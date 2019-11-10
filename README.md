@@ -53,7 +53,7 @@ We use [SemVer](http://semver.org/) for versioning. For available versions, see 
 * **Akin, Muhterem** - *Project manager*
 * **Esch, Andre** - *Project manager*
 * **Born, Louis** - *Quality manager* - [SteveHen](https://github.com/swisscreator)
-* **Happe, Benedikt** - *Technology manager*
+* **Happe, Benedikt** - *Technology manager* - [ErIsGuterJunge](https://github.com/ErIsGuterJunge)
 * **Henriss, Steve** - *Quality manager* - [SteveHen](https://github.com/SteveHen)
 * **Kirch, Titus** - *Technology manager* - [TitusKirch](https://github.com/TitusKirch)
 * **Vanessa, Miske** - *Sales manager* - [Tsunaria](https://github.com/Tsunaria)
