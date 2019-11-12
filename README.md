@@ -56,7 +56,7 @@ We use [SemVer](http://semver.org/) for versioning. For available versions, see 
 * **Happe, Benedikt** - *Technology manager* - [ErIsGuterJunge](https://github.com/ErIsGuterJunge)
 * **Henriss, Steve** - *Quality manager* - [SteveHen](https://github.com/SteveHen)
 * **Kirch, Titus** - *Technology manager* - [TitusKirch](https://github.com/TitusKirch)
-* **Vanessa, Miske** - *Sales manager* - [Tsunaria](https://github.com/Tsunaria)
+* **Miske, Vanessa** - *Sales manager* - [Tsunaria](https://github.com/Tsunaria)
 * **Nguyen, David** - *Sales manager* - [davidn121](https://github.com/davidn121)  
 
 See also the list of [contributors](https://github.com/swe-e4/pgv/graphs/contributors) who participated in this project.
