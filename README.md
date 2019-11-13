@@ -1,5 +1,6 @@
 <p align="center">
     <a href="https://travis-ci.com/swe-e4/pgv"><img src="https://travis-ci.com/swe-e4/pgv.svg?branch=master" alt="Build status"></a>
+    <a href="https://github.com/swe-e4/pgv/actions"><img src="https://github.com/swe-e4/pgv/workflows/Laravel/badge.svg)" alt="Laravel action status"></a>
     <a href="https://github.com/swe-e4/pgv/blob/master/LICENSE"><img src="https://img.shields.io/github/license/swe-e4/pgv" alt="License"></a>
     <a href="https://github.com/swe-e4/pgv/releases"><img src="https://img.shields.io/github/downloads/swe-e4/pgv/total" alt="Downloads"></a>
     <a href="https://github.com/swe-e4/pgv/graphs/contributors"><img src="https://img.shields.io/github/contributors/swe-e4/pgv" alt="Contributors"></a>
