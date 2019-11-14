@@ -51,7 +51,7 @@ We use [SemVer](http://semver.org/) for versioning. For available versions, see 
 ## Authors
 
 * **Akin, Muhterem** - *Project manager* [muhterem123](https://github.com/muhterem123)
-* **Esch, Andre** - *Project manager*
+* **Esch, Andre** - *Project manager* [andreesch0804](https://github.com/andreesch0804)
 * **Born, Louis** - *Quality manager* - [SteveHen](https://github.com/swisscreator)
 * **Happe, Benedikt** - *Technology manager* - [ErIsGuterJunge](https://github.com/ErIsGuterJunge)
 * **Henriss, Steve** - *Quality manager* - [SteveHen](https://github.com/SteveHen)
