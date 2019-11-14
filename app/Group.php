@@ -15,4 +15,13 @@ class Group extends Model
     {
         return $this->hasOne('App\User');
     }
+    /**
+     * students
+     *
+     * @return void
+     */
+    public function students()
+    {
+        return $this->hasMany('App\Students');
+    }
 }
