@@ -24,4 +24,14 @@ class Group extends Model
     {
         return $this->hasMany('App\Students');
     }
+    
+    /**
+     * milestones
+     *
+     * @return void
+     */
+    public function milestones()
+    {
+        return $this->belongsToMany('App\Milestone');
+    }
 }
