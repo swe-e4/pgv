@@ -1,5 +1,4 @@
 <p align="center">
-    <a href="https://travis-ci.com/swe-e4/pgv"><img src="https://travis-ci.com/swe-e4/pgv.svg?branch=master" alt="Build status"></a>
     <a href="https://github.com/swe-e4/pgv/actions"><img src="https://github.com/swe-e4/pgv/workflows/Laravel/badge.svg" alt="Laravel action status"></a>
     <a href="https://github.com/swe-e4/pgv/blob/master/LICENSE"><img src="https://img.shields.io/github/license/swe-e4/pgv" alt="License"></a>
     <a href="https://github.com/swe-e4/pgv/releases"><img src="https://img.shields.io/github/downloads/swe-e4/pgv/total" alt="Downloads"></a>
@@ -51,8 +50,8 @@ We use [SemVer](http://semver.org/) for versioning. For available versions, see 
 
 ## Authors
 
-* **Akin, Muhterem** - *Project manager*
-* **Esch, Andre** - *Project manager*
+* **Akin, Muhterem** - *Project manager* [muhterem123](https://github.com/muhterem123)
+* **Esch, Andre** - *Project manager* [andreesch0804](https://github.com/andreesch0804)
 * **Born, Louis** - *Quality manager* - [SteveHen](https://github.com/swisscreator)
 * **Happe, Benedikt** - *Technology manager* - [ErIsGuterJunge](https://github.com/ErIsGuterJunge)
 * **Henriss, Steve** - *Quality manager* - [SteveHen](https://github.com/SteveHen)
