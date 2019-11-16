@@ -18,6 +18,7 @@ class CreateMilestonesTable extends Migration
             $table->string('name');
             $table->date('deadline');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

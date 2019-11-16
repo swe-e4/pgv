@@ -19,6 +19,7 @@ class CreateGroupMilestoneTable extends Migration
             $table->unsignedBigInteger('milestone_id');
             $table->date('done_on');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
