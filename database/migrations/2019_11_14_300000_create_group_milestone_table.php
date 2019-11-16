@@ -15,7 +15,7 @@ class CreateGroupMilestoneTable extends Migration
     {
         Schema::create('group_milestone', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('groups_id');
+            $table->unsignedBigInteger('group_id');
             $table->unsignedBigInteger('milestone_id');
             $table->date('done_on');
             $table->timestamps();
