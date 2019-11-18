@@ -1,78 +1,103 @@
-# Contribution Guidelines
+# Contribution guidelines
+First of all, thank you very much for your interest in contributing to this project.
 
-This document outlines the general rules for contributing to
-a project from this organization. More detailed and tailored
-considerations will be found along with the specific project.
+The consideration and application of the contribution directives mentioned here will contribute to a more rapid, comprehensible and transparent development.
 
-## Style
+There are many ways to help this open source project. Write tutorials, improve documentation, share bugs with others, make feature requests, or just write code. We look forward to every contribution.
 
-Any project must define a coding style to be used when writing
-code. This should consist of a code formatter and linting pattern.  
-All projects should make use of Github hooks for continuous
-integration providers.
+Please **do not** use the issue tracker for support requests, please use our discord server (You can find more information about this in the [README.md](README.md)).
+
+## Table of contents
+
+* [General rules](#general-rules)
+* [Issues](#issues)
+    * [Bug report](#bug-report)
+    * [Feature request](#feature-request)
+* [Contributing code](#contributing-code)
+    * [Branches](#branches)
+    * [Commits](#commits)
+    * [Pull requests](#pull-requests)
+
+## General rules
+* Follow our [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md)
+
+## Issues
+For feature requests or bug reports, use the issue templates and fill them out.
+
+### Bug report
+For bug reports use the following template:
+
+[/.github/ISSUE_TEMPLATE/bug_report.md](/.github/ISSUE_TEMPLATE/bug_report.md)
+
+
+### Feature request
+For feature request use the following template:
+
+[/.github/ISSUE_TEMPLATE/feature_request.md](/.github/ISSUE_TEMPLATE/feature_request.md)
 
 ## Contributing code
+The following syntax applies to name formats:
+
+`{INHALT}` => Content **must** be set
+
+`CONTENT A/CONTENT B` => Content A or Content B (xor)
+
+`<CONTENT>` => Content is optional
+
+Example:
+
+`I said {hello/bye} <to my buddy>`
+
+Valid names:
+
+`I said bello`
+
+`I said bye`
+
+`I said hello to my buddy`
+
+`I said bye to my buddy`
 
 ### Branches
-When adding a feature or fixing a bug, one must create a new
-feature/fix branch with a name in this format:
-```
-{feat, fix}/<short title for feature/fix>(_<issue ID>)
-```
-Where:  
-`feat` - a new feature or major update of existing functionality  
-`fix`  - a bug fix or small correction  
-`issue ID` - ID of the github issue related to the feature/fix (if available)
+To implement new functions or fix bugs, a new branch must be created in the following name format:
 
-Examples:  
+`{feat/fix}/{short title for feature/short title for fix}`
+
+
+`feat` - A new function or an update of the existing functionality
+
+`fix` - A bug fix or a small correction
+
+Branches must be written in Snake case (example_case).
+
+Examples:
+
 `feat/user_login`
-`feat/user_keep_login_#10`
-`fix/user_logout_after_refresh_#12`
+
+`fix/automatic_logout`
 
 ### Commits
+Commits should always have meaningful content. A commit should contain at most a related set of files, but better still one file. A commit message must have the following name format:
 
-Commits should always have meaningful content. That means a commit
-containing only a typo correction is undesirable.
-A commit should also be constrained to a limited scope, at most
-a related set of files, but better yet one file.
-A commit message must have the following format:
 ```
-{feat, fix}(<scope>): <short summary of feature/fix>
+{feat/fix}<(scope)>: {short summary of feature/ short summary of fix} <(#issueID)>
 NEWLINE
-<longer description of feature/fix>
+<longer description of feature/ longer description of fix>
 ```
-A longer description is optional, but should be used if
-the changes are not self-explanatory.
+
+Commits must be written in lower case (example case), except the scope and the description.
 
 Example:
 ```
-feat(src/views): add login page
+feat: add follow system (#1)
 
-add a user login page, with links for registration and password
-reset
+Allows users to follow each other.
 ```
 
 ### Pull requests
+To add the code to the master branch, a pull request must be opened. The title must have the following name format:
 
-To contribute the code the the master branch a pull request must
-be opened.
-The title must have the following format:
-```
-{feat, fix}: <short description of feature/fix>
-```
-The body must contain:
-```
-closes <issue ID>
-```
 
-### Review
+`{feat/fix}: {short description of feature/short description of fix}`
 
-Any addition to the master branch requires a review from a
-contributing member of the project other than the person
-working on the addition. Reviews should be requested once all
-initial work on the feature/fix has been completed.
-
-### Merging
-
-All feature/fix branches must be rebased onto the master branch
-before merging.
+Pull Request must use the Pull Request template ([/.github/pull_request_template.md](/.github/pull_request_template.md)) and must be filled out completely.
