@@ -8,6 +8,19 @@ use Illuminate\Http\Request;
 class GroupController extends Controller
 {
     /**
+     * Return request with valid data
+     *
+     * @return array
+     */
+    private function validateData()
+    {
+        return request()->validate([
+            'name' => 'required',
+            'adviser_id' => 'nullable|exists:users,id',
+        ]);
+    }
+    
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -35,7 +48,7 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Group::create($this->validateData());
     }
 
     /**
@@ -46,7 +59,7 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        //
+        return $group;
     }
 
     /**
@@ -69,7 +82,7 @@ class GroupController extends Controller
      */
     public function update(Request $request, Group $group)
     {
-        //
+        $item->update($this->validateData());
     }
 
     /**
@@ -80,6 +93,6 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
-        //
+        $item->delete();
     }
 }
