@@ -8,6 +8,19 @@ use Illuminate\Http\Request;
 class MilestoneController extends Controller
 {
     /**
+    * Return request with valid data
+    *
+    * @return array
+    */
+   private function validateData()
+   {
+       return request()->validate([
+           'name' => 'required',
+           'deadline' => 'required|date',
+       ]);
+   }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -35,7 +48,7 @@ class MilestoneController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Milestone::create($this->validateData());
     }
 
     /**
@@ -46,7 +59,7 @@ class MilestoneController extends Controller
      */
     public function show(Milestone $milestone)
     {
-        //
+        return $milestone;
     }
 
     /**
@@ -69,7 +82,7 @@ class MilestoneController extends Controller
      */
     public function update(Request $request, Milestone $milestone)
     {
-        //
+        $milestone->update($this->validateData());
     }
 
     /**
@@ -80,6 +93,6 @@ class MilestoneController extends Controller
      */
     public function destroy(Milestone $milestone)
     {
-        //
+        $milestone->destroy();
     }
 }
