@@ -8,6 +8,24 @@ use Illuminate\Http\Request;
 class AppointmentController extends Controller
 {
     /**
+     * Return request with valid data
+     *
+     * @return array
+     */
+    private function validateData()
+    {
+        return request()->validate([
+            'name' => 'required',
+            'start' => 'nullable|date',
+            'end' => 'nullable|date',
+            'group_id' => 'nullable|bail|numeric|exists:groups,id',
+            'description' => 'required',
+            'traffic_light_status' => 'required|in:red,yellow,green',
+            'rating' => '|in:+,0,-',
+        ]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -35,7 +53,7 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Appointment::create($this->validateData());
     }
 
     /**
@@ -46,7 +64,7 @@ class AppointmentController extends Controller
      */
     public function show(Appointment $appointment)
     {
-        //
+        return $appointment;
     }
 
     /**
@@ -69,7 +87,7 @@ class AppointmentController extends Controller
      */
     public function update(Request $request, Appointment $appointment)
     {
-        //
+        $appointment->update($this->validateData());
     }
 
     /**
@@ -80,6 +98,6 @@ class AppointmentController extends Controller
      */
     public function destroy(Appointment $appointment)
     {
-        //
+        $appointment->destroy();
     }
 }
