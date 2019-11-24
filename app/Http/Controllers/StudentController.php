@@ -8,6 +8,22 @@ use Illuminate\Http\Request;
 class StudentController extends Controller
 {
     /**
+     * Return request with valid data
+     *
+     * @return array
+     */
+    private function validateData()
+    {
+        return request()->validate([
+            'surname' => 'required',
+            'first_name' => 'required',
+            'email' => 'required|unique:students',
+            'student_number' => 'required|unique:students',
+            'group_id' => 'nullable|bail|numeric|exists:groups,id',
+        ]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -35,7 +51,7 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Student::create($this->validateData());
     }
 
     /**
@@ -46,7 +62,7 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        //
+        return $student;
     }
 
     /**
@@ -69,7 +85,7 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        //
+        $student->update($this->validateData());
     }
 
     /**
@@ -80,6 +96,6 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //
+        $item->destroy();
     }
 }

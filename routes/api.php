@@ -19,4 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::apiResources([
     'appointment' => 'AppointmentController',
+    'groups' => 'GroupsController',
+    'student' => 'StudentController',
 ]);
