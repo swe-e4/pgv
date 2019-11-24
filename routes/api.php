@@ -20,6 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::apiResources([
     'milestone' => 'MilestoneController',
     'appointment' => 'AppointmentController',
-    'groups' => 'GroupsController',
+    'group' => 'GroupController',
     'student' => 'StudentController',
 ]);
