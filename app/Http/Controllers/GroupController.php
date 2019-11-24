@@ -16,7 +16,7 @@ class GroupController extends Controller
     {
         return request()->validate([
             'name' => 'required',
-            'adviser_id' => 'nullable|exists:users,id',
+            'adviser_id' => 'nullable|bail|numeric|exists:users,id',
         ]);
     }
     
