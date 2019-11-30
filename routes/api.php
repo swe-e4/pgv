@@ -17,9 +17,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResources([
-    'milestone' => 'MilestoneController',
-    'appointment' => 'AppointmentController',
-    'group' => 'GroupController',
-    'student' => 'StudentController',
-]);
+Route::middleware('auth:api')->group(function() {
+    Route::apiResources([
+        'milestone' => 'MilestoneController',
+        'appointment' => 'AppointmentController',
+        'group' => 'GroupController',
+        'student' => 'StudentController',
+    ]);
+});
