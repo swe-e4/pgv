@@ -1,0 +1,12 @@
+body.layout.layout-panel {
+    @apply h-screen w-full;
+    > div#app {
+        @apply flex flex-col;
+        main {
+            @apply flex-auto flex;
+            > .content {
+                @apply bg-gray-200 flex-auto;
+            }
+        }
+    }
+}
