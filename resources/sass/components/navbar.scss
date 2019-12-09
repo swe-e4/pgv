@@ -1,0 +1,23 @@
+nav {
+    @apply flex items-center justify-between flex-wrap bg-teal-400 px-6 py-2;
+    > .brand {
+        @apply flex items-center flex-shrink-0 text-white mr-6;
+        > span {
+            @apply font-semibold text-xl tracking-tight;
+        }
+    }
+    > .menu {
+        @apply float-right text-teal-100;
+        > a {
+            &:not(:first-child) {
+                @apply ml-2;
+            }
+            &:hover {
+                @apply text-gray-200 cursor-pointer;
+                > span {
+                    @apply underline;
+                }
+            }
+        }
+    }
+}
