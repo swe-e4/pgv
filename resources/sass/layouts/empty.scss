@@ -1,0 +1,34 @@
+body.layout.layout-empty {
+    > div#app {   
+        @apply bg-teal-400 pt-8 pb-8;
+        @screen sm {
+            @apply pt-12;
+        }
+        @screen md {
+            @apply pt-16;
+            
+        }
+        @screen lg {
+            @apply pt-24;
+        }
+        main {
+            @apply bg-gray-200 shadow-md w-11/12 px-8 pt-6 pb-4 mx-auto;
+            > h1 {
+                @apply text-center text-2xl mb-2 text-gray-600;
+            }
+            > small {
+                @apply text-gray-500 text-center block mt-2;
+            }
+            @screen sm {
+                @apply w-3/4;
+            }
+            @screen md {
+                @apply w-2/3;
+                
+            }
+            @screen lg {
+                @apply w-1/3;
+            }
+        }
+    }
+}
