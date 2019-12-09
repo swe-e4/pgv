@@ -1,0 +1,6 @@
+body.layout {
+    @apply h-full min-h-screen w-full;
+    > div#app {
+        @apply h-full min-h-screen w-full;
+    }
+}
