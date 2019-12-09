@@ -20,3 +20,7 @@ Auth::routes();
 Route::get('/', function(){
     return view('pages.login');
 })->name('login');
+
+Route::get('/overview', function(){
+    return view('pages.overview');
+})->name('overview');
