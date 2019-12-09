@@ -19,4 +19,4 @@ Auth::routes();
 
 Route::get('/', function(){
     return view('pages.login');
-})->name('home');
+})->name('login');
