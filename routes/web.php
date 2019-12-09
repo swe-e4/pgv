@@ -16,3 +16,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
+Route::get('/', function(){
+    return view('pages.login');
+})->name('home');
