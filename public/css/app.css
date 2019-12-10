@@ -17414,6 +17414,13 @@ body.layout.layout-panel > div#app main > .content {
   background-color: #edf2f7;
   -webkit-box-flex: 1;
           flex: 1 1 auto;
+  position: static;
+  overflow-y: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+  max-height: calc(100vh - 46px);
 }
 
 form .group {
@@ -17507,7 +17514,7 @@ nav {
   -webkit-box-pack: justify;
           justify-content: space-between;
   flex-wrap: wrap;
-  background-color: #4fd1c5;
+  background-color: #319795;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   padding-top: 0.5rem;
@@ -17550,17 +17557,19 @@ nav > .menu > a:hover > span {
 
 .sidebar {
   background-color: #f7fafc;
-  width: 100%;
+  display: none;
+  width: 0;
 }
 
 @media (min-width: 768px) {
   .sidebar {
+    display: block;
     width: 250px;
   }
 }
 
-.sidebar.hidden {
-  width: 0;
+.sidebar.active {
+  width: 100%;
 }
 
 .sidebar > ul:not(:last-child)::after {
@@ -17605,6 +17614,137 @@ nav > .menu > a:hover > span {
   height: 1rem;
   width: 1rem;
   margin-right: 0.5rem;
+}
+
+.table {
+  display: block;
+}
+
+.table > h1 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #4a5568;
+}
+
+@media (min-width: 768px) {
+  .table > h1 {
+    float: left;
+  }
+}
+
+.table > .search {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+  border-bottom-width: 1px;
+  border-bottom-width: 1px;
+  border-color: #718096;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .table > .search {
+    width: 33.333333%;
+    float: right;
+  }
+}
+
+@media (min-width: 1024px) {
+  .table > .search {
+    width: 25%;
+  }
+}
+
+.table > .search:hover {
+  border-color: #319795;
+}
+
+.table > .search > i {
+  color: #718096;
+}
+
+.table > .search > input {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: transparent;
+  border-style: none;
+  width: 100%;
+  color: #718096;
+  margin-right: 0.75rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  line-height: 1.25;
+}
+
+.table > .search > input:focus {
+  outline: 0;
+}
+
+.table > .scroll {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.table table {
+  table-layout: auto;
+}
+
+.table table > thead > tr > th {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.table table > tbody > tr > td {
+  border-width: 1px;
+}
+
+.table table > tbody > tr > td:first-child {
+  border-left: none;
+}
+
+.table table > tbody > tr > td:last-child {
+  border-right: none;
+}
+
+.table table > tbody > tr > td > a {
+  display: block;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.table table > tbody > tr > td > a > span {
+  width: 100%;
+}
+
+.table table > tbody > tr > td > a > small {
+  display: block;
+  color: #4a5568;
+}
+
+.table table > tbody > tr:last-child > td {
+  border-bottom: none;
+}
+
+.box {
+  display: block;
+  background-color: #f7fafc;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+.box:not(:last-child) {
+  margin-bottom: 2rem;
 }
 
 @media (min-width: 640px){
