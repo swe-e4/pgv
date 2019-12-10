@@ -1,0 +1,6 @@
+.box {
+    @apply block bg-gray-100 px-4 pt-4 pb-2;
+    &:not(:last-child) {
+        @apply mb-8;
+    }
+}
