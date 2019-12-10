@@ -5,7 +5,8 @@ body.layout.layout-panel {
         main {
             @apply flex-auto flex;
             > .content {
-                @apply bg-gray-200 flex-auto;
+                @apply bg-gray-200 flex-auto static overflow-y-auto px-4 pt-4 pb-8;
+                max-height: calc(100vh - 46px);
             }
         }
     }

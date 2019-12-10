@@ -1,10 +1,11 @@
 .sidebar {
-    @apply bg-gray-100 w-full;
+    @apply bg-gray-100 hidden w-0;
     @screen md {
+        @apply block;
         width: 250px;
     }
-    &.hidden {
-        @apply w-0;
+    &.active {
+        @apply w-full;
     }
     > ul {
         &:not(:last-child) {
