@@ -24,3 +24,7 @@ Route::get('/', function(){
 Route::get('/overview', function(){
     return view('pages.overview');
 })->name('overview');
+
+Route::get('/adviser/add', function(){
+    return view('pages.adviser_add');
+})->name('adviser_add');
