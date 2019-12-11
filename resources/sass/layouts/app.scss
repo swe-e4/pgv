@@ -3,4 +3,15 @@ body.layout {
     > div#app {
         @apply h-full min-h-screen w-full;
     }
+    .only-mobile {
+        @screen md {
+            @apply hidden;
+        }
+    }
+    .only-desktop {
+        @apply hidden;
+        @screen md {
+            @apply block;
+        }
+    }
 }
