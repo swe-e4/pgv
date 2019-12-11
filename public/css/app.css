@@ -17338,6 +17338,31 @@ body.layout .only-desktop {
   }
 }
 
+body.layout .sidebar::-webkit-scrollbar, body.layout form input::-webkit-scrollbar, form body.layout input::-webkit-scrollbar,
+body.layout form select::-webkit-scrollbar,
+form body.layout select::-webkit-scrollbar {
+  width: 6px;
+}
+
+body.layout .sidebar::-webkit-scrollbar-track, body.layout form input::-webkit-scrollbar-track, form body.layout input::-webkit-scrollbar-track,
+body.layout form select::-webkit-scrollbar-track,
+form body.layout select::-webkit-scrollbar-track {
+  background-color: #e2e8f0;
+}
+
+body.layout .sidebar::-webkit-scrollbar-thumb, body.layout form input::-webkit-scrollbar-thumb, form body.layout input::-webkit-scrollbar-thumb,
+body.layout form select::-webkit-scrollbar-thumb,
+form body.layout select::-webkit-scrollbar-thumb {
+  background-color: #cbd5e0;
+}
+
+body.layout .sidebar::-webkit-scrollbar-thumb:hover, body.layout form input::-webkit-scrollbar-thumb:hover, form body.layout input::-webkit-scrollbar-thumb:hover,
+body.layout form select::-webkit-scrollbar-thumb:hover,
+form body.layout select::-webkit-scrollbar-thumb:hover {
+  background-color: #a0aec0;
+  width: 12px;
+}
+
 body.layout.layout-card > div#app {
   background-color: #319795;
   padding-top: 2rem;
@@ -17444,12 +17469,12 @@ body.layout.layout-panel > div#app main > .content {
   padding-right: 1rem;
   padding-top: 1rem;
   padding-bottom: 2rem;
-  min-height: calc(100vh - 46px);
+  min-height: calc(100vh - 40px);
 }
 
 @media (min-width: 768px) {
   body.layout.layout-panel > div#app main > .content {
-    max-height: calc(100vh - 46px);
+    max-height: calc(100vh - 40px);
   }
 }
 
@@ -17709,6 +17734,9 @@ nav > .toggle:hover {
   display: none;
   width: 0;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: calc(100vh - 40px);
 }
 
 .sidebar.active {
@@ -17722,6 +17750,7 @@ nav > .toggle:hover {
     position: relative;
     min-width: 150px !important;
     width: 150px !important;
+    max-height: calc(100vh - 40px);
   }
 }
 
