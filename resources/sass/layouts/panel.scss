@@ -10,9 +10,9 @@ body.layout.layout-panel {
             }
             > .content {
                 @apply bg-gray-200 flex-auto static overflow-y-auto px-4 pt-4 pb-8;
-                min-height: calc(100vh - 46px);
+                min-height: calc(100vh - 40px);
                 @screen md {
-                    max-height: calc(100vh - 46px);
+                    max-height: calc(100vh - 40px);
                 }
             }
         }

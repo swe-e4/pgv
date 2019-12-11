@@ -1,5 +1,7 @@
 .sidebar {
-    @apply bg-gray-100 hidden w-0 shadow-md;
+    @extend %fancy-scrollbar;
+    @apply bg-gray-100 hidden w-0 shadow-md overflow-y-auto overflow-x-hidden;
+    min-height: calc(100vh - 40px);
     &.active {
         @apply w-full block;
     }
@@ -7,6 +9,7 @@
         @apply block relative;
         min-width: 150px !important;
         width: 150px !important;
+        max-height: calc(100vh - 40px);
     }
     @screen lg {
         @apply block;
