@@ -17444,6 +17444,7 @@ body.layout.layout-panel > div#app main > .content {
   padding-right: 1rem;
   padding-top: 1rem;
   padding-bottom: 2rem;
+  min-height: calc(100vh - 46px);
 }
 
 @media (min-width: 768px) {
@@ -17464,11 +17465,14 @@ form label {
   margin-bottom: 0.5rem;
 }
 
-form input {
+form label.description {
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+form input,
+form select {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
   border-width: 1px;
   width: 100%;
   padding-top: 0.5rem;
@@ -17480,7 +17484,9 @@ form input {
   outline: 0;
 }
 
-form input:focus, form input:hover {
+form input:focus, form input:hover,
+form select:focus,
+form select:hover {
   border-color: #38b2ac;
 }
 
@@ -17497,8 +17503,46 @@ button:hover {
   background-color: #319795;
 }
 
+button.gray {
+  background-color: #a0aec0;
+  color: #fff;
+}
+
+button.gray:hover {
+  background-color: #718096;
+}
+
+button.half {
+  width: 50%;
+}
+
 button.full {
   width: 100%;
+}
+
+.button-list > button {
+  float: left;
+  width: calc(100% - 0.5rem);
+}
+
+.button-list > button:first-child, .button-list > button:last-child {
+  width: calc(100% - 0.25rem);
+}
+
+.button-list > button:not(:first-child) {
+  margin-left: 0.25rem;
+}
+
+.button-list > button:not(:last-child) {
+  margin-right: 0.25rem;
+}
+
+.button-list > button.half {
+  width: calc(50% - 0.5rem);
+}
+
+.button-list > button.half:first-child, .button-list > button.half:last-child {
+  width: calc(50% - 0.25rem);
 }
 
 .alert {
@@ -17545,6 +17589,8 @@ nav {
   flex-wrap: wrap;
   background-color: #38b2ac;
   padding-left: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  position: relative;
 }
 
 @media (min-width: 768px) {
@@ -17673,7 +17719,7 @@ nav > .toggle:hover {
 @media (min-width: 768px) {
   .sidebar {
     display: block;
-    box-shadow: none;
+    position: relative;
     min-width: 150px !important;
     width: 150px !important;
   }
@@ -17858,14 +17904,22 @@ nav > .toggle:hover {
 .box {
   display: block;
   background-color: #f7fafc;
+  overflow-y: hidden;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 1rem;
-  padding-bottom: 0.5rem;
+  padding-bottom: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .box:not(:last-child) {
   margin-bottom: 2rem;
+}
+
+.box > h1 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: #2d3748;
 }
 
 @media (min-width: 640px){
