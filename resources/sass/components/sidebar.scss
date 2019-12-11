@@ -4,7 +4,7 @@
         @apply w-full block;
     }
     @screen md {
-        @apply block shadow-none;
+        @apply block relative;
         min-width: 150px !important;
         width: 150px !important;
     }

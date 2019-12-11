@@ -1,5 +1,5 @@
 nav {
-    @apply flex items-center justify-between flex-wrap bg-teal-500 pl-6;
+    @apply flex items-center justify-between flex-wrap bg-teal-500 pl-6 shadow-md relative;
     @screen md {
         @apply pr-6;
     }
