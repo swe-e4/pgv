@@ -17662,27 +17662,29 @@ nav > .toggle:hover {
   background-color: #f7fafc;
   display: none;
   width: 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.sidebar.active {
+  width: 100%;
+  display: block;
 }
 
 @media (min-width: 768px) {
   .sidebar {
     display: block;
-    min-width: 150px;
-    width: 150px;
+    box-shadow: none;
+    min-width: 150px !important;
+    width: 150px !important;
   }
 }
 
 @media (min-width: 1024px) {
   .sidebar {
     display: block;
-    min-width: 250px;
-    width: 250px;
+    min-width: 250px !important;
+    width: 250px !important;
   }
-}
-
-.sidebar.active {
-  width: 100%;
-  display: block;
 }
 
 .sidebar > ul:not(:first-child)::before {
