@@ -38,3 +38,17 @@
         </a>
     </li>
 </ul>
+<ul class="only-mobile">
+    <li>
+        <a>
+            <i class="fas fa-cog"></i>
+            <span>Einstellungen</span>
+        </a>
+    </li>
+    <li>
+        <a>
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Ausloggen</span>
+        </a>
+    </li>
+</ul>

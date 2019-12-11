@@ -1,13 +1,22 @@
 nav {
-    @apply flex items-center justify-between flex-wrap bg-teal-500 px-6 py-2;
+    @apply flex items-center justify-between flex-wrap bg-teal-500 pl-6;
+    @screen md {
+        @apply pr-6;
+    }
     > .brand {
-        @apply flex items-center flex-shrink-0 text-white mr-6;
+        @apply flex items-center flex-shrink-0 text-white mr-6 py-2;
+        @screen md {
+            @apply py-0;
+        }
         > span {
             @apply font-semibold text-xl tracking-tight;
         }
     }
     > .menu {
-        @apply float-right text-teal-100;
+        @apply float-right text-teal-100 py-2 hidden;
+        @screen md {
+            @apply block;
+        }
         > a {
             &:not(:first-child) {
                 @apply ml-2;
@@ -18,6 +27,35 @@ nav {
                     @apply underline;
                 }
             }
+        }
+        > ul {
+            @apply absolute bg-white right-0 text-gray-800 hidden;
+            top: 40px;
+            > li {
+                @apply py-2 px-3 text-sm;
+                &:hover {
+                    @apply cursor-pointer bg-gray-200;
+                }
+                &.separator {
+                    @apply border-b border-gray-300;
+                }
+            }
+        }
+        &:hover  {
+            > ul {
+                @apply block;
+            }
+        }
+    }
+    > .toggle {
+        @apply float-right text-teal-100 block py-3 text-center;
+        width: 46px;
+        height: 46px;
+        @screen md {
+            @apply hidden;
+        }
+        &:hover {
+            @apply bg-teal-600 cursor-pointer;
         }
     }
 }
