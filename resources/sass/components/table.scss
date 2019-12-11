@@ -1,7 +1,7 @@
 .table {
     @apply block;
     > h1 {
-        @apply text-xl mb-2 text-gray-700;
+        @apply text-xl mb-2 text-gray-800;
         @screen md {
             @apply float-left;
         }
@@ -21,7 +21,7 @@
             @apply text-gray-600;
         }
         > input {
-            @apply appearance-none bg-transparent border-none w-full text-gray-600 mr-3 py-1 px-2 leading-tight;
+            @apply appearance-none bg-transparent border-none w-full text-gray-800 mr-3 py-1 px-2 leading-tight;
             &:focus {
                 @apply outline-none;
             }
