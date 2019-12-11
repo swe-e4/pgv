@@ -23,16 +23,17 @@
         <!-- Navbar -->
         @include('includes.navbar')
         
+        <!-- Main -->
         <main>
+
             <!-- Sidebar -->
-            <div class="sidebar">
-                @include('includes.sidebar')
-            </div>
+            @include('includes.sidebar')
 
             <!-- Content -->
             <div class="content">
                 @yield('content')
             </div>
+            
         </main>
     </div>
 </body>
