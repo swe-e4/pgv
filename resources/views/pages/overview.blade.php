@@ -10,11 +10,31 @@
             <table class="w-full">
                 <thead>
                     <tr>
-                        <th>Montag</th>
-                        <th>Dienstag</th>
-                        <th>Mittwoch</th>
-                        <th>Donnerstag</th>
-                        <th>Freitag</th>
+                        <th>
+                            <a>
+                                <span>Montag</span>
+                            </a>
+                        </th>
+                        <th>
+                            <a>
+                                <span>Dienstag</span>
+                            </a>
+                        </th>
+                        <th>
+                            <a>
+                                <span>Mittwoch</span>
+                            </a>
+                        </th>
+                        <th>
+                            <a>
+                                <span>Donnerstag</span>
+                            </a>
+                        </th>
+                        <th>
+                            <a>
+                                <span>Freitag</span>
+                            </a>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,10 +88,26 @@
             <table class="w-full">
                 <thead>
                     <tr>
-                        <th>Gruppe</th>
-                        <th>Betreuer</th>
-                        <th>Nächster Termin</th>
-                        <th>Aktion</th>
+                        <th class="sort up">
+                            <a>
+                                <span>Gruppe</span>
+                            </a>
+                        </th>
+                        <th class="sort">
+                            <a>
+                                <span>Betreuer</span>
+                            </a>
+                        </th>
+                        <th class="sort">
+                            <a>
+                                <span>Nächster Termin</span>
+                            </a>
+                        </th>
+                        <th>
+                            <a>
+                                <span>Aktion</span>
+                            </a>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>

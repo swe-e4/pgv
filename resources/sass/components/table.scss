@@ -34,8 +34,53 @@
         @apply table-auto;
         > thead {
             > tr {
+                @apply border-b-2;
                 > th {
-                    @apply px-4 py-2;
+                    &:not(:last-child) {
+                        @apply border-r;
+                    }
+                    &.sort {
+                        > a {
+                            &:hover {
+                                @apply cursor-pointer underline;
+                            }
+                            > span { 
+                                &::after {
+                                    @apply float-right;
+                                    font-family: "Font Awesome 5 Free";
+                                    font-weight: 900;
+                                    content: "\F0DC";
+                                }
+                            }
+                        }
+                        &.up {
+                            > a {
+                                > span { 
+                                    &::after {
+                                        content: "\F0DE";
+                                    }
+                                }
+                            }
+                        }
+                        &.down {
+                            > a {
+                                > span { 
+                                    &::after {
+                                        content: "\F0DD";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    > a {
+                        @apply block px-4 py-2 text-left;
+                        > span {
+                            @apply w-full;
+                        }
+                        > i {
+                            @apply float-right;
+                        }
+                    }
                 }
             }
         }
@@ -44,10 +89,10 @@
                 > td {
                     @apply border;
                     &:first-child {
-                        border-left: none;
+                        @apply border-l-0;
                     }
                     &:last-child {
-                        border-right: none;
+                        @apply border-r-0;
                     }
                     > a {
                         @apply block px-4 py-2;
@@ -61,7 +106,7 @@
                 }
                 &:last-child {
                     > td {
-                        border-bottom: none;
+                        @apply border-b-0;
                     }
                 }
             }
