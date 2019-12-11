@@ -1,7 +1,7 @@
 <div class="sidebar active">
     <ul>
         <li>
-            <a>
+            <a href="/overview">
                 <i class="fas fa-thumbtack"></i>
                 <span>Übersicht</span>
             </a>
@@ -9,7 +9,7 @@
     </ul>
     <ul>
         <li>
-            <a>
+            <a href="/adviser/add">
                 <i class="fas fa-users"></i>
                 <span>Betreuer</span>
             </a>
