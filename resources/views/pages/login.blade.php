@@ -1,4 +1,4 @@
-@extends('layouts.empty')
+@extends('layouts.card')
 
 @section('title', 'Login')
 

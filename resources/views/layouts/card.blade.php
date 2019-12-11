@@ -17,7 +17,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="layout layout-empty">
+<body class="layout layout-card">
     <div id="app">
         <main>
             @yield('content')
