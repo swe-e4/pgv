@@ -1,16 +1,19 @@
 body.layout.layout-empty {
     > div#app {   
-        @apply bg-teal-400 pt-8 pb-8;
+        @apply bg-teal-600 pt-8 pb-8;
+        background: url('/images/background.png') no-repeat center center fixed;
         @screen sm {
             @apply pt-12;
+            background: url('/images/background_md.png') no-repeat center center fixed;
         }
         @screen md {
             @apply pt-16;
-            
+            background: url('/images/background_md.png') no-repeat center center fixed; 
         }
         @screen lg {
-            @apply pt-24;
+            @apply pt-32;
         }
+        @apply bg-cover;
         main {
             @apply bg-gray-200 shadow-md w-11/12 px-8 pt-6 pb-4 mx-auto;
             > h1 {
