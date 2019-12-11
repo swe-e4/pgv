@@ -17890,11 +17890,49 @@ nav > .toggle:hover {
   table-layout: auto;
 }
 
-.table table > thead > tr > th {
+.table table > thead > tr {
+  border-bottom-width: 2px;
+}
+
+.table table > thead > tr > th:not(:last-child) {
+  border-right-width: 1px;
+}
+
+.table table > thead > tr > th.sort > a:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.table table > thead > tr > th.sort > a > span::after {
+  float: right;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\F0DC";
+}
+
+.table table > thead > tr > th.sort.up > a > span::after {
+  content: "\F0DE";
+}
+
+.table table > thead > tr > th.sort.down > a > span::after {
+  content: "\F0DD";
+}
+
+.table table > thead > tr > th > a {
+  display: block;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  text-align: left;
+}
+
+.table table > thead > tr > th > a > span {
+  width: 100%;
+}
+
+.table table > thead > tr > th > a > i {
+  float: right;
 }
 
 .table table > tbody > tr > td {
@@ -17902,11 +17940,11 @@ nav > .toggle:hover {
 }
 
 .table table > tbody > tr > td:first-child {
-  border-left: none;
+  border-left-width: 0;
 }
 
 .table table > tbody > tr > td:last-child {
-  border-right: none;
+  border-right-width: 0;
 }
 
 .table table > tbody > tr > td > a {
@@ -17927,7 +17965,7 @@ nav > .toggle:hover {
 }
 
 .table table > tbody > tr:last-child > td {
-  border-bottom: none;
+  border-bottom-width: 0;
 }
 
 .box {
