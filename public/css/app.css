@@ -17736,7 +17736,6 @@ nav > .toggle:hover {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   overflow-y: auto;
   overflow-x: hidden;
-  min-height: calc(100vh - 40px);
 }
 
 .sidebar.active {
@@ -17750,6 +17749,7 @@ nav > .toggle:hover {
     position: relative;
     min-width: 150px !important;
     width: 150px !important;
+    min-height: calc(100vh - 40px);
     max-height: calc(100vh - 40px);
   }
 }
