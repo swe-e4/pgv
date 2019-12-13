@@ -1,0 +1,50 @@
+.sidebar {
+    @extend %fancy-scrollbar;
+    @apply bg-gray-100 hidden w-0 shadow-md overflow-y-auto overflow-x-hidden;
+    &.active {
+        @apply w-full block;
+    }
+    @screen md {
+        @apply block relative;
+        min-width: 150px !important;
+        width: 150px !important;
+        min-height: calc(100vh - 40px);
+        max-height: calc(100vh - 40px);
+    }
+    @screen lg {
+        @apply block;
+        min-width: 250px !important;
+        width: 250px !important;
+    }
+    > ul {
+        &:not(:first-child) {
+            &::before {
+                content: "";
+                @apply bg-gray-300 absolute h-px;
+                left: 5px;
+                width: calc(100% - 10px);
+                @screen md {
+                    width: 140px;
+                }
+                @screen lg {
+                    width: 240px;
+                }
+            }
+        }
+        > li {
+            @apply w-full;
+            > a {
+                @apply block w-full pl-3 py-2 pr-4 text-gray-800;
+                &:hover {
+                    @apply cursor-pointer bg-gray-200;
+                    > span {
+                        @apply underline;
+                    }
+                }
+                > i {
+                    @apply h-4 w-4 mr-2;
+                }
+            }
+        }
+    }
+}

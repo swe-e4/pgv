@@ -1,0 +1,115 @@
+.table {
+    @apply block;
+    > h1 {
+        @apply text-xl mb-2 text-gray-800;
+        @screen md {
+            @apply float-left;
+        }
+    }
+    > .search {
+        @apply flex items-center border-b border-b border-gray-600 w-full mb-2;
+        @screen md {
+            @apply w-1/3 float-right;
+        }
+        @screen lg {
+            @apply w-1/4;
+        }
+        &:hover {
+            @apply border-teal-500;
+        }
+        > i {
+            @apply text-gray-600;
+        }
+        > input {
+            @apply appearance-none bg-transparent border-none w-full text-gray-800 mr-3 py-1 px-2 leading-tight;
+            &:focus {
+                @apply outline-none;
+            }
+        }
+    }
+    > .scroll {
+        @apply overflow-x-auto w-full;
+    }
+    table {
+        @apply table-auto;
+        > thead {
+            > tr {
+                @apply border-b-2;
+                > th {
+                    &:not(:last-child) {
+                        @apply border-r;
+                    }
+                    &.sort {
+                        > a {
+                            &:hover {
+                                @apply cursor-pointer underline;
+                            }
+                            > span { 
+                                &::after {
+                                    @apply float-right;
+                                    font-family: "Font Awesome 5 Free";
+                                    font-weight: 900;
+                                    content: "\F0DC";
+                                }
+                            }
+                        }
+                        &.up {
+                            > a {
+                                > span { 
+                                    &::after {
+                                        content: "\F0DE";
+                                    }
+                                }
+                            }
+                        }
+                        &.down {
+                            > a {
+                                > span { 
+                                    &::after {
+                                        content: "\F0DD";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    > a {
+                        @apply block px-4 py-2 text-left;
+                        > span {
+                            @apply w-full;
+                        }
+                        > i {
+                            @apply float-right;
+                        }
+                    }
+                }
+            }
+        }
+        > tbody {
+            > tr {
+                > td {
+                    @apply border;
+                    &:first-child {
+                        @apply border-l-0;
+                    }
+                    &:last-child {
+                        @apply border-r-0;
+                    }
+                    > a {
+                        @apply block px-4 py-2;
+                        > span {
+                            @apply w-full;
+                        }
+                        > small {
+                            @apply block text-gray-700;
+                        }
+                    }
+                }
+                &:last-child {
+                    > td {
+                        @apply border-b-0;
+                    }
+                }
+            }
+        }
+    }
+}

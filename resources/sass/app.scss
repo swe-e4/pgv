@@ -8,3 +8,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+//layouts
+@import 'layouts/app.scss';
+@import 'layouts/card.scss';
+@import 'layouts/panel.scss';
+
+//components
+@import 'components/forms.scss';
+@import 'components/buttons.scss';
+@import 'components/alerts.scss';
+@import 'components/navbar.scss';
+@import 'components/sidebar.scss';
+@import 'components/table.scss';
+@import 'components/box.scss';

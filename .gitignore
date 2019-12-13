@@ -1,3 +1,7 @@
+# vscode
+/.vscode
+
+# laravel
 /node_modules
 /public/hot
 /public/storage

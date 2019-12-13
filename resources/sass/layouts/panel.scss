@@ -1,0 +1,20 @@
+body.layout.layout-panel {
+    @apply h-screen w-full;
+    > div#app {
+        @screen md {
+            @apply flex flex-col;
+        }
+        main {
+            @screen md {
+                @apply flex-auto flex;
+            }
+            > .content {
+                @apply bg-gray-200 flex-auto static overflow-y-auto px-4 pt-4 pb-8;
+                min-height: calc(100vh - 40px);
+                @screen md {
+                    max-height: calc(100vh - 40px);
+                }
+            }
+        }
+    }
+}
