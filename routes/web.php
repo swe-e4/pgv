@@ -20,6 +20,7 @@ Route::get('/login', function(){
 
 Route::get('/logout', function(){
     Auth::logout();
+    return redirect()->route('login');
 })->name('logout');
 
 Route::get('/{any}', 'AppController@index')->where('any', '.*');
