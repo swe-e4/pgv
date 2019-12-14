@@ -14,6 +14,13 @@ body.layout {
             @apply block;
         }
     }
+    .disabled,
+    [disabled] {
+        :hover,
+        &:hover {
+            @apply cursor-not-allowed #{!important};
+        }
+    }
     %fancy-scrollbar {
         &::-webkit-scrollbar {
             width: 6px;
