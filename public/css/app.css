@@ -17338,6 +17338,12 @@ body.layout .only-desktop {
   }
 }
 
+body.layout .disabled :hover, body.layout .disabled:hover,
+body.layout [disabled] :hover,
+body.layout [disabled]:hover {
+  cursor: not-allowed !important;
+}
+
 body.layout .sidebar::-webkit-scrollbar, body.layout form input::-webkit-scrollbar, form body.layout input::-webkit-scrollbar,
 body.layout form select::-webkit-scrollbar,
 form body.layout select::-webkit-scrollbar {
@@ -17515,6 +17521,17 @@ form select:hover {
   border-color: #38b2ac;
 }
 
+form input.error,
+form select.error {
+  border-color: #f56565;
+  background-color: #fff5f5;
+}
+
+form .error {
+  color: #9b2c2c;
+  font-size: 0.875rem;
+}
+
 button {
   background-color: #38b2ac;
   padding-top: 0.5rem;
@@ -17685,7 +17702,8 @@ nav > .menu > ul {
   top: 40px;
 }
 
-nav > .menu > ul > li {
+nav > .menu > ul > li > a {
+  display: block;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 0.75rem;
@@ -17693,7 +17711,7 @@ nav > .menu > ul > li {
   font-size: 0.875rem;
 }
 
-nav > .menu > ul > li:hover {
+nav > .menu > ul > li > a:hover:not(.disabled), nav > .menu > ul > li > a.router-link-exact-active:not(.disabled) {
   cursor: pointer;
   background-color: #edf2f7;
 }
@@ -17797,12 +17815,12 @@ nav > .toggle:hover {
   color: #2d3748;
 }
 
-.sidebar > ul > li > a:hover {
+.sidebar > ul > li > a:hover:not(.disabled), .sidebar > ul > li > a.router-link-exact-active:not(.disabled) {
   cursor: pointer;
   background-color: #edf2f7;
 }
 
-.sidebar > ul > li > a:hover > span {
+.sidebar > ul > li > a:hover:not(.disabled) > span, .sidebar > ul > li > a.router-link-exact-active:not(.disabled) > span {
   text-decoration: underline;
 }
 
