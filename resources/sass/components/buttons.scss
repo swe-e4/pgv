@@ -17,6 +17,13 @@ button {
     }
 }
 .button-list {
+    @apply overflow-y-hidden;
+    &:not(:first-child) {
+        @apply mt-8;
+    }
+    &:not(:last-child) {
+        @apply mb-8;
+    }
     > button {
         @apply float-left;
         width: calc(100% - 0.5rem);
