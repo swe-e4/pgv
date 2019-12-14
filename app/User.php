@@ -54,7 +54,7 @@ class User extends Authenticatable
      */
     public function groups()
     {
-        return $this->hasMany('App\Group');
+        return $this->hasMany('App\Group', 'adviser_id')->orderBy('name');
     }
 
     /**

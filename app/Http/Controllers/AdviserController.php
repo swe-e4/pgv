@@ -15,12 +15,12 @@ class AdviserController extends Controller
      *
      * @return array
      */
-    private function validateData()
+    private function validateData($adviser = NULL)
     {
         return request()->validate([
             'first_name' => 'required',
             'surname' => 'required',
-            'email' => 'bail|required|email:rfc,dns|unique:users',
+            'email' => 'bail|required|email:rfc,dns|unique:users,email'.(isset($adviser) ? ','.$adviser->id : ''),
             //'password' => 'required',
         ]);
     }
@@ -90,8 +90,10 @@ class AdviserController extends Controller
     public function update(Request $request, User $adviser)
     {
         $this->authorize('update', $adviser);
+
+        $adviser->update($this->validateData($adviser));
         
-        return (new AdviserResource($adviser->update($this->validateData())))
+        return (new AdviserResource($adviser))
             ->response()
             ->setStatusCode(Response::HTTP_OK);
     }
@@ -105,7 +107,7 @@ class AdviserController extends Controller
     public function destroy(User $adviser)
     {
         $this->authorize('delete', $adviser);
-        $adviser-destroy();
+        $adviser->delete();
 
         return response([], Response::HTTP_NO_CONTENT);
     }
