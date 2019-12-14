@@ -16,5 +16,11 @@ form {
         &:hover {
             @apply border-teal-500;
         }
+        &.error {
+            @apply border-red-500 bg-red-100;
+        }
+    }
+    .error {
+        @apply text-red-800 text-sm;
     }
 }
