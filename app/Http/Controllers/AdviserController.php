@@ -20,7 +20,7 @@ class AdviserController extends Controller
         return request()->validate([
             'first_name' => 'required',
             'surname' => 'required',
-            'email' => 'required|email:rfc,dns',
+            'email' => 'bail|required|email:rfc,dns|unique:users',
             //'password' => 'required',
         ]);
     }
