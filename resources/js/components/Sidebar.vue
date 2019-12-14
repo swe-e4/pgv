@@ -10,7 +10,7 @@
         </ul>
         <ul>
             <li>
-                <router-link to="/adviser/create">
+                <router-link to="/adviser">
                     <i class="fas fa-users"></i>
                     <span>Betreuer</span>
                 </router-link>
@@ -48,10 +48,10 @@
                 </router-link>
             </li>
             <li>
-                <a href="/logout">
+                <router-link to="/logout">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Ausloggen</span>
-                </a>
+                </router-link>
             </li>
         </ul>
     </div>

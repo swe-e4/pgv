@@ -1,7 +1,7 @@
 <template>
     <nav>
         <div class="brand">
-            <span>NAME</span>
+            <span>{{ app_name }}</span>
         </div>
         <div class="menu">
             <a>
@@ -16,10 +16,10 @@
                     </router-link>
                 </li>
                 <li>
-                    <a href="/logout">
+                    <router-link to="/logout">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>Ausloggen</span>
-                    </a>
+                    </router-link>
                 </li>
             </ul>
         </div>
@@ -34,6 +34,7 @@
         name: "Navbar",
 
         props: [
+            'app_name',
             'user'
         ],
     }
