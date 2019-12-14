@@ -5,7 +5,7 @@ import vuetron from 'vuetron'
 
 require('./bootstrap');;
 
-Vue.use(vuetron.VuetronVue);
+//Vue.use(vuetron.VuetronVue);
 
 const app = new Vue({
     el: '#app',
