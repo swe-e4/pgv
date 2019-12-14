@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="box">
-            <h1>Betreuer hinzufügen</h1>
+            <h1>Betreuer bearbeiten</h1>
 
-            <Alert type="success" title="Hinzugefügt" message="Betreuer wurde erfolgreich hinzugefügt." v-if="success"/>
-            
+            <Alert type="success" title="Bearbeitet" message="Betreuer wurde erfolgreich bearbeitet." v-if="success"/>
+
             <form @submit.prevent="submitForm">
                 <InputField name="surname" label="Nachname" placeholder="Mustermann" @update:field="form.surname = $event" :errors="errors" :data="form.surname"/>
                 <InputField name="first_name" label="Vorname" placeholder="Max" @update:field="form.first_name = $event" :errors="errors" :data="form.first_name"/>
@@ -21,9 +21,10 @@
                 </div>
 
                 <div class="button-list">
-                    <button class="half" type="submit">Betreuer hinzufügen</button>
+                    <button class="half" type="submit">Änderungen speichern</button>
                     <button class="half gray" type="reset" @click="$router.back();">Abbrechen</button>
                 </div>
+
             </form>
         </div>
     </div>
@@ -33,11 +34,23 @@
     import InputField from '../components/InputField';
     import Alert from '../components/Alert';
     export default {
-        name: "AdviserCreate",
+        name: "AdviserEdit",
 
         components: {
             InputField,
             Alert
+        },
+
+        mounted() {
+            axios.get('/api/adviser/' + this.$route.params.id)
+                .then(response => {
+                    this.form = response.data.data;
+                })
+                .catch(errors => {
+                    if(errors.response.status === 404 || errors.response.status === 403) {
+                        this.$router.push('/adviser');
+                    }
+                });
         },
 
         data: function() {
@@ -54,14 +67,9 @@
 
         methods: {
             submitForm: function() {
-                axios.post('/api/adviser', this.form)
+                axios.patch('/api/adviser/' + this.$route.params.id, this.form)
                     .then(response => {
                         this.success = true;
-                        this.form = {
-                                'surname': '',
-                                'first_name': '',
-                                'email': '',
-                            };
                     })
                     .catch(errors => {
                         this.success = false,
