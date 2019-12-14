@@ -17344,27 +17344,27 @@ body.layout [disabled]:hover {
   cursor: not-allowed !important;
 }
 
-body.layout .sidebar::-webkit-scrollbar, body.layout form input::-webkit-scrollbar, form body.layout input::-webkit-scrollbar,
-body.layout form select::-webkit-scrollbar,
-form body.layout select::-webkit-scrollbar {
+body.layout .sidebar::-webkit-scrollbar, body.layout form input:not([type=checkbox])::-webkit-scrollbar, form body.layout input:not([type=checkbox])::-webkit-scrollbar,
+body.layout form select:not([type=checkbox])::-webkit-scrollbar,
+form body.layout select:not([type=checkbox])::-webkit-scrollbar {
   width: 6px;
 }
 
-body.layout .sidebar::-webkit-scrollbar-track, body.layout form input::-webkit-scrollbar-track, form body.layout input::-webkit-scrollbar-track,
-body.layout form select::-webkit-scrollbar-track,
-form body.layout select::-webkit-scrollbar-track {
+body.layout .sidebar::-webkit-scrollbar-track, body.layout form input:not([type=checkbox])::-webkit-scrollbar-track, form body.layout input:not([type=checkbox])::-webkit-scrollbar-track,
+body.layout form select:not([type=checkbox])::-webkit-scrollbar-track,
+form body.layout select:not([type=checkbox])::-webkit-scrollbar-track {
   background-color: #e2e8f0;
 }
 
-body.layout .sidebar::-webkit-scrollbar-thumb, body.layout form input::-webkit-scrollbar-thumb, form body.layout input::-webkit-scrollbar-thumb,
-body.layout form select::-webkit-scrollbar-thumb,
-form body.layout select::-webkit-scrollbar-thumb {
+body.layout .sidebar::-webkit-scrollbar-thumb, body.layout form input:not([type=checkbox])::-webkit-scrollbar-thumb, form body.layout input:not([type=checkbox])::-webkit-scrollbar-thumb,
+body.layout form select:not([type=checkbox])::-webkit-scrollbar-thumb,
+form body.layout select:not([type=checkbox])::-webkit-scrollbar-thumb {
   background-color: #cbd5e0;
 }
 
-body.layout .sidebar::-webkit-scrollbar-thumb:hover, body.layout form input::-webkit-scrollbar-thumb:hover, form body.layout input::-webkit-scrollbar-thumb:hover,
-body.layout form select::-webkit-scrollbar-thumb:hover,
-form body.layout select::-webkit-scrollbar-thumb:hover {
+body.layout .sidebar::-webkit-scrollbar-thumb:hover, body.layout form input:not([type=checkbox])::-webkit-scrollbar-thumb:hover, form body.layout input:not([type=checkbox])::-webkit-scrollbar-thumb:hover,
+body.layout form select:not([type=checkbox])::-webkit-scrollbar-thumb:hover,
+form body.layout select:not([type=checkbox])::-webkit-scrollbar-thumb:hover {
   background-color: #a0aec0;
   width: 12px;
 }
@@ -17484,10 +17484,6 @@ body.layout.layout-panel > div#app main > .content {
   }
 }
 
-form .group {
-  margin-bottom: 1rem;
-}
-
 form label {
   display: block;
   color: #718096;
@@ -17501,8 +17497,8 @@ form label.description {
   font-weight: 400;
 }
 
-form input,
-form select {
+form input:not([type=checkbox]),
+form select:not([type=checkbox]) {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   border-width: 1px;
   width: 100%;
@@ -17515,14 +17511,14 @@ form select {
   outline: 0;
 }
 
-form input:focus, form input:hover,
-form select:focus,
-form select:hover {
+form input:not([type=checkbox]):focus, form input:not([type=checkbox]):hover,
+form select:not([type=checkbox]):focus,
+form select:not([type=checkbox]):hover {
   border-color: #38b2ac;
 }
 
-form input.error,
-form select.error {
+form input:not([type=checkbox]).error,
+form select:not([type=checkbox]).error {
   border-color: #f56565;
   background-color: #fff5f5;
 }
@@ -17530,6 +17526,14 @@ form select.error {
 form .error {
   color: #9b2c2c;
   font-size: 0.875rem;
+}
+
+form .group {
+  margin-bottom: 1rem;
+}
+
+form .group.checkbox > label {
+  display: inline;
 }
 
 button {
@@ -17560,6 +17564,18 @@ button.half {
 
 button.full {
   width: 100%;
+}
+
+.button-list {
+  overflow-y: hidden;
+}
+
+.button-list:not(:first-child) {
+  margin-top: 2rem;
+}
+
+.button-list:not(:last-child) {
+  margin-bottom: 2rem;
 }
 
 .button-list > button {
@@ -17633,6 +17649,10 @@ nav {
   padding-left: 1.5rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   position: relative;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 @media (min-width: 768px) {
@@ -17918,22 +17938,33 @@ nav > .toggle:hover {
 
 .table table > thead > tr > th.sort > a:hover {
   cursor: pointer;
+}
+
+.table table > thead > tr > th.sort > a:hover > span {
   text-decoration: underline;
 }
 
-.table table > thead > tr > th.sort > a > span::after {
-  float: right;
+.table table > thead > tr > th.sort > a::after {
+  margin-left: 0.5rem;
+  text-decoration: none !important;
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
   content: "\F0DC";
 }
 
-.table table > thead > tr > th.sort.up > a > span::after {
+.table table > thead > tr > th.sort.up > a::after {
   content: "\F0DE";
 }
 
-.table table > thead > tr > th.sort.down > a > span::after {
+.table table > thead > tr > th.sort.down > a::after {
   content: "\F0DD";
+}
+
+.table table > thead > tr > th.actions {
+  -webkit-user-select: none !important;
+     -moz-user-select: none !important;
+      -ms-user-select: none !important;
+          user-select: none !important;
 }
 
 .table table > thead > tr > th > a {
@@ -17982,6 +18013,34 @@ nav > .toggle:hover {
   color: #4a5568;
 }
 
+.table table > tbody > tr > td > ul {
+  display: block;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.table table > tbody > tr > td.actions a {
+  float: left;
+  -webkit-user-select: none !important;
+     -moz-user-select: none !important;
+      -ms-user-select: none !important;
+          user-select: none !important;
+}
+
+.table table > tbody > tr > td.actions a:hover {
+  cursor: pointer;
+}
+
+.table table > tbody > tr > td.actions a:hover > span {
+  text-decoration: underline;
+}
+
+.table table > tbody > tr > td.actions a:not(:last-child) {
+  padding-right: 0;
+}
+
 .table table > tbody > tr:last-child > td {
   border-bottom-width: 0;
 }
@@ -18005,6 +18064,18 @@ nav > .toggle:hover {
   font-size: 1.25rem;
   margin-bottom: 1rem;
   color: #2d3748;
+}
+
+ul.comma-separated > li {
+  float: left;
+}
+
+ul.comma-separated > li:not(:last-child)::after {
+  content: ",";
+}
+
+ul.comma-separated > li:not(:last-child)::after:not(:last-child) {
+  margin-right: 0.25rem;
 }
 
 @media (min-width: 640px){
