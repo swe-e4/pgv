@@ -14,13 +14,14 @@ class Adviser extends JsonResource
      */
     public function toArray($request)
     {
+
         return [
             'data' => [
                 'id' => $this->id,
-                'first_name' => $this->id,
-                'surname' => $this->id,
-                'email' => $this->id,
-                'groups' => $this->groups(),
+                'first_name' => $this->first_name,
+                'surname' => $this->surname,
+                'email' => $this->email,
+                'groups' => $this->groups,
                 'last_update' => $this->updated_at->diffForHumans(),
             ],
             'links' => [
