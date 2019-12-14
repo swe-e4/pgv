@@ -10,21 +10,16 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
+use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
-Route::get('/', function(){
+Route::get('/login', function(){
     return view('pages.login');
 })->name('login');
 
-Route::get('/overview', function(){
-    return view('pages.overview');
-})->name('overview');
+Route::get('/logout', function(){
+    Auth::logout();
+})->name('logout');
 
-Route::get('/adviser/add', function(){
-    return view('pages.adviser_add');
-})->name('adviser_add');
+Route::get('/{any}', 'AppController@index')->where('any', '.*');
