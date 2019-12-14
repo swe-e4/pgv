@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name', 'surname', 'email', 'password', 'api_token', 'role_id',
     ];
 
     /**
@@ -45,5 +45,25 @@ class User extends Authenticatable
     public function role()
     {
         return $this->hasOne('App\Role');
+    }
+
+    /**
+     * groups
+     *
+     * @return void
+     */
+    public function groups()
+    {
+        return $this->hasMany('App\Group');
+    }
+
+    /**
+     * path
+     *
+     * @return void
+     */
+    public function path()
+    {
+        return url('/user/'.$this->id);
     }
 }
