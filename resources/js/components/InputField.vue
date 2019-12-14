@@ -16,6 +16,7 @@
             'label',
             'placeholder',
             'errors',
+            'data'
         ],
 
         data: function() {
@@ -50,6 +51,12 @@
                 return {
                     'error': this.hasError
                 }
+            }
+        },
+
+        watch: {
+            data: function(val) {
+                this.value = val;
             }
         }
     }
