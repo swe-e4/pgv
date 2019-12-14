@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Navbar -->
-        <Navbar :user="user"></Navbar>
+        <Navbar :app_name="app_name" :user="user"></Navbar>
 
         <!-- Main -->
         <main>
@@ -29,21 +29,44 @@
         },
 
         props: [
+            'app_name',
             'user'
         ],
 
-        mounted() {
+        created() {
+            this.title = this.$route.meta.title;
+
             window.user = this.user;
             window.axios.interceptors.request.use(
                 (config) => {
-                    config.data = {
-                        ...config.data,
-                        api_token: this.user.api_token
-                    };
+                    if(config.method === 'get') {
+                        config.url = config.url + '?api_token=' + this.user.api_token;
+                    } else {
+                        config.data = {
+                            ...config.data,
+                            api_token: this.user.api_token
+                        };
+                    }
 
                     return config;
                 }
             )
+        },
+
+        data: function() {
+            return {
+                title: '',
+            }
+        },
+
+        watch: {
+            $route(to, from) {
+                this.title = to.meta.title;
+            },
+
+            title() {
+                document.title = this.app_name + ' - ' + this.title; 
+            }
         }
     }
 </script>
