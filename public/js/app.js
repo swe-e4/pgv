@@ -1955,6 +1955,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     var _this = this;
 
+    window.user = this.user;
     window.axios.interceptors.request.use(function (config) {
       config.data = _objectSpread({}, config.data, {
         api_token: _this.user.api_token
@@ -2063,7 +2064,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Navbar"
+  name: "Navbar",
+  props: ['user']
 });
 
 /***/ }),
@@ -31145,7 +31147,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("Navbar"),
+      _c("Navbar", { attrs: { user: _vm.user } }),
       _vm._v(" "),
       _c(
         "main",
@@ -31248,7 +31250,13 @@ var render = function() {
     _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "menu" }, [
-      _vm._m(1),
+      _c("a", [
+        _c("span", [
+          _vm._v(_vm._s(_vm.user.surname) + ", " + _vm._s(_vm.user.first_name))
+        ]),
+        _vm._v(" "),
+        _c("i", { staticClass: "fas fa-chevron-down" })
+      ]),
       _vm._v(" "),
       _c("ul", [
         _c(
@@ -31268,21 +31276,7 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _c(
-          "li",
-          [
-            _c(
-              "router-link",
-              { staticClass: "disabled", attrs: { to: "/disabled" } },
-              [
-                _c("i", { staticClass: "fas fa-sign-out-alt" }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Ausloggen")])
-              ]
-            )
-          ],
-          1
-        )
+        _vm._m(1)
       ])
     ]),
     _vm._v(" "),
@@ -31300,10 +31294,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", [
-      _c("span", [_vm._v("tk3208s")]),
-      _vm._v(" "),
-      _c("i", { staticClass: "fas fa-chevron-down" })
+    return _c("li", [
+      _c("a", { attrs: { href: "/logout" } }, [
+        _c("i", { staticClass: "fas fa-sign-out-alt" }),
+        _vm._v(" "),
+        _c("span", [_vm._v("Ausloggen")])
+      ])
     ])
   },
   function() {
@@ -31446,25 +31442,24 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "li",
-        [
-          _c(
-            "router-link",
-            { staticClass: "disabled", attrs: { to: "/disabled" } },
-            [
-              _c("i", { staticClass: "fas fa-sign-out-alt" }),
-              _vm._v(" "),
-              _c("span", [_vm._v("Ausloggen")])
-            ]
-          )
-        ],
-        1
-      )
+      _vm._m(0)
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "/logout" } }, [
+        _c("i", { staticClass: "fas fa-sign-out-alt" }),
+        _vm._v(" "),
+        _c("span", [_vm._v("Ausloggen")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
