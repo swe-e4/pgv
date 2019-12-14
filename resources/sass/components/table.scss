@@ -42,35 +42,36 @@
                     &.sort {
                         > a {
                             &:hover {
-                                @apply cursor-pointer underline;
-                            }
-                            > span { 
-                                &::after {
-                                    @apply float-right;
-                                    font-family: "Font Awesome 5 Free";
-                                    font-weight: 900;
-                                    content: "\F0DC";
+                                @apply cursor-pointer;
+                                > span {
+                                    @apply underline;
                                 }
+                            }
+                            &::after {
+                                @apply ml-2;
+                                @apply no-underline #{!important};
+                                font-family: "Font Awesome 5 Free";
+                                font-weight: 900;
+                                content: "\F0DC";
                             }
                         }
                         &.up {
                             > a {
-                                > span { 
-                                    &::after {
-                                        content: "\F0DE";
-                                    }
+                                &::after {
+                                    content: "\F0DE";
                                 }
                             }
                         }
                         &.down {
                             > a {
-                                > span { 
-                                    &::after {
-                                        content: "\F0DD";
-                                    }
+                                &::after {
+                                    content: "\F0DD";
                                 }
                             }
                         }
+                    }
+                    &.actions {
+                        @apply select-none #{!important};
                     }
                     > a {
                         @apply block px-4 py-2 text-left;
@@ -101,6 +102,24 @@
                         }
                         > small {
                             @apply block text-gray-700;
+                        }
+                    }
+                    > ul {
+                        @apply block px-4 py-2;
+                    }
+                    &.actions {
+                        a {
+                            @apply float-left;
+                            @apply select-none #{!important};
+                            &:hover {
+                                @apply cursor-pointer;
+                                > span {
+                                    @apply underline;
+                                }
+                            }
+                            &:not(:last-child) {
+                                @apply pr-0;
+                            }
                         }
                     }
                 }
