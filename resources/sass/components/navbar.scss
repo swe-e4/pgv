@@ -32,9 +32,14 @@ nav {
             @apply absolute bg-white right-0 text-gray-800 hidden;
             top: 40px;
             > li {
-                @apply py-2 px-3 text-sm;
-                &:hover {
-                    @apply cursor-pointer bg-gray-200;
+                > a {
+                    @apply block py-2 px-3 text-sm;
+                    &:hover,
+                    &.router-link-exact-active {
+                        &:not(.disabled) {
+                            @apply cursor-pointer bg-gray-200;
+                        }
+                    }
                 }
                 &.separator {
                     @apply border-b border-gray-300;

@@ -35,10 +35,13 @@
             @apply w-full;
             > a {
                 @apply block w-full pl-3 py-2 pr-4 text-gray-800;
-                &:hover {
-                    @apply cursor-pointer bg-gray-200;
-                    > span {
-                        @apply underline;
+                &:hover,
+                &.router-link-exact-active {
+                    &:not(.disabled) {
+                        @apply cursor-pointer bg-gray-200;
+                        > span {
+                            @apply underline;
+                        }
                     }
                 }
                 > i {
