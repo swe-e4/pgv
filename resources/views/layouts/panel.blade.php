@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Title -->
-    <title>{{ config('app.name') }} - @yield('title')</title>
+    <title>{{ config('app.name') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -19,22 +19,7 @@
 </head>
 <body class="layout layout-panel">
     <div id="app">
-        
-        <!-- Navbar -->
-        @include('includes.navbar')
-        
-        <!-- Main -->
-        <main>
-
-            <!-- Sidebar -->
-            @include('includes.sidebar')
-
-            <!-- Content -->
-            <div class="content">
-                @yield('content')
-            </div>
-            
-        </main>
+        @yield('content')
     </div>
 </body>
 </html>
