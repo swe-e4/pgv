@@ -29,12 +29,7 @@ class AdviserPolicy
      */
     public function view(User $user, User $model)
     {
-        if($user->role_id == 1 || $user->id == $model->id) {
-            if($model->role_id == 2) {
-                return true;
-            }
-        }
-        return false;
+        return (($user->role_id == 1 || $user->id == $model->id) && $model->role_id == 2);
     }
 
     /**
