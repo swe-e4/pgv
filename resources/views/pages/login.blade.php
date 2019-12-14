@@ -9,6 +9,7 @@
         <p>Die Anmeldung ist fehlgeschlagen.</p>
     </div>
     <form method="POST">
+        @csrf
         <div class="group">
             <label for="email">E-Mail</label>
             <input type="email" id="email" name="email" placeholder="email@example.com">
