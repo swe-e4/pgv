@@ -1,34 +1,29 @@
 @extends('layouts.card')
 
-@section('title', 'Login')
+@section('title', __('Login'))
 
 @section('content')
-    <h1>{{ config('app.name') }} - Login</h1>
-    <div class="alert error">
-        <h1>Fehler</h1>
-        <p>Die Anmeldung ist fehlgeschlagen.</p>
-    </div>
-    <form method="POST" action="{{ route('login') }}>
+    <h1>{{ config('app.name') }} - {{ __('Login') }}</h1>
+    <form method="POST" action="{{ route('login') }}">
         @csrf
         <div class="group">
-            <label for="email">E-Mail</label>
-            <input type="email" id="email" name="email" placeholder="email@example.com">
+            <label for="email">{{ __('E-Mail Address') }}</label>
+            <input type="email" id="email" name="email" @error('email')class="error"@enderror  value="{{ old('email') }}" placeholder="email@example.com" autocomplete="email" autofocus required>
 
             @error('email')
                 <p class="error">{{ $message }}</p>
             @enderror
         </div>
         <div class="group">
-            <label for="password">Passwort</label>
-            <input type="password" id="password" name="password" placeholder="*******">
+            <label for="password">{{ __('Password') }}</label>
+            <input type="password" id="password" name="password" @error('password')class="error"@enderror placeholder="**********" autocomplete="current-password" required>
 
             @error('password')
                 <p class="error">{{ $message }}</p>
             @enderror
         </div>
 
-        
-        <div class="group">
+        <div class="group checkbox">
             <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
             <label for="remember">
