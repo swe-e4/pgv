@@ -48,10 +48,10 @@
                 </router-link>
             </li>
             <li>
-                <router-link to="/disabled" class="disabled">
+                <a href="/logout">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Ausloggen</span>
-                </router-link>
+                </a>
             </li>
         </ul>
     </div>
