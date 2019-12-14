@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Navbar -->
-        <Navbar></Navbar>
+        <Navbar :user="user"></Navbar>
 
         <!-- Main -->
         <main>
@@ -33,6 +33,7 @@
         ],
 
         mounted() {
+            window.user = this.user;
             window.axios.interceptors.request.use(
                 (config) => {
                     config.data = {

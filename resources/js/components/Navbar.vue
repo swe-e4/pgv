@@ -5,7 +5,7 @@
         </div>
         <div class="menu">
             <a>
-                <span>tk3208s</span>
+                <span>{{ user.surname }}, {{ user.first_name }}</span>
                 <i class="fas fa-chevron-down"></i>
             </a>
             <ul>
@@ -16,10 +16,10 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="/disabled" class="disabled">
+                    <a href="/logout">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>Ausloggen</span>
-                    </router-link>
+                    </a>
                 </li>
             </ul>
         </div>
@@ -31,7 +31,11 @@
 
 <script>
     export default {
-        name: "Navbar"
+        name: "Navbar",
+
+        props: [
+            'user'
+        ],
     }
 </script>
 
