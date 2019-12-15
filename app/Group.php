@@ -7,13 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 class Group extends Model
 {
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'adviser_id',
+    ];
+
+    /**
      * adviser
      *
      * @return void
      */
     public function adviser()
     {
-        return $this->hasOne('App\User');
+        return $this->hasOne('App\User', 'id', 'adviser_id');
     }
     /**
      * students
