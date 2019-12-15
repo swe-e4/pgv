@@ -6,6 +6,10 @@ import Adviser from './views/Adviser';
 import AdviserCreate from './views/AdviserCreate';
 import AdviserEdit from './views/AdviserEdit';
 
+import Group from './views/Group';
+import GroupCreate from './views/GroupCreate';
+import GroupEdit from './views/GroupEdit';
+
 import Disabled from './views/Disabled';
 
 import Logout from './actions/Logout';
@@ -30,6 +34,19 @@ export default new VueRouter({
         {
             path: '/adviser/:id/edit', component: AdviserEdit,
             meta: {title: 'Betreuer bearbeiten' }
+        },
+        
+        {
+            path: '/group', component: Group,
+            meta: {title: 'Gruppen' }
+        },
+        {
+            path: '/group/create', component: GroupCreate,
+            meta: {title: 'Gruppen hinzufügen' }
+        },
+        {
+            path: '/group/:id/edit', component: GroupEdit,
+            meta: {title: 'Gruppen bearbeiten' }
         },
 
         {

@@ -16,7 +16,7 @@
                 </router-link>
             </li>
             <li>
-                <router-link to="/disabled" class="disabled">
+                <router-link to="/group">
                     <i class="fas fa-project-diagram"></i>
                     <span>Gruppe</span>
                 </router-link>
