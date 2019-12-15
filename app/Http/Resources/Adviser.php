@@ -24,6 +24,7 @@ class Adviser extends JsonResource
                 'id' => $this->id,
                 'first_name' => $this->first_name,
                 'surname' => $this->surname,
+                'full_name' =>  $this->surname.', '.$this->first_name,
                 'email' => $this->email,
                 'groups_string' => $groups_string,
                 'groups' => $this->groups,
