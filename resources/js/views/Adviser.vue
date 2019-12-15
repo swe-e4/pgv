@@ -61,7 +61,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(adviser, index) in filteredAdvisers" :key="index">
+                                <tr v-for="adviser in filteredAdvisers" :key="adviser.data.id">
                                     <td>
                                         <a>
                                             <span>{{ adviser.data.surname }}</span>
@@ -88,7 +88,7 @@
                                             <i class="fas fa-pencil-alt"></i>
                                             <span>Bearbeiten</span>
                                         </router-link>
-                                        <a @click="destroy(adviser.data.id, index)">
+                                        <a @click="destroy(adviser)">
                                             <i class="far fa-trash-alt"></i>
                                             <span>Löschen</span>
                                         </a>
@@ -148,13 +148,13 @@
         },
 
         methods: {
-            destroy: function(adviserID, index) {
-                axios.delete('/api/adviser/' + adviserID)
+            destroy: function(adviser) {
+                axios.delete('/api/adviser/' + adviser.data.id)
                     .then(response => {
                         if(response.status === 204) {
                             this.success = true;
                             this.error = false;
-                            this.advisers.splice(index, 1);
+                            this.advisers.splice(this.advisers.indexOf(adviser), 1);
                         } else {
                             this.success = false;
                             this.error = true;
@@ -178,9 +178,9 @@
             filteredAdvisers: function() {
                 return _.orderBy(this.advisers.filter((adviser) => {
                     return (
-                        adviser.data.surname.match(this.search) ||
-                        adviser.data.first_name.match(this.search) ||
-                        adviser.data.groups_string.match(this.search)
+                        adviser.data.surname.toLowerCase().match(this.search.toLowerCase()) ||
+                        adviser.data.first_name.toLowerCase().match(this.search.toLowerCase()) ||
+                        adviser.data.groups_string.toLowerCase().match(this.search.toLowerCase())
                     );
                 }), 'data.' + this.orderByColumn, (this.orderByAsc ? 'asc' : 'desc'));
             }
