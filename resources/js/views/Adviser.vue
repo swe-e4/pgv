@@ -24,20 +24,26 @@
                 </div>
                 <div class="table" v-else>
                     <h1>Betreuer</h1>
-                    <div class="search disabled">
+                    <div class="search">
                         <i class="fas fa-search fa-xs"></i>
-                        <input type="text" placeholder="Suche" aria-label="Suche" disabled>
+                        <input type="text" placeholder="Suche" aria-label="Suche" v-model="search">
                     </div>
                     <div class="scroll">
                         <table class="w-full">
                             <thead>
                                 <tr>
-                                    <th class="sort up">
+                                    <th class="sort" @click="orderBy('surname')" v-bind:class="[
+                                        { up: orderByColumn == 'surname' && orderByAsc == true },
+                                        { down: orderByColumn == 'surname' && orderByAsc == false }
+                                        ]">
                                         <a>
                                             <span>Nachname</span>
                                         </a>
                                     </th>
-                                    <th class="sort">
+                                    <th class="sort" @click="orderBy('first_name')" v-bind:class="[
+                                        { up: orderByColumn == 'first_name' && orderByAsc == true },
+                                        { down: orderByColumn == 'first_name' && orderByAsc == false }
+                                        ]">
                                         <a>
                                             <span>Vorname</span>
                                         </a>
@@ -55,7 +61,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(adviser, index) in advisers" :key="index">
+                                <tr v-for="(adviser, index) in filteredAdvisers" :key="index">
                                     <td>
                                         <a>
                                             <span>{{ adviser.data.surname }}</span>
@@ -67,10 +73,12 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <ul class="comma-separated">
-                                            <li v-for="group in adviser.data.groups" :key="group.id">
+                                        <ul>
+                                            <li>
                                                 <a>
-                                                    <span>{{ group.name }}</span>
+                                                    <span v-for="(group, index) in adviser.data.groups" :key="group.id">
+                                                        {{ group.name }}<span v-if="index != adviser.data.groups.length - 1">, </span>
+                                                    </span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -133,6 +141,9 @@
                 advisers: null,
                 success: false,
                 error: false,
+                search: '',
+                orderByColumn: 'surname',
+                orderByAsc: true,
             }
         },
 
@@ -153,6 +164,25 @@
                         this.success = false;
                         this.error = true;
                     });
+            },
+            orderBy: function(orderByColumn) {
+                this.orderByAsc = (this.orderByColumn == orderByColumn ? !this.orderByAsc : true);
+                this.orderByColumn = orderByColumn;
+            },
+            groupsString: function(groups_string) {
+                return groups_string.replace(';', ', ');
+            }
+        },
+
+        computed: {
+            filteredAdvisers: function() {
+                return _.orderBy(this.advisers.filter((adviser) => {
+                    return (
+                        adviser.data.surname.match(this.search) ||
+                        adviser.data.first_name.match(this.search) ||
+                        adviser.data.groups_string.match(this.search)
+                    );
+                }), 'data.' + this.orderByColumn, (this.orderByAsc ? 'asc' : 'desc'));
             }
         }
     }
