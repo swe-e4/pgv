@@ -18066,6 +18066,16 @@ nav > .toggle:hover {
   color: #2d3748;
 }
 
+.box > .half {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .box > .half {
+    width: 50%;
+  }
+}
+
 ul.comma-separated > li {
   float: left;
 }
