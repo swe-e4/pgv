@@ -19,7 +19,6 @@ class CreateGroupsTable extends Migration
             $table->unsignedBigInteger('adviser_id')->index()->nullable();
             $table->foreign('adviser_id')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
