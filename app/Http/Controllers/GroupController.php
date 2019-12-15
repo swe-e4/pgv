@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use App\Http\Resources\Group as GroupResource;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
@@ -27,17 +28,9 @@ class GroupController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $this->authorize('viewAny', Group::class);
+        
+        return GroupResource::collection(Group::all());
     }
 
     /**
@@ -48,7 +41,13 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        Group::create($this->validateData());
+        $this->authorize('create', Group::class);
+
+        $group = Group::create($this->validateData());
+
+        return (new GroupResource($group))
+            ->response()
+            ->setStatusCode(Response::HTTP_CREATED);
     }
 
     /**
@@ -59,18 +58,8 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        return $group;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Group  $group
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Group $group)
-    {
-        //
+        $this->authorize('view', $group);
+        return new GroupResource($group);
     }
 
     /**
@@ -82,7 +71,13 @@ class GroupController extends Controller
      */
     public function update(Request $request, Group $group)
     {
-        $item->update($this->validateData());
+        $this->authorize('update', $group);
+
+        $group->update($this->validateData());
+        
+        return (new GroupResource($group))
+            ->response()
+            ->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -93,6 +88,9 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
-        $item->delete();
+        $this->authorize('delete', $group);
+        $group->delete();
+
+        return response([], Response::HTTP_NO_CONTENT);
     }
 }

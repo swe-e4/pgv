@@ -44,4 +44,14 @@ class Group extends Model
     {
         return $this->hasMany('App\Appointment');
     }
+
+    /**
+     * path
+     *
+     * @return void
+     */
+    public function path()
+    {
+        return url('/group/'.$this->id);
+    }
 }
