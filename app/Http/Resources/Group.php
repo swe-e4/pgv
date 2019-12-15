@@ -17,7 +17,9 @@ class Group extends JsonResource
         return [
             'data' => [
                 'id' => $this->id,
+                'name' => $this->name,
                 'adviser_id' => $this->adviser_id,
+                'adviser' => new Adviser($this->adviser),
                 'last_update' => $this->updated_at->diffForHumans(),
             ],
             'links' => [
