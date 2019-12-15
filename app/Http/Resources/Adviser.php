@@ -15,8 +15,10 @@ class Adviser extends JsonResource
     public function toArray($request)
     {
         $groups_string = '';
+        $groups_string_id = '';
         foreach($this->groups as $group) {
             $groups_string .= $group->name.';';
+            $groups_string_id .= $group->id.';';
         }
 
         return [
@@ -27,6 +29,7 @@ class Adviser extends JsonResource
                 'full_name' =>  $this->surname.', '.$this->first_name,
                 'email' => $this->email,
                 'groups_string' => $groups_string,
+                'groups_string_id' => $groups_string_id,
                 'groups' => $this->groups,
                 'last_update' => $this->updated_at->diffForHumans(),
             ],

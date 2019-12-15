@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Group;
 use App\Http\Resources\Adviser as AdviserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -63,6 +64,11 @@ class AdviserController extends Controller
 
         $adviser = User::create(array_merge($this->requiredData(), $this->validateData()));
 
+        if($request->input('groups')) {
+            $groups = Group::find($request->input('groups'));
+            $adviser->groups()->saveMany($groups);
+        }
+
         return (new AdviserResource($adviser))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
@@ -92,8 +98,20 @@ class AdviserController extends Controller
         $this->authorize('update', $adviser);
 
         $adviser->update($this->validateData($adviser));
-        
-        return (new AdviserResource($adviser))
+        if($request->input('groups') || $request->input('groupUpdate')) {
+            foreach($adviser->groups as $group) {
+                if(!$request->input('groups') || !in_array($group->id, $request->input('groups'))) {
+                    $group->adviser_id = NULL;
+                    $group->save();
+                }
+            }
+            if($request->input('groups')) {
+                $groups = Group::find($request->input('groups'));
+                $adviser->groups()->saveMany($groups);
+            }
+        }
+
+        return (new AdviserResource($adviser->fresh()))
             ->response()
             ->setStatusCode(Response::HTTP_OK);
     }

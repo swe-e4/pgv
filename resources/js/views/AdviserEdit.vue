@@ -11,13 +11,22 @@
                 <InputField name="email" label="E-Mail" placeholder="max.mustermann@example.com" @update:field="form.email = $event" :errors="errors" :data="form.email"/>
                 
                 <div class="group">
-                    <label for="group">Gruppe</label>
-                    <select id="group" name="group" multiple size="10" disabled>
-                        <optgroup v-for="letter in ['A','B', 'C', 'D', 'E']" :key="letter" :label="letter">
-                            <option v-for="i in 5" :key="i">{{ letter }}{{ i }}</option>
-                        </optgroup>
-                    </select>
-                    <label for="group" class="description">Mehrere Gruppen können durch Drücken der Strg-Taste ausgewählt werden.</label>
+                    <label for="groups">Gruppen</label>
+
+                    <Alert type="info" title="Information" message="Gruppen werden geladen." v-if="loading"/>
+                        
+                    <div v-else>
+
+                        <div class="alert info" v-if="groups.length === 0">
+                            <h1>Information</h1>
+                            <p>Es exestieren derzeit keine Gruppen.</p>
+                        </div>
+                        <select id="groups" name="groups[]" v-else v-model="form.groups" multiple size="10">
+                            <option v-for="group in groups" :key="group.data.id" v-bind:value="group.data.id" :selected="form.groups.includes(group.data.id)">{{ group.data.name }}</option>
+                        </select>
+
+                        <label for="group" class="description">Mehrere Gruppen können durch Drücken der Strg-Taste ausgewählt werden. Gruppen können mit dem Drücken Strg-Taste und einem erneuten Klick auf diese, abgewählt werden.</label>
+                    </div>
                 </div>
 
                 <div class="button-list">
@@ -44,12 +53,21 @@
         mounted() {
             axios.get('/api/adviser/' + this.$route.params.id)
                 .then(response => {
-                    this.form = response.data.data;
+                    this.form = Object.assign({'groupUpdate': true}, response.data.data);
+                    this.form.groups = response.data.data.groups_string_id.split(';');
                 })
                 .catch(errors => {
                     if(errors.response.status === 404 || errors.response.status === 403) {
                         this.$router.push('/adviser');
                     }
+                });
+            axios.get('/api/group')
+                .then(response => {
+                    this.groups = _.orderBy(response.data.data, 'data.name');
+                    this.loading = false;
+                })
+                .catch(errors => {
+                    this.loading = false;
                 });
         },
 
@@ -59,9 +77,12 @@
                     'surname': '',
                     'first_name': '',
                     'email': '',
+                    'groups': []
                 },
                 success: false,
                 errors: null,
+                loading: true,
+                groups: null,
             }
         },
 
@@ -70,6 +91,8 @@
                 axios.patch('/api/adviser/' + this.$route.params.id, this.form)
                     .then(response => {
                         this.success = true;
+                        console.log(this.form);
+                        console.log(response);
                     })
                     .catch(errors => {
                         this.success = false,
