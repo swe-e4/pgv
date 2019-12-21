@@ -3213,6 +3213,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3224,7 +3256,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('/api/group/' + this.$route.params.id).then(function (response) {
+    axios.get('/api/group/' + this.$route.params.id + '?students').then(function (response) {
       _this.form = response.data.data;
     })["catch"](function (errors) {
       if (errors.response.status === 404 || errors.response.status === 403) {
@@ -3237,6 +3269,12 @@ __webpack_require__.r(__webpack_exports__);
     })["catch"](function (errors) {
       _this.loading = false;
     });
+    axios.get('/api/student?students').then(function (response) {
+      _this.students = _.orderBy(response.data.data, 'data.student_number');
+      _this.studentsLoading = false;
+    })["catch"](function (errors) {
+      _this.studentsLoading = false;
+    });
   },
   data: function data() {
     return {
@@ -3244,10 +3282,17 @@ __webpack_require__.r(__webpack_exports__);
         'name': '',
         'adviser_id': null
       },
+      studentForm: {
+        'id': ''
+      },
       success: false,
       errors: null,
+      studentSuccess: false,
+      studentError: false,
       loading: true,
-      advisers: null
+      studentsLoading: true,
+      advisers: {},
+      students: {}
     };
   },
   methods: {
@@ -3259,6 +3304,43 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (errors) {
         _this2.success = false, _this2.errors = errors.response.data.errors;
       });
+    },
+    addStudent: function addStudent() {
+      var _this3 = this;
+
+      axios.patch('/api/student/' + this.studentForm.id, {
+        'group_id': this.$route.params.id
+      }).then(function (response) {
+        _this3.studentSuccess = true;
+        _this3.studentError = false;
+        _this3.studentForm = {
+          'id': ''
+        };
+
+        _this3.form.students.push(response.data);
+      })["catch"](function (errors) {
+        _this3.studentSuccess = false, _this3.studentError = true;
+      });
+    }
+  },
+  computed: {
+    filteredFormStudents: function filteredFormStudents() {
+      return _.orderBy(this.form.students, 'data.student_number');
+    },
+    studentsList: function studentsList() {
+      var _this4 = this;
+
+      return _.orderBy(this.students.filter(function (student) {
+        if (_this4.form.students) {
+          for (var i = 0; i < _this4.form.students.length; i++) {
+            if (_this4.form.students[i].data.id == student.data.id) {
+              return false;
+            }
+          }
+
+          return true;
+        }
+      }), 'data.student_number');
     }
   }
 });
@@ -67013,69 +67095,234 @@ var render = function() {
     _c("div", { staticClass: "box" }, [
       _c("h1", [_vm._v("Gruppe bearbeiten")]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "half" },
-        [
-          _vm.success
-            ? _c("Alert", {
-                attrs: {
-                  type: "success",
-                  title: "Hinzugefügt",
-                  message: "Gruppe wurde erfolgreich hinzugefügt."
+      _c("div", [
+        _c(
+          "div",
+          { staticClass: "half" },
+          [
+            _vm.success
+              ? _c("Alert", {
+                  attrs: {
+                    type: "success",
+                    title: "Hinzugefügt",
+                    message: "Gruppe wurde erfolgreich hinzugefügt."
+                  }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.submitForm($event)
+                  }
                 }
-              })
-            : _vm._e(),
-          _vm._v(" "),
+              },
+              [
+                _c("InputField", {
+                  attrs: {
+                    name: "name",
+                    label: "Gruppenname",
+                    placeholder: "Gruppenname",
+                    errors: _vm.errors,
+                    data: _vm.form.name
+                  },
+                  on: {
+                    "update:field": function($event) {
+                      _vm.form.name = $event
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "group" },
+                  [
+                    _c("label", { attrs: { for: "group" } }, [
+                      _vm._v("Betreuer")
+                    ]),
+                    _vm._v(" "),
+                    _vm.loading
+                      ? _c("Alert", {
+                          attrs: {
+                            type: "info",
+                            title: "Information",
+                            message: "Betreuer werden geladen."
+                          }
+                        })
+                      : _c("div", [
+                          _vm.advisers.length === 0
+                            ? _c("div", { staticClass: "alert info" }, [
+                                _c("h1", [_vm._v("Information")]),
+                                _vm._v(" "),
+                                _c("p", [
+                                  _vm._v(
+                                    "Es exestieren derzeit keine Betreuer."
+                                  )
+                                ])
+                              ])
+                            : _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.form.adviser_id,
+                                      expression: "form.adviser_id"
+                                    }
+                                  ],
+                                  attrs: {
+                                    id: "adviser_id",
+                                    name: "adviser_id"
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.form,
+                                        "adviser_id",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                _vm._l(_vm.advisers, function(adviser) {
+                                  return _c(
+                                    "option",
+                                    {
+                                      key: adviser.data.id,
+                                      domProps: {
+                                        value: adviser.data.id,
+                                        selected:
+                                          _vm.form.adviser_id ===
+                                          adviser.data.id
+                                      }
+                                    },
+                                    [_vm._v(_vm._s(adviser.data.full_name))]
+                                  )
+                                }),
+                                0
+                              )
+                        ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "group" }, [
+                  _c("label", [_vm._v("Studenten")]),
+                  _vm._v(" "),
+                  _vm.form.students && _vm.form.students.length !== 0
+                    ? _c(
+                        "ul",
+                        { staticClass: "comma-separated" },
+                        _vm._l(_vm.filteredFormStudents, function(student) {
+                          return _c("li", { key: student.data.id }, [
+                            _vm._v(_vm._s(student.data.student_number))
+                          ])
+                        }),
+                        0
+                      )
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "button-list" }, [
+                  _c(
+                    "button",
+                    { staticClass: "half", attrs: { type: "submit" } },
+                    [_vm._v("Änderungen speichern")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "half gray",
+                      attrs: { type: "reset" },
+                      on: {
+                        click: function($event) {
+                          return _vm.$router.back()
+                        }
+                      }
+                    },
+                    [_vm._v("Abbrechen")]
+                  )
+                ])
+              ],
+              1
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "half" }, [
           _c(
             "form",
             {
               on: {
                 submit: function($event) {
                   $event.preventDefault()
-                  return _vm.submitForm($event)
+                  return _vm.addStudent($event)
                 }
               }
             },
             [
-              _c("InputField", {
-                attrs: {
-                  name: "name",
-                  label: "Gruppenname",
-                  placeholder: "Gruppenname",
-                  errors: _vm.errors,
-                  data: _vm.form.name
-                },
-                on: {
-                  "update:field": function($event) {
-                    _vm.form.name = $event
-                  }
-                }
-              }),
-              _vm._v(" "),
               _c(
                 "div",
                 { staticClass: "group" },
                 [
                   _c("label", { attrs: { for: "group" } }, [
-                    _vm._v("Betreuer")
+                    _vm._v("Student hinzufügen")
                   ]),
                   _vm._v(" "),
-                  _vm.loading
+                  _vm.studentError
+                    ? _c("Alert", {
+                        attrs: {
+                          type: "error",
+                          title: "Fehler",
+                          message: "Student konnte nicht hinzugefügt werden."
+                        }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.studentSuccess
+                    ? _c("Alert", {
+                        attrs: {
+                          type: "success",
+                          title: "Hinzugefügt",
+                          message: "Student wurde erfolgreich hinzugefügt."
+                        }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.studentsLoading
                     ? _c("Alert", {
                         attrs: {
                           type: "info",
                           title: "Information",
-                          message: "Betreuer werden geladen."
+                          message: "Studenten werden geladen."
                         }
                       })
                     : _c("div", [
-                        _vm.advisers.length === 0
+                        _vm.students.length === 0
                           ? _c("div", { staticClass: "alert info" }, [
                               _c("h1", [_vm._v("Information")]),
                               _vm._v(" "),
                               _c("p", [
-                                _vm._v("Es exestieren derzeit keine Betreuer.")
+                                _vm._v("Es exestieren derzeit keine Studenten.")
                               ])
                             ])
                           : _c(
@@ -67085,11 +67332,15 @@ var render = function() {
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: _vm.form.adviser_id,
-                                    expression: "form.adviser_id"
+                                    value: _vm.studentForm.id,
+                                    expression: "studentForm.id"
                                   }
                                 ],
-                                attrs: { id: "adviser_id", name: "adviser_id" },
+                                attrs: {
+                                  id: "id",
+                                  name: "id",
+                                  placeholder: "Matrikelnummer"
+                                },
                                 on: {
                                   change: function($event) {
                                     var $$selectedVal = Array.prototype.filter
@@ -67102,8 +67353,8 @@ var render = function() {
                                         return val
                                       })
                                     _vm.$set(
-                                      _vm.form,
-                                      "adviser_id",
+                                      _vm.studentForm,
+                                      "id",
                                       $event.target.multiple
                                         ? $$selectedVal
                                         : $$selectedVal[0]
@@ -67111,18 +67362,14 @@ var render = function() {
                                   }
                                 }
                               },
-                              _vm._l(_vm.advisers, function(adviser) {
+                              _vm._l(_vm.studentsList, function(student) {
                                 return _c(
                                   "option",
                                   {
-                                    key: adviser.data.id,
-                                    domProps: {
-                                      value: adviser.data.id,
-                                      selected:
-                                        _vm.form.adviser_id === adviser.data.id
-                                    }
+                                    key: student.data.id,
+                                    domProps: { value: student.data.id }
                                   },
-                                  [_vm._v(_vm._s(adviser.data.full_name))]
+                                  [_vm._v(_vm._s(student.data.student_number))]
                                 )
                               }),
                               0
@@ -67132,39 +67379,26 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "button-list" }, [
-                _c(
-                  "button",
-                  { staticClass: "half", attrs: { type: "submit" } },
-                  [_vm._v("Änderungen speichern")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "half gray",
-                    attrs: { type: "reset" },
-                    on: {
-                      click: function($event) {
-                        return _vm.$router.back()
-                      }
-                    }
-                  },
-                  [_vm._v("Abbrechen")]
-                )
-              ])
-            ],
-            1
+              _vm._m(0)
+            ]
           )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "half" })
+        ])
+      ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "button-list" }, [
+      _c("button", { attrs: { type: "submit" } }, [
+        _vm._v("Student hinzufügen")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

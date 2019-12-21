@@ -17933,6 +17933,7 @@ form .error {
 
 form .group {
   margin-bottom: 1rem;
+  overflow-y: hidden;
 }
 
 form .group.checkbox > label {
@@ -18485,13 +18486,32 @@ nav > .toggle:hover {
   color: #2d3748;
 }
 
-.box > .half {
+.box > .half,
+.box > div > .half {
   width: 100%;
 }
 
+.box > .half:not(:first-child),
+.box > div > .half:not(:first-child) {
+  margin-top: 2rem;
+}
+
 @media (min-width: 768px) {
-  .box > .half {
+  .box > .half,
+.box > div > .half {
     width: 50%;
+    float: left;
+  }
+
+  .box > .half:not(:first-child),
+.box > div > .half:not(:first-child) {
+    padding-left: 0.75rem;
+    margin-top: 0;
+  }
+
+  .box > .half:not(:last-child),
+.box > div > .half:not(:last-child) {
+    padding-right: 0.75rem;
   }
 }
 
@@ -18501,9 +18521,6 @@ ul.comma-separated > li {
 
 ul.comma-separated > li:not(:last-child)::after {
   content: ",";
-}
-
-ul.comma-separated > li:not(:last-child)::after:not(:last-child) {
   margin-right: 0.25rem;
 }
 
