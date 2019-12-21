@@ -4,7 +4,7 @@
 
             <div class="button-list">
                 <router-link to="/group/create" tag="button">
-                    <i class="fas fa-user-plus"></i>
+                    <i class="fas fa-plus"></i>
                     <span>Gruppe hinzufügen</span>
                 </router-link>
             </div>
@@ -85,7 +85,7 @@
             
                 <div class="button-list" v-if="groups.length >= 10">
                     <router-link to="/group/create" tag="button">
-                        <i class="fas fa-user-plus"></i>
+                        <i class="fas fa-plus"></i>
                         <span>Gruppe hinzufügen</span>
                     </router-link>
                 </div>
