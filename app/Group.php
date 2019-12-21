@@ -31,7 +31,7 @@ class Group extends Model
      */
     public function students()
     {
-        return $this->hasMany('App\Students');
+        return $this->hasMany('App\Student');
     }
     
     /**
