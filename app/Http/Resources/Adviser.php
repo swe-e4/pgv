@@ -32,9 +32,6 @@ class Adviser extends JsonResource
                 'groups_string_id' => $groups_string_id,
                 'groups' => $this->groups,
                 'last_update' => $this->updated_at->diffForHumans(),
-            ],
-            'links' => [
-                'self' => $this->path(),
             ]
         ];
     }

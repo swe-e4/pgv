@@ -56,14 +56,4 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Group', 'adviser_id')->orderBy('name');
     }
-
-    /**
-     * path
-     *
-     * @return void
-     */
-    public function path()
-    {
-        return url('/user/'.$this->id);
-    }
 }
