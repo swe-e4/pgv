@@ -23,7 +23,7 @@ form {
         @apply text-red-800 text-sm;
     }
     .group {
-        @apply mb-4;
+        @apply mb-4 overflow-y-hidden;
         &.checkbox {
             > label {
                 @apply inline;
