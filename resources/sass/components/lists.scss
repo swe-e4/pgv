@@ -5,9 +5,7 @@ ul {
             &:not(:last-child) {
                 &::after {
                     content: ",";
-                    &:not(:last-child) {
-                        @apply mr-1;
-                    }
+                    @apply mr-1;
                 }
             }
         }
