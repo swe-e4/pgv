@@ -3,7 +3,7 @@
         <div class="box">
             <h1>Gruppe hinzufügen</h1>
 
-            <div class="half">
+            <div>
                 <Alert type="success" title="Hinzugefügt" message="Gruppe wurde erfolgreich hinzugefügt." v-if="success"/>
                 
                 <form @submit.prevent="submitForm">
@@ -32,11 +32,6 @@
                         <button class="half gray" type="reset" @click="$router.back();">Abbrechen</button>
                     </div>
                 </form>
-            </div>
-            <div class="half">
-
-                <!-- placeholder for student select -->
-                
             </div>
         </div>
     </div>
