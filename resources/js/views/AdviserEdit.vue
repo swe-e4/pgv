@@ -91,8 +91,6 @@
                 axios.patch('/api/adviser/' + this.$route.params.id, this.form)
                     .then(response => {
                         this.success = true;
-                        console.log(this.form);
-                        console.log(response);
                     })
                     .catch(errors => {
                         this.success = false,
