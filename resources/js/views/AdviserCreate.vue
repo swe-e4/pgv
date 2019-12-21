@@ -81,7 +81,6 @@
                 axios.post('/api/adviser', this.form)
                     .then(response => {
                         this.success = true;
-                        console.log(this.form.groups);
                         this.form = {
                                 'surname': '',
                                 'first_name': '',
