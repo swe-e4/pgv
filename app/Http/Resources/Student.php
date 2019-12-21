@@ -21,7 +21,7 @@ class Student extends JsonResource
                     'surname' => $this->surname,
                     'first_name' => $this->first_name,
                     'email' => $this->email,
-                    'student_number' => $this->student_number,
+                    'student_number' => intval($this->student_number),
                     'last_update' => $this->updated_at->diffForHumans(),
                 ]
             ], 
