@@ -15,13 +15,13 @@ class MilestoneSeeder extends Seeder
         //create delivery of the specification book
         Milestone::create([
             'name' => "Abgabe vom Lastenheft",
-            'deadline' => "2019-12-01"
+            'deadline' => "2019-12-13"
         ]);
         
         //create delivery of the project
         Milestone::create([
             'name' => "Abgabe vom Projekt",
-            'deadline' => "2020-01-25"
+            'deadline' => "2020-01-24"
         ]);
     }
 }
