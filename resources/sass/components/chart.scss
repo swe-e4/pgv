@@ -1,0 +1,8 @@
+.chart {
+    &.pie {
+        @apply w-full;
+        @screen md {
+            @apply w-1/2 float-left;
+        }
+    }
+}
