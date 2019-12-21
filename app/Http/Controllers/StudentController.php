@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Student;
 use Illuminate\Http\Request;
+use App\Http\Resources\Student as StudentResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class StudentController extends Controller
 {
@@ -12,13 +14,13 @@ class StudentController extends Controller
      *
      * @return array
      */
-    private function validateData()
+    private function validateData($student = NULL)
     {
         return request()->validate([
             'surname' => 'required',
             'first_name' => 'required',
-            'email' => 'required|unique:students',
-            'student_number' => 'required|unique:students',
+            'email' => 'bail|required|email:rfc,dns|unique:students,email'.(isset($student) ? ','.$student->id : ''),
+            'student_number' => 'bail|required|unique:students,student_number'.(isset($student) ? ','.$student->id : ''),
             'group_id' => 'nullable|bail|numeric|exists:groups,id',
         ]);
     }
@@ -30,17 +32,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $this->authorize('viewAny', Student::class);
+        
+        return StudentResource::collection(Student::all());
     }
 
     /**
@@ -51,7 +45,13 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        Student::create($this->validateData());
+        $this->authorize('create', Student::class);
+
+        $student = Student::create($this->validateData());
+
+        return (new StudentResource($student))
+            ->response()
+            ->setStatusCode(Response::HTTP_CREATED);
     }
 
     /**
@@ -62,18 +62,8 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        return $student;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Student  $student
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Student $student)
-    {
-        //
+        $this->authorize('view', $student);
+        return new StudentResource($student);
     }
 
     /**
@@ -85,7 +75,13 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        $student->update($this->validateData());
+        $this->authorize('update', $student);
+
+        $student->update($this->validateData($student));
+        
+        return (new StudentResource($student))
+            ->response()
+            ->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -96,6 +92,9 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        $item->destroy();
+        $this->authorize('delete', $student);
+        $student->delete();
+
+        return response([], Response::HTTP_NO_CONTENT);
     }
 }
