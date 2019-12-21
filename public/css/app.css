@@ -18269,6 +18269,10 @@ nav > .toggle:hover {
   display: block;
 }
 
+.table.center {
+  text-align: center;
+}
+
 .table > h1 {
   font-size: 1.25rem;
   margin-bottom: 0.5rem;
@@ -18501,6 +18505,41 @@ ul.comma-separated > li:not(:last-child)::after {
 
 ul.comma-separated > li:not(:last-child)::after:not(:last-child) {
   margin-right: 0.25rem;
+}
+
+.traffic-light-status {
+  display: block;
+  height: 1.25rem;
+  width: 1.25rem;
+  border-width: 1px;
+  border-color: #2d3748;
+  border-style: solid;
+  border-radius: 9999px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.traffic-light-status.red {
+  background-color: #f56565;
+}
+
+.traffic-light-status.yellow {
+  background-color: #ecc94b;
+}
+
+.traffic-light-status.green {
+  background-color: #48bb78;
+}
+
+.chart.pie {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .chart.pie {
+    width: 50%;
+    float: left;
+  }
 }
 
 @media (min-width: 640px){
