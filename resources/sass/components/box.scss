@@ -6,4 +6,20 @@
     > h1 {
         @apply text-xl mb-4 text-gray-800;
     }
+    > .half,
+    > div > .half {
+        @apply w-full;
+        &:not(:first-child) {
+            @apply mt-8;
+        }
+        @screen md {
+            @apply w-1/2 float-left;
+            &:not(:first-child) {
+                @apply pl-3 mt-0;
+            }
+            &:not(:last-child) {
+                @apply pr-3;
+            }
+        }
+    }
 }

@@ -24,7 +24,6 @@ class CreateAppointmentsTable extends Migration
             $table->enum('traffic_light_status', ['red', 'yellow', 'green']);
             $table->enum('rating', ['+', '0', '-']);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

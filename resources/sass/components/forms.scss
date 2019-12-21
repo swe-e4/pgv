@@ -1,7 +1,4 @@
 form {
-    .group {
-        @apply mb-4;
-    }
     label {
         @apply block text-gray-600 text-sm font-bold mb-2;
         &.description {
@@ -10,11 +7,39 @@ form {
     }
     input,
     select {
-        @extend %fancy-scrollbar;
-        @apply shadow border w-full py-2 px-3 text-gray-700 leading-tight outline-none;
-        &:focus,
-        &:hover {
-            @apply border-teal-500;
+        &:not([type="checkbox"]) {
+            @extend %fancy-scrollbar;
+            @apply shadow border w-full py-2 px-3 text-gray-700 leading-tight outline-none;
+            &:focus,
+            &:hover {
+                @apply border-teal-500;
+            }
+            &.error {
+                @apply border-red-500 bg-red-100;
+            }
+        }
+    }
+    .error {
+        @apply text-red-800 text-sm;
+    }
+    .group {
+        @apply mb-4 overflow-y-hidden;
+        &.checkbox {
+            > label {
+                @apply inline;
+            }
+        }
+    }
+    .vdatetime {
+        .vdatetime-popup__header,
+        .vdatetime-calendar__month__day--selected > span > span,
+        .vdatetime-calendar__month__day--selected:hover > span > span {
+            @apply bg-teal-500;
+        }
+        .vdatetime-year-picker__item--selected,
+        .vdatetime-time-picker__item--selected,
+        .vdatetime-popup__actions__button {
+            @apply text-teal-500;
         }
     }
 }

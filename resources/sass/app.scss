@@ -9,6 +9,9 @@
 @tailwind components;
 @tailwind utilities;
 
+//vue-datetime
+@import '~vue-datetime/dist/vue-datetime.css';
+
 //layouts
 @import 'layouts/app.scss';
 @import 'layouts/card.scss';
@@ -22,3 +25,6 @@
 @import 'components/sidebar.scss';
 @import 'components/table.scss';
 @import 'components/box.scss';
+@import 'components/lists.scss';
+@import 'components/traffic-light-status.scss';
+@import 'components/chart.scss';

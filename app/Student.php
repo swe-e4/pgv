@@ -7,12 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'first_name', 'surname', 'email', 'student_number', 'group_id',
+    ];
+
+    /**
      * group
      *
      * @return void
      */
     public function group()
     {
-        return $this->hasOne('App\Group');
+        return $this->belongsTo('App\Group');
     }
 }

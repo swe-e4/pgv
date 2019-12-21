@@ -22,7 +22,6 @@ class CreateStudentsTable extends Migration
             $table->unsignedBigInteger('group_id')->index()->nullable();
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('set null');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

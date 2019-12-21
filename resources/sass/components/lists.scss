@@ -1,0 +1,13 @@
+ul {
+    &.comma-separated {
+        > li {
+            @apply float-left;
+            &:not(:last-child) {
+                &::after {
+                    content: ",";
+                    @apply mr-1;
+                }
+            }
+        }
+    }
+}

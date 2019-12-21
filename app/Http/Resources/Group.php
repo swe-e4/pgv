@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Http\Resources;
+
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class Group extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function toArray($request)
+    {
+        return array_merge_recursive(
+            [
+                'data' => [
+                    'id' => $this->id,
+                    'name' => $this->name,
+                    'adviser_id' => $this->adviser_id,
+                    'adviser' => new Adviser($this->adviser),
+                    'last_update' => $this->updated_at->diffForHumans(),
+                ],
+                'links' => [
+                    'self' => $this->path(),
+                ]
+            ], 
+            ($request->has('students') ? [
+                'data' => [
+                    'students' => Student::collection($this->students),
+                ]
+            ] : [] )
+        );
+    }
+}
