@@ -1,5 +1,8 @@
 .table {
     @apply block;
+    &.center {
+        @apply text-center;
+    }
     > h1 {
         @apply text-xl mb-2 text-gray-800;
         @screen md {
