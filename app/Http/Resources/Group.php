@@ -14,17 +14,24 @@ class Group extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'data' => [
-                'id' => $this->id,
-                'name' => $this->name,
-                'adviser_id' => $this->adviser_id,
-                'adviser' => new Adviser($this->adviser),
-                'last_update' => $this->updated_at->diffForHumans(),
-            ],
-            'links' => [
-                'self' => $this->path(),
-            ]
-        ];
+        return array_merge_recursive(
+            [
+                'data' => [
+                    'id' => $this->id,
+                    'name' => $this->name,
+                    'adviser_id' => $this->adviser_id,
+                    'adviser' => new Adviser($this->adviser),
+                    'last_update' => $this->updated_at->diffForHumans(),
+                ],
+                'links' => [
+                    'self' => $this->path(),
+                ]
+            ], 
+            ($request->has('students') ? [
+                'data' => [
+                    'students' => Student::collection($this->students),
+                ]
+            ] : [] )
+        );
     }
 }
