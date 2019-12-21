@@ -23,7 +23,7 @@
                 </li>
             </ul>
         </div>
-        <div class="toggle">
+        <div class="toggle" @click="toggleNavbar">
             <i class="fas fa-bars fa-lg"></i>
         </div>
     </nav>
@@ -37,6 +37,27 @@
             'app_name',
             'user'
         ],
+
+        data: function() {
+            return {
+                isActive: false
+            }
+        },
+        
+        methods: {
+            toggleNavbar: function() {
+                this.isActive = !this.isActive;
+                this.$emit("sidebarToggle", this.isActive);
+            }
+        },
+        
+        watch: {
+            '$route' () {
+                if(this.isActive) {
+                    this.toggleNavbar();
+                }
+            }
+        }
     }
 </script>
 

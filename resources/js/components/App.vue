@@ -1,13 +1,13 @@
 <template>
     <div>
         <!-- Navbar -->
-        <Navbar :app_name="app_name" :user="user"></Navbar>
+        <Navbar :app_name="app_name" :user="user" @sidebarToggle="sidebarToggle"></Navbar>
 
         <!-- Main -->
         <main>
 
             <!-- Sidebar -->
-            <Sidebar></Sidebar>
+            <Sidebar :active="this.sidebarActive"></Sidebar>
 
             <!-- Content -->
             <router-view class="content"></router-view>
@@ -56,6 +56,7 @@
         data: function() {
             return {
                 title: '',
+                sidebarActive: false
             }
         },
 
@@ -66,6 +67,11 @@
 
             title() {
                 document.title = this.app_name + ' - ' + this.title; 
+            }
+        },
+        methods: {
+            sidebarToggle(variable) {
+                this.sidebarActive = variable
             }
         }
     }

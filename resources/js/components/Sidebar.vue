@@ -1,5 +1,5 @@
 <template>
-    <div class="sidebar active">
+    <div class="sidebar" v-bind:class="{active: active}">
         <ul>
             <li>
                 <router-link to="/">
@@ -59,7 +59,11 @@
 
 <script>
     export default {
-        name: "Sidebar"
+        name: "Sidebar",
+
+        props: [
+            'active',
+        ]
     }
 </script>
 

@@ -1939,7 +1939,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      title: ''
+      title: '',
+      sidebarActive: false
     };
   },
   watch: {
@@ -1948,6 +1949,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     title: function title() {
       document.title = this.app_name + ' - ' + this.title;
+    }
+  },
+  methods: {
+    sidebarToggle: function sidebarToggle(variable) {
+      this.sidebarActive = variable;
     }
   }
 });
@@ -2057,7 +2063,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Navbar",
-  props: ['app_name', 'user']
+  props: ['app_name', 'user'],
+  data: function data() {
+    return {
+      isActive: false
+    };
+  },
+  methods: {
+    toggleNavbar: function toggleNavbar() {
+      this.isActive = !this.isActive;
+      this.$emit("sidebarToggle", this.isActive);
+    }
+  },
+  watch: {
+    '$route': function $route() {
+      if (this.isActive) {
+        this.toggleNavbar();
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -2131,7 +2155,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Sidebar"
+  name: "Sidebar",
+  props: ['active']
 });
 
 /***/ }),
@@ -30716,12 +30741,15 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("Navbar", { attrs: { app_name: _vm.app_name, user: _vm.user } }),
+      _c("Navbar", {
+        attrs: { app_name: _vm.app_name, user: _vm.user },
+        on: { sidebarToggle: _vm.sidebarToggle }
+      }),
       _vm._v(" "),
       _c(
         "main",
         [
-          _c("Sidebar"),
+          _c("Sidebar", { attrs: { active: this.sidebarActive } }),
           _vm._v(" "),
           _c("router-view", { staticClass: "content" })
         ],
@@ -30861,19 +30889,12 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(0)
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "toggle" }, [
+    _c("div", { staticClass: "toggle", on: { click: _vm.toggleNavbar } }, [
       _c("i", { staticClass: "fas fa-bars fa-lg" })
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -30895,7 +30916,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "sidebar active" }, [
+  return _c("div", { staticClass: "sidebar", class: { active: _vm.active } }, [
     _c("ul", [
       _c(
         "li",
