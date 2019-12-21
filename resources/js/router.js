@@ -10,6 +10,14 @@ import Group from './views/Group';
 import GroupCreate from './views/GroupCreate';
 import GroupEdit from './views/GroupEdit';
 
+import Student from './views/Student';
+import StudentCreate from './views/StudentCreate';
+import StudentEdit from './views/StudentEdit';
+
+import Milestone from './views/Milestone';
+import MilestoneCreate from './views/MilestoneCreate';
+import MilestoneEdit from './views/MilestoneEdit';
+
 import Disabled from './views/Disabled';
 
 import Logout from './actions/Logout';
@@ -42,11 +50,37 @@ export default new VueRouter({
         },
         {
             path: '/group/create', component: GroupCreate,
-            meta: {title: 'Gruppen hinzufügen' }
+            meta: {title: 'Gruppe hinzufügen' }
         },
         {
             path: '/group/:id/edit', component: GroupEdit,
-            meta: {title: 'Gruppen bearbeiten' }
+            meta: {title: 'Gruppe bearbeiten' }
+        },
+        
+        {
+            path: '/student', component: Student,
+            meta: {title: 'Studenten' }
+        },
+        {
+            path: '/student/create', component: StudentCreate,
+            meta: {title: 'Student hinzufügen' }
+        },
+        {
+            path: '/student/:id/edit', component: StudentEdit,
+            meta: {title: 'Student bearbeiten' }
+        },
+        
+        {
+            path: '/milestone', component: Milestone,
+            meta: {title: 'Meilensteine' }
+        },
+        {
+            path: '/milestone/create', component: MilestoneCreate,
+            meta: {title: 'Meilenstein hinzufügen' }
+        },
+        {
+            path: '/milestone/:id/edit', component: MilestoneEdit,
+            meta: {title: 'Meilenstein bearbeiten' }
         },
 
         {
