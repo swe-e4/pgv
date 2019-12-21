@@ -40,7 +40,11 @@
             window.axios.interceptors.request.use(
                 (config) => {
                     if(config.method === 'get') {
-                        config.url = config.url + '?api_token=' + this.user.api_token;
+                        if(config.url.includes('?')) {
+                            config.url = config.url + '&api_token=' + this.user.api_token;
+                        } else {
+                            config.url = config.url + '?api_token=' + this.user.api_token;
+                        }
                     } else {
                         config.data = {
                             ...config.data,
