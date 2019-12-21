@@ -22,7 +22,7 @@
                 </router-link>
             </li>
             <li>
-                <router-link to="/disabled" class="disabled">
+                <router-link to="/student">
                     <i class="fas fa-graduation-cap"></i>
                     <span>Studenten</span>
                 </router-link>
@@ -34,7 +34,7 @@
                 </router-link>
             </li>
             <li>
-                <router-link to="/disabled" class="disabled">
+                <router-link to="/milestone">
                     <i class="fas fa-briefcase"></i>
                     <span>Meilensteine</span>
                 </router-link>
