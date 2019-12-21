@@ -47,6 +47,7 @@ We use [SemVer](http://semver.org/) for versioning. For available versions, see 
 * [Vue.js](https://github.com/vuejs/vue) - Vue.js is a progressive, incrementally-adoptable JavaScript framework for building UI on the web.
 * [Tailwind CSS](https://github.com/tailwindcss/tailwindcss) - A utility-first CSS framework for rapid UI development.
 * [Font Awesome Free](https://github.com/FortAwesome/Font-Awesome) - The iconic SVG, font, and CSS toolkit.
+* [vue-datetime](https://github.com/mariomka/vue-datetime) - Mobile friendly datetime picker for Vue. Supports date and datetime modes, i18n and disabling dates.
 
 ## Authors
 
