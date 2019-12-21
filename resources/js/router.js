@@ -7,6 +7,7 @@ import AdviserCreate from './views/AdviserCreate';
 import AdviserEdit from './views/AdviserEdit';
 
 import Group from './views/Group';
+import GroupDetails from './views/GroupDetails';
 import GroupCreate from './views/GroupCreate';
 import GroupEdit from './views/GroupEdit';
 
@@ -51,6 +52,10 @@ export default new VueRouter({
         {
             path: '/group/create', component: GroupCreate,
             meta: {title: 'Gruppe hinzufügen' }
+        },
+        {
+            path: '/group/:id', component: GroupDetails,
+            meta: {title: 'Gruppendetails' }
         },
         {
             path: '/group/:id/edit', component: GroupEdit,
