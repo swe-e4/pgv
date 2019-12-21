@@ -1,0 +1,12 @@
+.traffic-light-status {
+    @apply block h-5 w-5 border border-gray-800 border-solid rounded-full mx-auto;
+    &.red {
+        @apply bg-red-500;
+    }
+    &.yellow {
+        @apply bg-yellow-500;
+    }   
+    &.green {
+        @apply bg-green-500;
+    }
+}
