@@ -14,16 +14,22 @@ class Student extends JsonResource
      */
     public function toArray($request)
     {
-        return  [
-            'data' => [
-                'id' => $this->id,
-                'surname' => $this->surname,
-                'first_name' => $this->first_name,
-                'email' => $this->email,
-                'student_number' => $this->student_number,
-                'group' => new Group($this->group),
-                'last_update' => $this->updated_at->diffForHumans(),
-            ]
-        ];
+        return array_merge_recursive (
+            [
+                'data' => [
+                    'id' => $this->id,
+                    'surname' => $this->surname,
+                    'first_name' => $this->first_name,
+                    'email' => $this->email,
+                    'student_number' => $this->student_number,
+                    'last_update' => $this->updated_at->diffForHumans(),
+                ]
+            ], 
+            (!$request->has('students') ? [
+                'data' => [
+                    'group' => new Group($this->group),
+                ]
+            ] : [] )
+            );
     }
 }
