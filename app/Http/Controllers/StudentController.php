@@ -26,6 +26,20 @@ class StudentController extends Controller
     }
 
     /**
+     * Return request with valid data on update
+     *
+     * @return array
+     */
+    private function validateDataUpdate($student = NULL)
+    {
+        return request()->validate([
+            'email' => 'bail|email:rfc,dns|unique:students,email'.(isset($student) ? ','.$student->id : ''),
+            'student_number' => 'bail|unique:students,student_number'.(isset($student) ? ','.$student->id : ''),
+            'group_id' => 'nullable|bail|numeric|exists:groups,id',
+        ]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -77,7 +91,7 @@ class StudentController extends Controller
     {
         $this->authorize('update', $student);
 
-        $student->update($this->validateData($student));
+        $student->update($this->validateDataUpdate($student));
         
         return (new StudentResource($student))
             ->response()
