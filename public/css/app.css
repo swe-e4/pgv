@@ -17959,6 +17959,7 @@ button {
   padding-left: 1rem;
   padding-right: 1rem;
   color: #fff;
+  width: 100%;
 }
 
 button:hover {
@@ -17974,12 +17975,14 @@ button.gray:hover {
   background-color: #718096;
 }
 
-button.half {
-  width: 50%;
-}
+@media (min-width: 1024px) {
+  button.half {
+    width: 50%;
+  }
 
-button.full {
-  width: 100%;
+  button.full {
+    width: 100%;
+  }
 }
 
 .button-list {
@@ -17994,29 +17997,36 @@ button.full {
   margin-bottom: 2rem;
 }
 
-.button-list > button {
-  float: left;
-  width: calc(100% - 0.5rem);
-}
-
-.button-list > button:first-child, .button-list > button:last-child {
-  width: calc(100% - 0.25rem);
-}
-
-.button-list > button:not(:first-child) {
-  margin-left: 0.25rem;
-}
-
 .button-list > button:not(:last-child) {
-  margin-right: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
-.button-list > button.half {
-  width: calc(50% - 0.5rem);
-}
+@media (min-width: 1024px) {
+  .button-list > button {
+    float: left;
+    margin-bottom: 0;
+    width: calc(100% - 0.5rem);
+  }
 
-.button-list > button.half:first-child, .button-list > button.half:last-child {
-  width: calc(50% - 0.25rem);
+  .button-list > button:first-child, .button-list > button:last-child {
+    width: calc(100% - 0.25rem);
+  }
+
+  .button-list > button:not(:first-child) {
+    margin-left: 0.25rem;
+  }
+
+  .button-list > button:not(:last-child) {
+    margin-right: 0.25rem;
+  }
+
+  .button-list > button.half {
+    width: calc(50% - 0.5rem);
+  }
+
+  .button-list > button.half:first-child, .button-list > button.half:last-child {
+    width: calc(50% - 0.25rem);
+  }
 }
 
 .alert {
@@ -18487,30 +18497,30 @@ nav > .toggle:hover {
 }
 
 .box > .half,
-.box > div > .half {
+.box > div:not(.button-list) > .half {
   width: 100%;
 }
 
 .box > .half:not(:first-child),
-.box > div > .half:not(:first-child) {
+.box > div:not(.button-list) > .half:not(:first-child) {
   margin-top: 2rem;
 }
 
 @media (min-width: 768px) {
   .box > .half,
-.box > div > .half {
+.box > div:not(.button-list) > .half {
     width: 50%;
     float: left;
   }
 
   .box > .half:not(:first-child),
-.box > div > .half:not(:first-child) {
+.box > div:not(.button-list) > .half:not(:first-child) {
     padding-left: 0.75rem;
     margin-top: 0;
   }
 
   .box > .half:not(:last-child),
-.box > div > .half:not(:last-child) {
+.box > div:not(.button-list) > .half:not(:last-child) {
     padding-right: 0.75rem;
   }
 }

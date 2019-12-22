@@ -7,7 +7,7 @@
         @apply text-xl mb-4 text-gray-800;
     }
     > .half,
-    > div > .half {
+    > div:not(.button-list) > .half {
         @apply w-full;
         &:not(:first-child) {
             @apply mt-8;
