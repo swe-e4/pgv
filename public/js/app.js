@@ -4014,7 +4014,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       return _.orderBy(this.students.filter(function (student) {
-        return student.data.surname.toLowerCase().match(_this3.search.toLowerCase()) || student.data.first_name.toLowerCase().match(_this3.search.toLowerCase()) || student.data.student_number.toLowerCase().match(_this3.search.toLowerCase()) || student.data.group && student.data.group.data.name.toLowerCase().match(_this3.search.toLowerCase());
+        return student.data.surname.toLowerCase().match(_this3.search.toLowerCase()) || student.data.first_name.toLowerCase().match(_this3.search.toLowerCase()) || student.data.student_number.toString().match(_this3.search) || student.data.group && student.data.group.data.name.toLowerCase().match(_this3.search.toLowerCase());
       }), 'data.' + this.orderByColumn, this.orderByAsc ? 'asc' : 'desc');
     }
   }

@@ -184,7 +184,7 @@
                     return (
                         student.data.surname.toLowerCase().match(this.search.toLowerCase()) ||
                         student.data.first_name.toLowerCase().match(this.search.toLowerCase()) ||
-                        student.data.student_number.toLowerCase().match(this.search.toLowerCase()) ||
+                        student.data.student_number.toString().match(this.search) ||
                         (student.data.group && student.data.group.data.name.toLowerCase().match(this.search.toLowerCase()))
                     );
                 }), 'data.' + this.orderByColumn, (this.orderByAsc ? 'asc' : 'desc'));
