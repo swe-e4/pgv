@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="box">
-            <h1>Meilenstein hinzufügen</h1>
+            <h1>Termin hinzufügen</h1>
 
             <Alert type="success" title="Hinzugefügt" message="Termin wurde erfolgreich hinzugefügt." v-if="success"/>
             
@@ -9,12 +9,12 @@
                 
                 <div class="group">
                     <label for="group">Startdatum/-zeit:</label>
-                    <datetime type="datetime" v-model="form.start" placeholder="Startdatum/-zeit" format="yyyy-MM-dd HH:mm" auto></datetime>
+                    <datetime zone="Europe/Berlin" value-zone="Europe/Berlin" id="start" name="start" type="datetime" v-model="startTime" placeholder="Startdatum/-zeit" format="yyyy-MM-dd HH:mm" auto></datetime>
                 </div>
                 
                 <div class="group">
                     <label for="group">Enddatum/-zeit:</label>
-                    <datetime type="datetime" v-model="form.end" placeholder="Enddatum/-zeit" format="yyyy-MM-dd HH:mm" auto></datetime>
+                    <datetime zone="Europe/Berlin" value-zone="Europe/Berlin" id="end" name="end" type="datetime" v-model="endTime" :min-datetime="startTime" placeholder="Enddatum/-zeit" format="yyyy-MM-dd HH:mm" auto></datetime>
                 </div>
 
                 <InputField name="name" label="Name" placeholder="Name" @update:field="form.name = $event" :errors="errors" :data="form.name"/>
@@ -49,6 +49,7 @@
 <script>
     import InputField from '../components/InputField';
     import Alert from '../components/Alert';
+    import moment from 'moment'
     export default {
         name: "AppointmentCreate",
 
@@ -70,6 +71,8 @@
 
         data: function() {
             return {
+                startTime: '',
+                endTime: '',
                 form: {
                     'name': '',
                     'start': '',
@@ -85,12 +88,16 @@
 
         methods: {
             submitForm: function() {
-                console.log(this.form.start)
-                //this.form.deadline = this.form.deadline.split("T00:00:00.000Z")[0];
-                /*
-                axios.post('/api/milestone', this.form)
+                var tmpStart = this.startTime.split('.')[0].split('T');
+                var tmpEnd = this.endTime.split('.')[0].split('T');
+                this.form.start = tmpStart[0] + ' ' + tmpStart[1];
+                this.form.end = tmpEnd[0] + ' ' + tmpEnd[1];
+
+                axios.post('/api/appointment', this.form)
                     .then(response => {
                         this.success = true;
+                        this.startTime = '';
+                        this.endTime = '';
                         this.form = {
                                 'name': '',
                                 'start': '',
@@ -101,7 +108,7 @@
                     .catch(errors => {
                         this.success = false,
                         this.errors = errors.response.data.errors;
-                    });*/
+                    });
             }
         }
     }
