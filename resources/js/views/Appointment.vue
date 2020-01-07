@@ -175,7 +175,6 @@
                                 };
 
                                 for(var date in this.dates) {
-                                    console.log(this.dates[date].start);
                                     if(String(this.dates[date].start) == String(tmpDate.start)) {
                                         this.dates.splice(date, 1);
                                         break;
