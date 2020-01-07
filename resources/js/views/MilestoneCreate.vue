@@ -9,7 +9,7 @@
                 
                 <div class="group">
                     <label for="group">Fälligkeitsdatum</label>
-                    <datetime v-model="form.deadline" placeholder="Fälligkeitsdatum" format="yyyy-MM-dd" auto></datetime>
+                    <datetime zone="Europe/Berlin" value-zone="Europe/Berlin" v-model="form.deadline" placeholder="Fälligkeitsdatum" format="yyyy-MM-dd" auto></datetime>
                 </div>
 
                 <InputField name="name" label="Name" placeholder="Name" @update:field="form.name = $event" :errors="errors" :data="form.name"/>
