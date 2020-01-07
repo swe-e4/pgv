@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Appointment;
 use Illuminate\Http\Request;
+use App\Http\Resources\Appointment as AppointmentResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class AppointmentController extends Controller
 {
@@ -32,17 +34,9 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $this->authorize('viewAny', Appointment::class);
+        
+        return AppointmentResource::collection(Appointment::all());
     }
 
     /**
@@ -53,7 +47,13 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
-        Appointment::create($this->validateData());
+        $this->authorize('create', Appointment::class);
+
+        $appointment = Appointment::create($this->validateData());
+
+        return (new AppointmentResource($appointment))
+            ->response()
+            ->setStatusCode(Response::HTTP_CREATED);
     }
 
     /**
@@ -64,18 +64,8 @@ class AppointmentController extends Controller
      */
     public function show(Appointment $appointment)
     {
-        return $appointment;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Appointment  $appointment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Appointment $appointment)
-    {
-        //
+        $this->authorize('view', $appointment);
+        return new AppointmentResource($appointment);
     }
 
     /**
@@ -87,7 +77,13 @@ class AppointmentController extends Controller
      */
     public function update(Request $request, Appointment $appointment)
     {
+        $this->authorize('update', $appointment);
+
         $appointment->update($this->validateData());
+        
+        return (new AppointmentResource($appointment))
+            ->response()
+            ->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -98,6 +94,9 @@ class AppointmentController extends Controller
      */
     public function destroy(Appointment $appointment)
     {
-        $appointment->destroy();
+        $this->authorize('delete', $appointment);
+        $appointment->delete();
+
+        return response([], Response::HTTP_NO_CONTENT);
     }
 }

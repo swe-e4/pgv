@@ -18,7 +18,7 @@ class AppointmentPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->role_id == 1;
     }
 
     /**
@@ -30,7 +30,7 @@ class AppointmentPolicy
      */
     public function view(User $user, Appointment $appointment)
     {
-        //
+        return ($user->role_id == 1 || $user->id == $appointment->group()->adviser_id);
     }
 
     /**
@@ -41,7 +41,7 @@ class AppointmentPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->role_id == 1;
     }
 
     /**
@@ -53,7 +53,7 @@ class AppointmentPolicy
      */
     public function update(User $user, Appointment $appointment)
     {
-        //
+        return ($user->role_id == 1 || $user->id == $appointment->group()->adviser_id);
     }
 
     /**
@@ -65,7 +65,7 @@ class AppointmentPolicy
      */
     public function delete(User $user, Appointment $appointment)
     {
-        //
+        return $user->role_id == 1;
     }
 
     /**
@@ -77,7 +77,7 @@ class AppointmentPolicy
      */
     public function restore(User $user, Appointment $appointment)
     {
-        //
+        return false;
     }
 
     /**
@@ -89,6 +89,6 @@ class AppointmentPolicy
      */
     public function forceDelete(User $user, Appointment $appointment)
     {
-        //
+        return false;
     }
 }

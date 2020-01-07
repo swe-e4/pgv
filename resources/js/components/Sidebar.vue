@@ -28,7 +28,7 @@
                 </router-link>
             </li>
             <li>
-                <router-link to="/disabled" class="disabled">
+                <router-link to="/appointment">
                     <i class="fas fa-calendar-alt"></i>
                     <span>Termine</span>
                 </router-link>

@@ -17772,6 +17772,10 @@ form body.layout select:not([type=checkbox])::-webkit-scrollbar-thumb:hover {
   width: 12px;
 }
 
+body.layout .vc-container {
+  border-radius: 0;
+}
+
 body.layout.layout-card > div#app {
   background-color: #319795;
   padding-top: 2rem;

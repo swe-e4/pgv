@@ -13,6 +13,6 @@ class Appointment extends Model
      */
     public function group()
     {
-        return $this->hasOne('App\Group');
+        return $this->belongsTo('App\Group');
     }
 }
