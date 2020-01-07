@@ -18,12 +18,12 @@ class AppointmentController extends Controller
     {
         return request()->validate([
             'name' => 'required',
-            'start' => 'nullable|date',
-            'end' => 'nullable|date',
+            'start' => 'nullable',
+            'end' => 'nullable',
             'group_id' => 'nullable|bail|numeric|exists:groups,id',
-            'description' => 'required',
-            'traffic_light_status' => 'required|in:red,yellow,green',
-            'rating' => '|in:+,0,-',
+            'description' => 'nullable',
+            'traffic_light_status' => 'nullable|in:red,yellow,green',
+            'rating' => 'nullable|in:+,0,-',
         ]);
     }
 

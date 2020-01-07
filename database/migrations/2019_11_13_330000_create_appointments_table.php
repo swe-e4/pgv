@@ -20,9 +20,9 @@ class CreateAppointmentsTable extends Migration
             $table->timestamp('end')->nullable();
             $table->unsignedBigInteger('group_id')->index()->nullable();
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
-            $table->text('description');
-            $table->enum('traffic_light_status', ['red', 'yellow', 'green']);
-            $table->enum('rating', ['+', '0', '-']);
+            $table->text('description')->nullable();
+            $table->enum('traffic_light_status', ['red', 'yellow', 'green'])->nullable();
+            $table->enum('rating', ['+', '0', '-'])->nullable();
             $table->timestamps();
         });
     }
