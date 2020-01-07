@@ -2787,8 +2787,6 @@ __webpack_require__.r(__webpack_exports__);
             };
 
             for (var date in _this2.dates) {
-              console.log(_this2.dates[date].start);
-
               if (String(_this2.dates[date].start) == String(tmpDate.start)) {
                 _this2.dates.splice(date, 1);
 
@@ -2844,6 +2842,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_InputField__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/InputField */ "./resources/js/components/InputField.vue");
 /* harmony import */ var _components_Alert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Alert */ "./resources/js/components/Alert.vue");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -2892,6 +2892,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2912,6 +2913,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      startTime: '',
+      endTime: '',
       form: {
         'name': '',
         'start': '',
@@ -2926,23 +2929,25 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     submitForm: function submitForm() {
-      console.log(this.form.start); //this.form.deadline = this.form.deadline.split("T00:00:00.000Z")[0];
+      var _this2 = this;
 
-      /*
-      axios.post('/api/milestone', this.form)
-          .then(response => {
-              this.success = true;
-              this.form = {
-                      'name': '',
-                      'start': '',
-                      'end': '',
-                      'group_id': ''
-                  };
-          })
-          .catch(errors => {
-              this.success = false,
-              this.errors = errors.response.data.errors;
-          });*/
+      var tmpStart = this.startTime.split('.')[0].split('T');
+      var tmpEnd = this.endTime.split('.')[0].split('T');
+      this.form.start = tmpStart[0] + ' ' + tmpStart[1];
+      this.form.end = tmpEnd[0] + ' ' + tmpEnd[1];
+      axios.post('/api/appointment', this.form).then(function (response) {
+        _this2.success = true;
+        _this2.startTime = '';
+        _this2.endTime = '';
+        _this2.form = {
+          'name': '',
+          'start': '',
+          'end': '',
+          'group_id': ''
+        };
+      })["catch"](function (errors) {
+        _this2.success = false, _this2.errors = errors.response.data.errors;
+      });
     }
   }
 });
@@ -89389,7 +89394,7 @@ var render = function() {
       "div",
       { staticClass: "box" },
       [
-        _c("h1", [_vm._v("Meilenstein hinzufügen")]),
+        _c("h1", [_vm._v("Termin hinzufügen")]),
         _vm._v(" "),
         _vm.success
           ? _c("Alert", {
@@ -89422,17 +89427,21 @@ var render = function() {
                 _vm._v(" "),
                 _c("datetime", {
                   attrs: {
+                    zone: "Europe/Berlin",
+                    "value-zone": "Europe/Berlin",
+                    id: "start",
+                    name: "start",
                     type: "datetime",
                     placeholder: "Startdatum/-zeit",
                     format: "yyyy-MM-dd HH:mm",
                     auto: ""
                   },
                   model: {
-                    value: _vm.form.start,
+                    value: _vm.startTime,
                     callback: function($$v) {
-                      _vm.$set(_vm.form, "start", $$v)
+                      _vm.startTime = $$v
                     },
-                    expression: "form.start"
+                    expression: "startTime"
                   }
                 })
               ],
@@ -89449,17 +89458,22 @@ var render = function() {
                 _vm._v(" "),
                 _c("datetime", {
                   attrs: {
+                    zone: "Europe/Berlin",
+                    "value-zone": "Europe/Berlin",
+                    id: "end",
+                    name: "end",
                     type: "datetime",
+                    "min-datetime": _vm.startTime,
                     placeholder: "Enddatum/-zeit",
                     format: "yyyy-MM-dd HH:mm",
                     auto: ""
                   },
                   model: {
-                    value: _vm.form.end,
+                    value: _vm.endTime,
                     callback: function($$v) {
-                      _vm.$set(_vm.form, "end", $$v)
+                      _vm.endTime = $$v
                     },
-                    expression: "form.end"
+                    expression: "endTime"
                   }
                 })
               ],
@@ -91111,6 +91125,8 @@ var render = function() {
                 _vm._v(" "),
                 _c("datetime", {
                   attrs: {
+                    zone: "Europe/Berlin",
+                    "value-zone": "Europe/Berlin",
                     placeholder: "Fälligkeitsdatum",
                     format: "yyyy-MM-dd",
                     auto: ""
@@ -91229,6 +91245,8 @@ var render = function() {
                 _vm._v(" "),
                 _c("datetime", {
                   attrs: {
+                    zone: "Europe/Berlin",
+                    "value-zone": "Europe/Berlin",
                     placeholder: "Fälligkeitsdatum",
                     format: "yyyy-MM-dd",
                     auto: ""
