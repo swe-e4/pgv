@@ -2954,6 +2954,135 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/AppointmentEdit.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/AppointmentEdit.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_InputField__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/InputField */ "./resources/js/components/InputField.vue");
+/* harmony import */ var _components_Alert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Alert */ "./resources/js/components/Alert.vue");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "AppointmentEdit",
+  components: {
+    InputField: _components_InputField__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Alert: _components_Alert__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/api/appointment/' + this.$route.params.id).then(function (response) {
+      _this.form = response.data.data;
+
+      var tmpStart = _this.form.start.split(' ');
+
+      var tmpEnd = _this.form.end.split(' ');
+
+      _this.startTime = tmpStart[0] + 'T' + tmpStart[1] + '.000';
+      _this.endTime = tmpEnd[0] + 'T' + tmpEnd[1] + '.000';
+    })["catch"](function (errors) {
+      if (errors.response.status === 404 || errors.response.status === 403) {
+        _this.$router.push('/appointment');
+      }
+    });
+    axios.get('/api/group').then(function (response) {
+      _this.groups = _.orderBy(response.data.data, 'data.name');
+      _this.loading = false;
+    })["catch"](function (errors) {
+      _this.loading = false;
+    });
+  },
+  data: function data() {
+    return {
+      startTime: '',
+      endTime: '',
+      form: {
+        'name': '',
+        'start': '',
+        'end': '',
+        'group_id': ''
+      },
+      success: false,
+      errors: null,
+      loading: true,
+      groups: null
+    };
+  },
+  methods: {
+    submitForm: function submitForm() {
+      var _this2 = this;
+
+      var tmpStart = this.startTime.split('.')[0].split('T');
+      var tmpEnd = this.endTime.split('.')[0].split('T');
+      this.form.start = tmpStart[0] + ' ' + tmpStart[1];
+      this.form.end = tmpEnd[0] + ' ' + tmpEnd[1];
+      axios.post('/api/appointment', this.form).then(function (response) {
+        _this2.success = true;
+      })["catch"](function (errors) {
+        _this2.success = false, _this2.errors = errors.response.data.errors;
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Disabled.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/Disabled.vue?vue&type=script&lang=js& ***!
@@ -89602,6 +89731,237 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/AppointmentEdit.vue?vue&type=template&id=1bf9f4fa&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/AppointmentEdit.vue?vue&type=template&id=1bf9f4fa&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "box" },
+      [
+        _c("h1", [_vm._v("Termin bearbeiten")]),
+        _vm._v(" "),
+        _vm.success
+          ? _c("Alert", {
+              attrs: {
+                type: "success",
+                title: "Bearbeitet",
+                message: "Termin wurde erfolgreich bearbeitet."
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.submitForm($event)
+              }
+            }
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "group" },
+              [
+                _c("label", { attrs: { for: "group" } }, [
+                  _vm._v("Startdatum/-zeit:")
+                ]),
+                _vm._v(" "),
+                _c("datetime", {
+                  attrs: {
+                    zone: "Europe/Berlin",
+                    "value-zone": "Europe/Berlin",
+                    id: "start",
+                    name: "start",
+                    type: "datetime",
+                    placeholder: "Startdatum/-zeit",
+                    format: "yyyy-MM-dd HH:mm",
+                    auto: ""
+                  },
+                  model: {
+                    value: _vm.startTime,
+                    callback: function($$v) {
+                      _vm.startTime = $$v
+                    },
+                    expression: "startTime"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "group" },
+              [
+                _c("label", { attrs: { for: "group" } }, [
+                  _vm._v("Enddatum/-zeit:")
+                ]),
+                _vm._v(" "),
+                _c("datetime", {
+                  attrs: {
+                    zone: "Europe/Berlin",
+                    "value-zone": "Europe/Berlin",
+                    id: "end",
+                    name: "end",
+                    type: "datetime",
+                    "min-datetime": _vm.startTime,
+                    placeholder: "Enddatum/-zeit",
+                    format: "yyyy-MM-dd HH:mm",
+                    auto: ""
+                  },
+                  model: {
+                    value: _vm.endTime,
+                    callback: function($$v) {
+                      _vm.endTime = $$v
+                    },
+                    expression: "endTime"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("InputField", {
+              attrs: {
+                name: "name",
+                label: "Name",
+                placeholder: "Name",
+                errors: _vm.errors,
+                data: _vm.form.name
+              },
+              on: {
+                "update:field": function($event) {
+                  _vm.form.name = $event
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "group" },
+              [
+                _c("label", { attrs: { for: "group_id" } }, [_vm._v("Gruppe")]),
+                _vm._v(" "),
+                _vm.loading
+                  ? _c("Alert", {
+                      attrs: {
+                        type: "info",
+                        title: "Information",
+                        message: "Gruppen werden geladen."
+                      }
+                    })
+                  : _c("div", [
+                      _vm.groups.length === 0
+                        ? _c("div", { staticClass: "alert info" }, [
+                            _c("h1", [_vm._v("Information")]),
+                            _vm._v(" "),
+                            _c("p", [
+                              _vm._v("Es exestieren derzeit keine Gruppen.")
+                            ])
+                          ])
+                        : _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.group_id,
+                                  expression: "form.group_id"
+                                }
+                              ],
+                              attrs: { id: "group_id", name: "group_id" },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.form,
+                                    "group_id",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
+                              }
+                            },
+                            _vm._l(_vm.groups, function(group) {
+                              return _c(
+                                "option",
+                                {
+                                  key: group.data.id,
+                                  domProps: {
+                                    value: group.data.id,
+                                    selected: _vm.form.group_id == group.data.id
+                                  }
+                                },
+                                [_vm._v(_vm._s(group.data.name))]
+                              )
+                            }),
+                            0
+                          )
+                    ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "button-list" }, [
+              _c("button", { staticClass: "half", attrs: { type: "submit" } }, [
+                _vm._v("Termin hinzufügen")
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "half gray",
+                  attrs: { type: "reset" },
+                  on: {
+                    click: function($event) {
+                      return _vm.$router.back()
+                    }
+                  }
+                },
+                [_vm._v("Abbrechen")]
+              )
+            ])
+          ],
+          1
+        )
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Disabled.vue?vue&type=template&id=108ca09b&scoped=true&":
 /*!******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/Disabled.vue?vue&type=template&id=108ca09b&scoped=true& ***!
@@ -108820,26 +109180,63 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-var render, staticRenderFns
-var script = {}
+/* harmony import */ var _AppointmentEdit_vue_vue_type_template_id_1bf9f4fa_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AppointmentEdit.vue?vue&type=template&id=1bf9f4fa&scoped=true& */ "./resources/js/views/AppointmentEdit.vue?vue&type=template&id=1bf9f4fa&scoped=true&");
+/* harmony import */ var _AppointmentEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AppointmentEdit.vue?vue&type=script&lang=js& */ "./resources/js/views/AppointmentEdit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
-  script,
-  render,
-  staticRenderFns,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AppointmentEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AppointmentEdit_vue_vue_type_template_id_1bf9f4fa_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AppointmentEdit_vue_vue_type_template_id_1bf9f4fa_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  null,
+  "1bf9f4fa",
   null
   
 )
 
+/* hot reload */
+if (false) { var api; }
 component.options.__file = "resources/js/views/AppointmentEdit.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/views/AppointmentEdit.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/views/AppointmentEdit.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AppointmentEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./AppointmentEdit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/AppointmentEdit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AppointmentEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/views/AppointmentEdit.vue?vue&type=template&id=1bf9f4fa&scoped=true&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/views/AppointmentEdit.vue?vue&type=template&id=1bf9f4fa&scoped=true& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AppointmentEdit_vue_vue_type_template_id_1bf9f4fa_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./AppointmentEdit.vue?vue&type=template&id=1bf9f4fa&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/AppointmentEdit.vue?vue&type=template&id=1bf9f4fa&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AppointmentEdit_vue_vue_type_template_id_1bf9f4fa_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AppointmentEdit_vue_vue_type_template_id_1bf9f4fa_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
