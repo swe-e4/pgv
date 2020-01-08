@@ -23,6 +23,7 @@ class Appointment extends JsonResource
                 'description' => $this->description,
                 'traffic_light_status' => $this->traffic_light_status,
                 'rating' => $this->rating,
+                'group_id' => $this->group_id,
                 'group' => new Group($this->group),
                 'last_update' => $this->updated_at->diffForHumans(),
             ]
