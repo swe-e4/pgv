@@ -42,7 +42,7 @@
         </ul>
         <ul class="only-mobile">
             <li>
-                <router-link to="/disabled" class="disabled">
+                <router-link to="/settings">
                     <i class="fas fa-cog"></i>
                     <span>Einstellungen</span>
                 </router-link>

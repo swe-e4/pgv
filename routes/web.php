@@ -14,4 +14,5 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
+Route::post('/api/changepassword', 'ChangePasswordController@store');
 Route::get('/{any}', 'AppController@index')->where('any', '.*');

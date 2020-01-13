@@ -30,13 +30,15 @@ class AppointmentController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('viewAny', Appointment::class);
-        
+
         return AppointmentResource::collection(Appointment::all());
+        
     }
 
     /**

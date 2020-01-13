@@ -17747,25 +17747,25 @@ body.layout [disabled]:hover {
   cursor: not-allowed !important;
 }
 
-body.layout .sidebar::-webkit-scrollbar, body.layout form input:not([type=checkbox])::-webkit-scrollbar, form body.layout input:not([type=checkbox])::-webkit-scrollbar,
+body.layout .table > .max::-webkit-scrollbar, body.layout .table > .scroll::-webkit-scrollbar, body.layout .sidebar::-webkit-scrollbar, body.layout form input:not([type=checkbox])::-webkit-scrollbar, form body.layout input:not([type=checkbox])::-webkit-scrollbar,
 body.layout form select:not([type=checkbox])::-webkit-scrollbar,
 form body.layout select:not([type=checkbox])::-webkit-scrollbar {
   width: 6px;
 }
 
-body.layout .sidebar::-webkit-scrollbar-track, body.layout form input:not([type=checkbox])::-webkit-scrollbar-track, form body.layout input:not([type=checkbox])::-webkit-scrollbar-track,
+body.layout .table > .max::-webkit-scrollbar-track, body.layout .table > .scroll::-webkit-scrollbar-track, body.layout .sidebar::-webkit-scrollbar-track, body.layout form input:not([type=checkbox])::-webkit-scrollbar-track, form body.layout input:not([type=checkbox])::-webkit-scrollbar-track,
 body.layout form select:not([type=checkbox])::-webkit-scrollbar-track,
 form body.layout select:not([type=checkbox])::-webkit-scrollbar-track {
   background-color: #e2e8f0;
 }
 
-body.layout .sidebar::-webkit-scrollbar-thumb, body.layout form input:not([type=checkbox])::-webkit-scrollbar-thumb, form body.layout input:not([type=checkbox])::-webkit-scrollbar-thumb,
+body.layout .table > .max::-webkit-scrollbar-thumb, body.layout .table > .scroll::-webkit-scrollbar-thumb, body.layout .sidebar::-webkit-scrollbar-thumb, body.layout form input:not([type=checkbox])::-webkit-scrollbar-thumb, form body.layout input:not([type=checkbox])::-webkit-scrollbar-thumb,
 body.layout form select:not([type=checkbox])::-webkit-scrollbar-thumb,
 form body.layout select:not([type=checkbox])::-webkit-scrollbar-thumb {
   background-color: #cbd5e0;
 }
 
-body.layout .sidebar::-webkit-scrollbar-thumb:hover, body.layout form input:not([type=checkbox])::-webkit-scrollbar-thumb:hover, form body.layout input:not([type=checkbox])::-webkit-scrollbar-thumb:hover,
+body.layout .table > .max::-webkit-scrollbar-thumb:hover, body.layout .table > .scroll::-webkit-scrollbar-thumb:hover, body.layout .sidebar::-webkit-scrollbar-thumb:hover, body.layout form input:not([type=checkbox])::-webkit-scrollbar-thumb:hover, form body.layout input:not([type=checkbox])::-webkit-scrollbar-thumb:hover,
 body.layout form select:not([type=checkbox])::-webkit-scrollbar-thumb:hover,
 form body.layout select:not([type=checkbox])::-webkit-scrollbar-thumb:hover {
   background-color: #a0aec0;
@@ -18356,6 +18356,11 @@ nav > .toggle:hover {
 .table > .scroll {
   overflow-x: auto;
   width: 100%;
+}
+
+.table > .max {
+  overflow-y: auto;
+  max-height: calc(100vh * (2 / 3));
 }
 
 .table table {

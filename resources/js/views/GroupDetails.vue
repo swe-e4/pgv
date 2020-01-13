@@ -7,7 +7,7 @@
             <div class="box">
                 <div class="table center">
                     <h1>Gruppen: {{ this.group.name }}</h1>
-                    <div class="scroll">
+                    <div class="scroll max">
                         <table class="w-full">
                             <thead>
                                 <tr>
@@ -27,7 +27,7 @@
                                         </a>
                                     </th>
 
-                                    <th v-for="student in this.group.students" :key="student.data.id">
+                                    <th v-for="student in group.students" :key="student.data.id">
                                         <a>
                                             <span>{{ student.data.first_name}} {{ student.data.surname}}</span>
                                         </a>
@@ -35,73 +35,25 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr v-for="appointment in group.appointments" :key="appointment.data.id">
                                     <td>
                                         <a>
-                                            <span>07.11.19</span>
+                                            <span>{{ appointment.data.name }}</span>
                                         </a>
                                     </td>
                                     <td>
                                         <a>
-                                            <span>0</span>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a>
-                                            <span>
-                                                <div class="traffic-light-status green"></div>
-                                            </span>
-                                        </a>
-                                    </td>
-                                    <td v-for="student in this.group.students" :key="student.data.id">
-                                        <a>
-                                            <i class="fas fa-check"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a>
-                                            <span>14.11.19</span>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a>
-                                            <span>+</span>
+                                            <span>{{ appointment.data.rating }}</span>
                                         </a>
                                     </td>
                                     <td>
                                         <a>
                                             <span>
-                                                <div class="traffic-light-status yellow"></div>
+                                                <div class="traffic-light-status" v-bind:class="appointment.data.traffic_light_status"></div>
                                             </span>
                                         </a>
                                     </td>
-                                    <td v-for="student in this.group.students" :key="student.data.id">
-                                        <a>
-                                            <i class="fas fa-times"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a>
-                                            <span>21.11.19</span>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a>
-                                            <span>-</span>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a>
-                                            <span>
-                                                <div class="traffic-light-status red"></div>
-                                            </span>
-                                        </a>
-                                    </td>
-                                    <td v-for="student in this.group.students" :key="student.data.id">
+                                    <td v-for="student in group.students" :key="student.data.id">
                                         <a>
                                             <i class="fas fa-check"></i>
                                         </a>
@@ -201,10 +153,21 @@
         },
         
         mounted() {
-            axios.get('/api/group/' + this.$route.params.id + '?students')
+            axios.get('/api/group/' + this.$route.params.id + '?students&appointments')
                 .then(response => {
                     this.group = response.data.data;
                     this.loading = false;
+
+                    this.pieDataOne.labels = this.group.ratings.sort();
+                    for(var label in this.pieDataOne.labels) {
+                        this.pieDataOne.datasets[0].data.push(this.group.rating_count[this.pieDataOne.labels[label]]);
+                    }
+
+                    this.pieDataTwo.labels = this.group.traffic_lights.sort();
+                    for(var label in this.pieDataTwo.labels) {
+                        this.pieDataTwo.datasets[0].data.push(this.group.traffic_light_status_count[this.pieDataTwo.labels[label]]);
+                    }
+
                 })
                 .catch(errors => {
                     if(errors.response.status === 404 || errors.response.status === 403) {
@@ -230,27 +193,28 @@
                 milestonesOrderByColumn: 'name',
                 milestonesOrderByAsc: true,
                 pieDataOne: {
-                    labels: ['Label 1', 'Label 2'],
+                    labels: [],
                     datasets: [
                         {
                             backgroundColor: [
                                 '#48bb78',
-                                '#ed8936'
+                                '#f56565',
+                                '#ecc94b'
                             ],
-                            data: [30, 60]
+                            data: []
                         }
                     ]
                 },
                 pieDataTwo: {
-                    labels: ['Label 1', 'Label 2', 'Label 3'],
+                    labels: [],
                     datasets: [
                         {
                             backgroundColor: [
                                 '#48bb78',
-                                '#ed8936',
-                                '#f56565'
+                                '#f56565',
+                                '#ecc94b',
                             ],
-                            data: [30, 60, 80]
+                            data: []
                         }
                     ]
                 }

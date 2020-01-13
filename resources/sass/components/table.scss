@@ -31,7 +31,13 @@
         }
     }
     > .scroll {
+        @extend %fancy-scrollbar;
         @apply overflow-x-auto w-full;
+    }
+    > .max {
+        @extend %fancy-scrollbar;
+        @apply overflow-y-auto;
+        max-height: calc(100vh * (2 / 3));
     }
     table {
         @apply table-auto;

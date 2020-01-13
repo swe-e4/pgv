@@ -25,6 +25,7 @@ import MilestoneEdit from './views/MilestoneEdit';
 
 import Disabled from './views/Disabled';
 
+import Settings from './views/Settings';
 import Logout from './actions/Logout';
 
 Vue.use(VueRouter);
@@ -109,7 +110,12 @@ export default new VueRouter({
             path: '/disabled', component: Disabled,
             meta: {title: 'Deaktiviert' }
         },
-
+        
+        {
+            path: '/settings', component: Settings,
+            meta: {title: 'Einstellungen' }
+            
+        },
         {
             path: '/logout', component: Logout
         }
