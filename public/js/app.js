@@ -4129,6 +4129,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_Alert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Alert */ "./resources/js/components/Alert.vue");
 //
 //
 //
@@ -4267,8 +4268,66 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Overview"
+  name: "Overview",
+  components: {
+    Alert: _components_Alert__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/api/appointment?week').then(function (response) {
+      _this.appointments = response.data;
+      _this.loadingAppointments = false;
+    })["catch"](function (errors) {
+      _this.loadingAppointments = false;
+    });
+    axios.get('/api/group?overview').then(function (response) {
+      _this.groups = response.data.data;
+      _this.loadingGroups = false;
+    })["catch"](function (errors) {
+      _this.loadingGroups = false;
+    });
+  },
+  data: function data() {
+    return {
+      loadingGroups: true,
+      groups: null,
+      search: '',
+      orderByColumn: 'name',
+      orderByAsc: true,
+      loadingAppointments: true,
+      appointments: null
+    };
+  },
+  methods: {
+    orderBy: function orderBy(orderByColumn) {
+      this.orderByAsc = this.orderByColumn == orderByColumn ? !this.orderByAsc : true;
+      this.orderByColumn = orderByColumn;
+    }
+  },
+  computed: {
+    filteredGroups: function filteredGroups() {
+      var _this2 = this;
+
+      return _.orderBy(this.groups.filter(function (group) {
+        return group.data.name.toLowerCase().match(_this2.search.toLowerCase()) || group.data.adviser && group.data.adviser.data.full_name.toLowerCase().match(_this2.search.toLowerCase());
+      }), 'data.' + this.orderByColumn, this.orderByAsc ? 'asc' : 'desc');
+    }
+  }
 });
 
 /***/ }),
@@ -89976,7 +90035,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "button-list" }, [
               _c("button", { staticClass: "half", attrs: { type: "submit" } }, [
-                _vm._v("Termin hinzufügen")
+                _vm._v("Termin bearbeiten")
               ]),
               _vm._v(" "),
               _c(
@@ -91646,185 +91705,296 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "box disabled" }, [
-      _c("div", { staticClass: "table" }, [
-        _c("h1", [_vm._v("Wochenplan")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "scroll" }, [
-          _c("table", { staticClass: "w-full" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(4, function(i) {
-                return _c("tr", { key: i }, [
-                  _c("td", [
-                    _c("a", [
-                      _c("span", [_vm._v("Gruppe A" + _vm._s(i))]),
-                      _vm._v(" "),
-                      _c("small", [_vm._v("10:00-10:45 Uhr")])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("a", [
-                      _c("span", [_vm._v("Gruppe B" + _vm._s(i))]),
-                      _vm._v(" "),
-                      _c("small", [_vm._v("10:00-10:45 Uhr")])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("a", [
-                      _c("span", [_vm._v("Gruppe C" + _vm._s(i))]),
-                      _vm._v(" "),
-                      _c("small", [_vm._v("10:00-10:45 Uhr")])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("a", [
-                      _c("span", [_vm._v("Gruppe D" + _vm._s(i))]),
-                      _vm._v(" "),
-                      _c("small", [_vm._v("10:00-10:45 Uhr")])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("a", [
-                      _c("span", [_vm._v("Gruppe E" + _vm._s(i))]),
-                      _vm._v(" "),
-                      _c("small", [_vm._v("10:00-10:45 Uhr")])
+    _c(
+      "div",
+      { staticClass: "box" },
+      [
+        _vm.loadingAppointments
+          ? _c("Alert", {
+              attrs: {
+                type: "info",
+                title: "Information",
+                message: "Wochenplan wird geladen."
+              }
+            })
+          : _c("div", [
+              _vm.appointments.length === 0
+                ? _c("div", { staticClass: "alert info" }, [
+                    _c("h1", [_vm._v("Information")]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("Diese Woche stehen keine Termine an.")])
+                  ])
+                : _c("div", { staticClass: "table" }, [
+                    _c("h1", [_vm._v("Wochenplan")]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "scroll" }, [
+                      _c("table", { staticClass: "w-full" }, [
+                        _c("thead", [
+                          _c("tr", [
+                            _c("th", [
+                              _c("a", [_c("span", [_vm._v("Montag")])])
+                            ]),
+                            _vm._v(" "),
+                            _c("th", [
+                              _c("a", [_c("span", [_vm._v("Dienstag")])])
+                            ]),
+                            _vm._v(" "),
+                            _c("th", [
+                              _c("a", [_c("span", [_vm._v("Mittwoch")])])
+                            ]),
+                            _vm._v(" "),
+                            _c("th", [
+                              _c("a", [_c("span", [_vm._v("Donnerstag")])])
+                            ]),
+                            _vm._v(" "),
+                            _c("th", [
+                              _c("a", [_c("span", [_vm._v("Freitag")])])
+                            ]),
+                            _vm._v(" "),
+                            _c("th", [
+                              _c("a", [_c("span", [_vm._v("Samstag")])])
+                            ]),
+                            _vm._v(" "),
+                            _c("th", [
+                              _c("a", [_c("span", [_vm._v("Sonntag")])])
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "tbody",
+                          _vm._l(_vm.appointments, function(row, rowIndex) {
+                            return _c(
+                              "tr",
+                              { key: rowIndex },
+                              _vm._l(row, function(day, dayIndex) {
+                                return _c("td", { key: dayIndex }, [
+                                  day != false
+                                    ? _c("a", [
+                                        _c("span", [
+                                          _vm._v(
+                                            _vm._s(day.data.group.data.name)
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("small", [
+                                          _vm._v(
+                                            _vm._s(
+                                              day.data.start.split(" ")[1]
+                                            ) +
+                                              " - " +
+                                              _vm._s(day.data.end.split(" ")[1])
+                                          )
+                                        ])
+                                      ])
+                                    : _c("a", [
+                                        _vm._v(
+                                          "\n                                        -\n                                    "
+                                        )
+                                      ])
+                                ])
+                              }),
+                              0
+                            )
+                          }),
+                          0
+                        )
+                      ])
                     ])
                   ])
-                ])
-              }),
-              0
-            )
-          ])
-        ])
-      ])
-    ]),
+            ])
+      ],
+      1
+    ),
     _vm._v(" "),
-    _c("div", { staticClass: "box disabled" }, [
-      _c("div", { staticClass: "table" }, [
-        _c("h1", [_vm._v("Termine")]),
-        _vm._v(" "),
-        _vm._m(1),
-        _vm._v(" "),
-        _c("div", { staticClass: "scroll" }, [
-          _c("table", { staticClass: "w-full" }, [
-            _vm._m(2),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(6, function(i) {
-                return _c("tr", { key: i }, [
-                  _c("td", [
-                    _c("a", [_c("span", [_vm._v("Gruppe A" + _vm._s(i))])])
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(3, true),
-                  _vm._v(" "),
-                  _vm._m(4, true),
-                  _vm._v(" "),
-                  _vm._m(5, true)
-                ])
-              }),
-              0
-            )
-          ])
-        ])
-      ])
-    ])
+    _c(
+      "div",
+      { staticClass: "box" },
+      [
+        _vm.loadingGroups
+          ? _c("Alert", {
+              attrs: {
+                type: "info",
+                title: "Information",
+                message: "Gruppen werden geladen."
+              }
+            })
+          : _c("div", [
+              _vm.groups.length === 0
+                ? _c("div", { staticClass: "alert info" }, [
+                    _c("h1", [_vm._v("Information")]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("Es exestieren derzeit keine Gruppen.")])
+                  ])
+                : _c("div", { staticClass: "table" }, [
+                    _c("h1", [_vm._v("Termine")]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "search" }, [
+                      _c("i", { staticClass: "fas fa-search fa-xs" }),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.search,
+                            expression: "search"
+                          }
+                        ],
+                        attrs: {
+                          type: "text",
+                          placeholder: "Suche",
+                          "aria-label": "Suche"
+                        },
+                        domProps: { value: _vm.search },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.search = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "scroll" }, [
+                      _c("table", { staticClass: "w-full" }, [
+                        _c("thead", [
+                          _c("tr", [
+                            _c(
+                              "th",
+                              {
+                                staticClass: "sort",
+                                class: [
+                                  {
+                                    up:
+                                      _vm.orderByColumn == "name" &&
+                                      _vm.orderByAsc == true
+                                  },
+                                  {
+                                    down:
+                                      _vm.orderByColumn == "name" &&
+                                      _vm.orderByAsc == false
+                                  }
+                                ],
+                                on: {
+                                  click: function($event) {
+                                    return _vm.orderBy("name")
+                                  }
+                                }
+                              },
+                              [_c("a", [_c("span", [_vm._v("Gruppe")])])]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "sort",
+                                class: [
+                                  {
+                                    up:
+                                      _vm.orderByColumn ==
+                                        "adviser.data.full_name" &&
+                                      _vm.orderByAsc == true
+                                  },
+                                  {
+                                    down:
+                                      _vm.orderByColumn ==
+                                        "adviser.data.full_name" &&
+                                      _vm.orderByAsc == false
+                                  }
+                                ],
+                                on: {
+                                  click: function($event) {
+                                    return _vm.orderBy("adviser.data.full_name")
+                                  }
+                                }
+                              },
+                              [_c("a", [_c("span", [_vm._v("Betreuer")])])]
+                            ),
+                            _vm._v(" "),
+                            _c("th", [
+                              _c("a", [_c("span", [_vm._v("Nächster Termin")])])
+                            ]),
+                            _vm._v(" "),
+                            _c("th", { staticClass: "actions" }, [
+                              _c("a", [_c("span", [_vm._v("Aktion")])])
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "tbody",
+                          _vm._l(_vm.filteredGroups, function(group) {
+                            return _c("tr", { key: group.data.id }, [
+                              _c("td", [
+                                _c("a", [
+                                  _c("span", [_vm._v(_vm._s(group.data.name))])
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c("a", [
+                                  _c("span", [
+                                    _vm._v(
+                                      _vm._s(
+                                        group.data.adviser
+                                          ? group.data.adviser.data.full_name
+                                          : ""
+                                      )
+                                    )
+                                  ])
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c("a", [
+                                  _c("span", [
+                                    _vm._v(
+                                      _vm._s(
+                                        group.data.next_appointment
+                                          ? group.data.next_appointment.data
+                                              .start
+                                          : ""
+                                      )
+                                    )
+                                  ])
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                { staticClass: "actions" },
+                                [
+                                  _c(
+                                    "router-link",
+                                    {
+                                      attrs: { to: "/group/" + group.data.id }
+                                    },
+                                    [
+                                      _c("i", { staticClass: "fas fa-info" }),
+                                      _vm._v(" "),
+                                      _c("span", [_vm._v("Details")])
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            ])
+                          }),
+                          0
+                        )
+                      ])
+                    ])
+                  ])
+            ])
+      ],
+      1
+    )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_c("a", [_c("span", [_vm._v("Montag")])])]),
-        _vm._v(" "),
-        _c("th", [_c("a", [_c("span", [_vm._v("Dienstag")])])]),
-        _vm._v(" "),
-        _c("th", [_c("a", [_c("span", [_vm._v("Mittwoch")])])]),
-        _vm._v(" "),
-        _c("th", [_c("a", [_c("span", [_vm._v("Donnerstag")])])]),
-        _vm._v(" "),
-        _c("th", [_c("a", [_c("span", [_vm._v("Freitag")])])])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "search disabled" }, [
-      _c("i", { staticClass: "fas fa-search fa-xs" }),
-      _vm._v(" "),
-      _c("input", {
-        attrs: {
-          type: "text",
-          placeholder: "Suche",
-          "aria-label": "Suche",
-          disabled: ""
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", { staticClass: "sort up" }, [
-          _c("a", [_c("span", [_vm._v("Gruppe")])])
-        ]),
-        _vm._v(" "),
-        _c("th", { staticClass: "sort" }, [
-          _c("a", [_c("span", [_vm._v("Betreuer")])])
-        ]),
-        _vm._v(" "),
-        _c("th", { staticClass: "sort" }, [
-          _c("a", [_c("span", [_vm._v("Nächster Termin")])])
-        ]),
-        _vm._v(" "),
-        _c("th", [_c("a", [_c("span", [_vm._v("Aktion")])])])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [_c("a", [_c("span", [_vm._v("Herr Muster")])])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("a", [_c("span", [_vm._v("Dienstag 10:15-11:00 Uhr")])])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("a", [
-        _c("span", [
-          _vm._v("Gruppendetails "),
-          _c("i", { staticClass: "fas fa-angle-right" })
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

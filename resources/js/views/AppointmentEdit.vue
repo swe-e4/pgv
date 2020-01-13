@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="button-list">
-                    <button class="half" type="submit">Termin hinzufügen</button>
+                    <button class="half" type="submit">Termin bearbeiten</button>
                     <button class="half gray" type="reset" @click="$router.back();">Abbrechen</button>
                 </div>
             </form>

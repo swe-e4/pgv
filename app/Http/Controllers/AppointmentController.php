@@ -6,6 +6,7 @@ use App\Appointment;
 use Illuminate\Http\Request;
 use App\Http\Resources\Appointment as AppointmentResource;
 use Symfony\Component\HttpFoundation\Response;
+use Carbon\Carbon;
 
 class AppointmentController extends Controller
 {
@@ -37,7 +38,49 @@ class AppointmentController extends Controller
     {
         $this->authorize('viewAny', Appointment::class);
 
-        return AppointmentResource::collection(Appointment::all());
+        if($request->has('week')) {
+            $appointments = Appointment::whereBetween('start', [Carbon::now()->startOfWeek(),Carbon::now()->endOfWeek()])->orderBy('start', 'asc')->get();
+            $week = array(
+                '1' => [],
+                '2' => [],
+                '3' => [],
+                '4' => [],
+                '5' => [],
+                '6' => [],
+                '7' => [],
+            );
+            foreach($appointments as $appointment) {
+                array_push($week[date('w', strtotime($appointment->start))], new AppointmentResource($appointment));
+            }
+            $maxRows = 0;
+            foreach($week as $day) {
+                if(count($day) > $maxRows) {
+                    $maxRows = count($day);
+                }
+            }
+            $result = array();
+            for($i = 0; $i < $maxRows; $i++) {
+                $result[$i] = array(
+                    '1' => [],
+                    '2' => [],
+                    '3' => [],
+                    '4' => [],
+                    '5' => [],
+                    '6' => [],
+                    '7' => [],
+                );
+                foreach($week as $key => $day) {
+                    if(count($day) > $i) {
+                        $result[$i][$key] = $day[$i];
+                    } else {
+                        $result[$i][$key] = false;
+                    }
+                }
+            }
+            return $result;
+        } else {
+            return AppointmentResource::collection(Appointment::all());
+        }
         
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Carbon\Carbon;
 
 class Group extends JsonResource
 {
@@ -40,6 +41,11 @@ class Group extends JsonResource
                 }
             }
         }
+        $next_appointment = null;
+        if($this->appointments && $request->has('overview')) {
+            $next_appointment_db = $this->appointments()->whereRaw('NOW() <= start')->orderBy('start', 'asc')->first();
+            $next_appointment = new Appointment($next_appointment_db);
+        }
         return array_merge_recursive(
             [
                 'data' => [
@@ -52,7 +58,12 @@ class Group extends JsonResource
                 'links' => [
                     'self' => $this->path(),
                 ]
-            ], 
+            ],
+            ($request->has('overview') ? [
+                'data' => [
+                    'next_appointment' => $next_appointment,
+                ]
+            ] : []),
             ($request->has('students') ? [
                 'data' => [
                     'students' => Student::collection($this->students),

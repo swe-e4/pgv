@@ -27,7 +27,7 @@ class Appointment extends JsonResource
                     'last_update' => $this->updated_at->diffForHumans(),
                 ]
             ], 
-            (!$request->has('appointments') ? [
+            (!$request->has('appointments') && !$request->has('overview')? [
                 'data' => [
                     'group_id' => $this->group_id,
                     'group' => new Group($this->group),
