@@ -24,4 +24,14 @@ class Appointment extends Model
     {
         return $this->belongsTo('App\Group');
     }
+    
+    /**
+     * students
+     *
+     * @return void
+     */
+    public function students()
+    {
+        return $this->belongsToMany('App\Student');
+    }
 }

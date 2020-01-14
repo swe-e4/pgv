@@ -8,6 +8,7 @@ use App\Http\Resources\Appointment as AppointmentResource;
 use Symfony\Component\HttpFoundation\Response;
 use Carbon\Carbon;
 use App\User;
+use App\Student;
 
 class AppointmentController extends Controller
 {
@@ -154,6 +155,16 @@ class AppointmentController extends Controller
 
         $appointment->update($this->validateDataTest());
         
+        if($request->has('studentList') || $request->has('updateStudents')) {
+            if($request->input('studentList')) {
+                $list = $request->input('studentList');
+            } else {
+                $list = [];
+            }
+            $studentList = Student::find($list);
+            $appointment->students()->sync($studentList);
+        }
+
         return (new AppointmentResource($appointment))
             ->response()
             ->setStatusCode(Response::HTTP_OK);

@@ -14,6 +14,12 @@ class Appointment extends JsonResource
      */
     public function toArray($request)
     {
+        $studentIDs = [];
+        if($request->has('studentList')) {
+            foreach($this->students as $student) {
+                array_push($studentIDs, $student->id);
+            }
+        }
         return array_merge_recursive (
             [
                 'data' => [
@@ -31,6 +37,11 @@ class Appointment extends JsonResource
                 'data' => [
                     'group_id' => $this->group_id,
                     'group' => new Group($this->group),
+                ]
+            ] : [] ), 
+            ($request->has('studentList')? [
+                'data' => [
+                    'studentIDs' => $studentIDs,
                 ]
             ] : [] )
             );

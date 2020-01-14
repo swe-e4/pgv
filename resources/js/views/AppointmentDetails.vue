@@ -14,7 +14,7 @@
                 <div class="group checkbox">
                     <div v-for="student in appointment.group.data.students" :key="student.data.id">
                         
-                        <input type="checkbox" v-bind:id="student.data.id" name="studentList" v-model="form.studentList" v-bind:value="student.data.id">
+                        <input type="checkbox" v-bind:id="student.data.id" name="studentList" v-model="form.studentList" v-bind:value="student.data.id" v-bind:checked="appointment.studentIDs.includes(student.data.id)">
                         <label v-bind:for="student.data.id">{{ student.data.surname }}, {{ student.data.first_name }}</label>
                     
                     </div>
@@ -77,12 +77,13 @@
         },
         
         mounted() {
-            axios.get('/api/appointment/' + this.$route.params.id + '?students')
+            axios.get('/api/appointment/' + this.$route.params.id + '?students&studentList')
                 .then(response => {
                     this.appointment = response.data.data;
                     this.form.rating = this.appointment.rating;
                     this.form.traffic_light_status = this.appointment.traffic_light_status;
                     this.form.description = this.appointment.description;
+                    this.form.studentList = this.appointment.studentIDs;
                     this.loading = false;
                 })
                 .catch(errors => {
@@ -99,7 +100,8 @@
                     'rating': 0,
                     'traffic_light_status': 'green',
                     'description': '',
-                    'students': [],
+                    'studentList': [],
+                    'updateStudents': true,
                 },
                 loading: true,
                 success: false,
@@ -112,11 +114,9 @@
                 axios.patch('/api/appointment/' + this.$route.params.id, this.form)
                     .then(response => {
                         this.success = true;
-                        console.log(response);
                     })
                     .catch(errors => {
                         this.success = false,
-                        console.log(response);
                         this.errors = errors.response.data.errors;
                     });
             }

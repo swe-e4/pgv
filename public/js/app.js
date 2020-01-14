@@ -3043,11 +3043,12 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('/api/appointment/' + this.$route.params.id + '?students').then(function (response) {
+    axios.get('/api/appointment/' + this.$route.params.id + '?students&studentList').then(function (response) {
       _this.appointment = response.data.data;
       _this.form.rating = _this.appointment.rating;
       _this.form.traffic_light_status = _this.appointment.traffic_light_status;
       _this.form.description = _this.appointment.description;
+      _this.form.studentList = _this.appointment.studentIDs;
       _this.loading = false;
     })["catch"](function (errors) {
       if (errors.response.status === 404 || errors.response.status === 403) {
@@ -3062,7 +3063,8 @@ __webpack_require__.r(__webpack_exports__);
         'rating': 0,
         'traffic_light_status': 'green',
         'description': '',
-        'students': []
+        'studentList': [],
+        'updateStudents': true
       },
       loading: true,
       success: false
@@ -3075,10 +3077,8 @@ __webpack_require__.r(__webpack_exports__);
       console.log(this.form);
       axios.patch('/api/appointment/' + this.$route.params.id, this.form).then(function (response) {
         _this2.success = true;
-        console.log(response);
       })["catch"](function (errors) {
-        _this2.success = false, console.log(response);
-        _this2.errors = errors.response.data.errors;
+        _this2.success = false, _this2.errors = errors.response.data.errors;
       });
     }
   }
@@ -90094,6 +90094,9 @@ var render = function() {
                         },
                         domProps: {
                           value: student.data.id,
+                          checked: _vm.appointment.studentIDs.includes(
+                            student.data.id
+                          ),
                           checked: Array.isArray(_vm.form.studentList)
                             ? _vm._i(_vm.form.studentList, student.data.id) > -1
                             : _vm.form.studentList
