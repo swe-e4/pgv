@@ -18,6 +18,7 @@ import StudentEdit from './views/StudentEdit';
 import Appointment from './views/Appointment';
 import AppointmentCreate from './views/AppointmentCreate';
 import AppointmentEdit from './views/AppointmentEdit';
+import AppointmentDetails from './views/AppointmentDetails';
 
 import Milestone from './views/Milestone';
 import MilestoneCreate from './views/MilestoneCreate';
@@ -91,6 +92,10 @@ export default new VueRouter({
         {
             path: '/appointment/:id/edit', component: AppointmentEdit,
             meta: {title: 'Termin bearbeiten' }
+        },
+        {
+            path: '/appointment/:id', component: AppointmentDetails,
+            meta: {title: 'Termin' }
         },
         
         {

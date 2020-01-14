@@ -17747,27 +17747,35 @@ body.layout [disabled]:hover {
   cursor: not-allowed !important;
 }
 
-body.layout .table > .max::-webkit-scrollbar, body.layout .table > .scroll::-webkit-scrollbar, body.layout .sidebar::-webkit-scrollbar, body.layout form input:not([type=checkbox])::-webkit-scrollbar, form body.layout input:not([type=checkbox])::-webkit-scrollbar,
-body.layout form select:not([type=checkbox])::-webkit-scrollbar,
-form body.layout select:not([type=checkbox])::-webkit-scrollbar {
+body.layout .table > .max::-webkit-scrollbar, body.layout .table > .scroll::-webkit-scrollbar, body.layout .sidebar::-webkit-scrollbar, body.layout form input:not([type=checkbox]):not([type=radio])::-webkit-scrollbar, form body.layout input:not([type=checkbox]):not([type=radio])::-webkit-scrollbar,
+body.layout form select:not([type=checkbox]):not([type=radio])::-webkit-scrollbar,
+form body.layout select:not([type=checkbox]):not([type=radio])::-webkit-scrollbar,
+body.layout form textarea:not([type=checkbox]):not([type=radio])::-webkit-scrollbar,
+form body.layout textarea:not([type=checkbox]):not([type=radio])::-webkit-scrollbar {
   width: 6px;
 }
 
-body.layout .table > .max::-webkit-scrollbar-track, body.layout .table > .scroll::-webkit-scrollbar-track, body.layout .sidebar::-webkit-scrollbar-track, body.layout form input:not([type=checkbox])::-webkit-scrollbar-track, form body.layout input:not([type=checkbox])::-webkit-scrollbar-track,
-body.layout form select:not([type=checkbox])::-webkit-scrollbar-track,
-form body.layout select:not([type=checkbox])::-webkit-scrollbar-track {
+body.layout .table > .max::-webkit-scrollbar-track, body.layout .table > .scroll::-webkit-scrollbar-track, body.layout .sidebar::-webkit-scrollbar-track, body.layout form input:not([type=checkbox]):not([type=radio])::-webkit-scrollbar-track, form body.layout input:not([type=checkbox]):not([type=radio])::-webkit-scrollbar-track,
+body.layout form select:not([type=checkbox]):not([type=radio])::-webkit-scrollbar-track,
+form body.layout select:not([type=checkbox]):not([type=radio])::-webkit-scrollbar-track,
+body.layout form textarea:not([type=checkbox]):not([type=radio])::-webkit-scrollbar-track,
+form body.layout textarea:not([type=checkbox]):not([type=radio])::-webkit-scrollbar-track {
   background-color: #e2e8f0;
 }
 
-body.layout .table > .max::-webkit-scrollbar-thumb, body.layout .table > .scroll::-webkit-scrollbar-thumb, body.layout .sidebar::-webkit-scrollbar-thumb, body.layout form input:not([type=checkbox])::-webkit-scrollbar-thumb, form body.layout input:not([type=checkbox])::-webkit-scrollbar-thumb,
-body.layout form select:not([type=checkbox])::-webkit-scrollbar-thumb,
-form body.layout select:not([type=checkbox])::-webkit-scrollbar-thumb {
+body.layout .table > .max::-webkit-scrollbar-thumb, body.layout .table > .scroll::-webkit-scrollbar-thumb, body.layout .sidebar::-webkit-scrollbar-thumb, body.layout form input:not([type=checkbox]):not([type=radio])::-webkit-scrollbar-thumb, form body.layout input:not([type=checkbox]):not([type=radio])::-webkit-scrollbar-thumb,
+body.layout form select:not([type=checkbox]):not([type=radio])::-webkit-scrollbar-thumb,
+form body.layout select:not([type=checkbox]):not([type=radio])::-webkit-scrollbar-thumb,
+body.layout form textarea:not([type=checkbox]):not([type=radio])::-webkit-scrollbar-thumb,
+form body.layout textarea:not([type=checkbox]):not([type=radio])::-webkit-scrollbar-thumb {
   background-color: #cbd5e0;
 }
 
-body.layout .table > .max::-webkit-scrollbar-thumb:hover, body.layout .table > .scroll::-webkit-scrollbar-thumb:hover, body.layout .sidebar::-webkit-scrollbar-thumb:hover, body.layout form input:not([type=checkbox])::-webkit-scrollbar-thumb:hover, form body.layout input:not([type=checkbox])::-webkit-scrollbar-thumb:hover,
-body.layout form select:not([type=checkbox])::-webkit-scrollbar-thumb:hover,
-form body.layout select:not([type=checkbox])::-webkit-scrollbar-thumb:hover {
+body.layout .table > .max::-webkit-scrollbar-thumb:hover, body.layout .table > .scroll::-webkit-scrollbar-thumb:hover, body.layout .sidebar::-webkit-scrollbar-thumb:hover, body.layout form input:not([type=checkbox]):not([type=radio])::-webkit-scrollbar-thumb:hover, form body.layout input:not([type=checkbox]):not([type=radio])::-webkit-scrollbar-thumb:hover,
+body.layout form select:not([type=checkbox]):not([type=radio])::-webkit-scrollbar-thumb:hover,
+form body.layout select:not([type=checkbox]):not([type=radio])::-webkit-scrollbar-thumb:hover,
+body.layout form textarea:not([type=checkbox]):not([type=radio])::-webkit-scrollbar-thumb:hover,
+form body.layout textarea:not([type=checkbox]):not([type=radio])::-webkit-scrollbar-thumb:hover {
   background-color: #a0aec0;
   width: 12px;
 }
@@ -17904,8 +17912,9 @@ form label.description {
   font-weight: 400;
 }
 
-form input:not([type=checkbox]),
-form select:not([type=checkbox]) {
+form input:not([type=checkbox]):not([type=radio]),
+form select:not([type=checkbox]):not([type=radio]),
+form textarea:not([type=checkbox]):not([type=radio]) {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   border-width: 1px;
   width: 100%;
@@ -17918,14 +17927,17 @@ form select:not([type=checkbox]) {
   outline: 0;
 }
 
-form input:not([type=checkbox]):focus, form input:not([type=checkbox]):hover,
-form select:not([type=checkbox]):focus,
-form select:not([type=checkbox]):hover {
+form input:not([type=checkbox]):not([type=radio]):focus, form input:not([type=checkbox]):not([type=radio]):hover,
+form select:not([type=checkbox]):not([type=radio]):focus,
+form select:not([type=checkbox]):not([type=radio]):hover,
+form textarea:not([type=checkbox]):not([type=radio]):focus,
+form textarea:not([type=checkbox]):not([type=radio]):hover {
   border-color: #38b2ac;
 }
 
-form input:not([type=checkbox]).error,
-form select:not([type=checkbox]).error {
+form input:not([type=checkbox]):not([type=radio]).error,
+form select:not([type=checkbox]):not([type=radio]).error,
+form textarea:not([type=checkbox]):not([type=radio]).error {
   border-color: #f56565;
   background-color: #fff5f5;
 }
@@ -17940,7 +17952,7 @@ form .group {
   overflow-y: hidden;
 }
 
-form .group.checkbox > label {
+form .group.checkbox label {
   display: inline;
 }
 

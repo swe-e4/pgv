@@ -32,6 +32,12 @@
                                             <span>{{ student.data.first_name}} {{ student.data.surname}}</span>
                                         </a>
                                     </th>
+                                    
+                                    <th class="actions" v-if="user.role_id == 2">
+                                        <a>
+                                            <span>Aktion</span>
+                                        </a>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,8 +64,13 @@
                                             <i class="fas fa-check"></i>
                                         </a>
                                     </td>
+                                    <td class="actions" v-if="user.role_id == 2">
+                                        <router-link :to="'/appointment/' + appointment.data.id + ''">
+                                            <i class="fas fa-pencil-alt"></i>
+                                            <span>Bearbeiten</span>
+                                        </router-link>
+                                    </td>
                                 </tr>
-
                             </tbody>
                         </table>
                     </div>

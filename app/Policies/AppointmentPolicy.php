@@ -30,7 +30,7 @@ class AppointmentPolicy
      */
     public function view(User $user, Appointment $appointment)
     {
-        return ($user->role_id == 1 || $user->id == $appointment->group()->adviser_id);
+        return ($user->role_id == 1 || $user->id == $appointment->group->adviser_id);
     }
 
     /**
@@ -53,7 +53,7 @@ class AppointmentPolicy
      */
     public function update(User $user, Appointment $appointment)
     {
-        return ($user->role_id == 1 || $user->id == $appointment->group()->adviser_id);
+        return ($user->role_id == 1 || $user->id == $appointment->group->adviser_id);
     }
 
     /**

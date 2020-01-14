@@ -28,6 +28,14 @@ class AppointmentController extends Controller
             'rating' => 'nullable|in:+,0,-',
         ]);
     }
+    private function validateDataTest()
+    {
+        return request()->validate([
+            'description' => 'nullable',
+            'traffic_light_status' => 'nullable|in:red,yellow,green',
+            'rating' => 'nullable|in:+,0,-',
+        ]);
+    }
 
     /**
      * Display a listing of the resource.
@@ -54,7 +62,9 @@ class AppointmentController extends Controller
             );
             foreach($appointments as $appointment) {
                 if($user->role_id == 1 || $appointment->group->adviser_id == $user->id) {
-                    array_push($week[date('w', strtotime($appointment->start))], new AppointmentResource($appointment));
+                    if(date('w', strtotime($appointment->start)) > 0) {
+                        array_push($week[date('w', strtotime($appointment->start))], new AppointmentResource($appointment));
+                    }
                 }
             }
             $maxRows = 0;
@@ -142,7 +152,7 @@ class AppointmentController extends Controller
     {
         $this->authorize('update', $appointment);
 
-        $appointment->update($this->validateData());
+        $appointment->update($this->validateDataTest());
         
         return (new AppointmentResource($appointment))
             ->response()
