@@ -61,7 +61,8 @@
                                     </td>
                                     <td v-for="student in group.students" :key="student.data.id">
                                         <a>
-                                            <i class="fas fa-check"></i>
+                                            <i class="fas fa-check" v-if="appointment.data.studentIDs.includes(student.data.id)"></i>
+                                            <i class="fas fa-times" v-else></i>
                                         </a>
                                     </td>
                                     <td class="actions" v-if="user.role_id == 2">
@@ -169,7 +170,7 @@
         },
         
         mounted() {
-            axios.get('/api/group/' + this.$route.params.id + '?students&appointments')
+            axios.get('/api/group/' + this.$route.params.id + '?students&appointments&studentList')
                 .then(response => {
                     this.group = response.data.data;
                     this.loading = false;

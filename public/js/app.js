@@ -3034,6 +3034,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AppointmentDetails",
@@ -3676,6 +3677,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3688,7 +3690,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('/api/group/' + this.$route.params.id + '?students&appointments').then(function (response) {
+    axios.get('/api/group/' + this.$route.params.id + '?students&appointments&studentList').then(function (response) {
       _this.group = response.data.data;
       _this.loading = false;
       _this.pieDataOne.labels = _this.group.ratings.sort();
@@ -90027,35 +90029,36 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _vm.success
-        ? _c("Alert", {
-            attrs: {
-              type: "success",
-              title: "Bearbeitet",
-              message: "Termindetails wurden erfolgreich bearbeitet."
-            }
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.loading
-        ? _c(
-            "div",
-            { staticClass: "box" },
-            [
-              _c("Alert", {
-                attrs: {
-                  type: "info",
-                  title: "Information",
-                  message: "Termindetails werden geladen."
-                }
-              })
-            ],
-            1
-          )
-        : _c("div", { staticClass: "box" }, [
+  return _c("div", [
+    _vm.loading
+      ? _c(
+          "div",
+          { staticClass: "box" },
+          [
+            _c("Alert", {
+              attrs: {
+                type: "info",
+                title: "Information",
+                message: "Termindetails werden geladen."
+              }
+            })
+          ],
+          1
+        )
+      : _c(
+          "div",
+          { staticClass: "box" },
+          [
+            _vm.success
+              ? _c("Alert", {
+                  attrs: {
+                    type: "success",
+                    title: "Bearbeitet",
+                    message: "Termindetails wurden erfolgreich bearbeitet."
+                  }
+                })
+              : _vm._e(),
+            _vm._v(" "),
             _c("h1", [_vm._v(_vm._s(_vm.appointment.name))]),
             _vm._v(" "),
             _c(
@@ -90391,10 +90394,10 @@ var render = function() {
                 ])
               ]
             )
-          ])
-    ],
-    1
-  )
+          ],
+          1
+        )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -91237,7 +91240,13 @@ var render = function() {
                           _vm._v(" "),
                           _vm._l(_vm.group.students, function(student) {
                             return _c("td", { key: student.data.id }, [
-                              _vm._m(4, true)
+                              _c("a", [
+                                appointment.data.studentIDs.includes(
+                                  student.data.id
+                                )
+                                  ? _c("i", { staticClass: "fas fa-check" })
+                                  : _c("i", { staticClass: "fas fa-times" })
+                              ])
                             ])
                           }),
                           _vm._v(" "),
@@ -91498,12 +91507,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("a", [_c("span", [_vm._v("Aktion")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", [_c("i", { staticClass: "fas fa-check" })])
   }
 ]
 render._withStripped = true

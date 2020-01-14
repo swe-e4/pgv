@@ -1,11 +1,12 @@
 <template>
     <div>
-        <Alert type="success" title="Bearbeitet" message="Termindetails wurden erfolgreich bearbeitet." v-if="success"/>
-
         <div class="box" v-if="loading">
             <Alert type="info" title="Information" message="Termindetails werden geladen."/>
         </div>
         <div class="box" v-else>
+            
+            <Alert type="success" title="Bearbeitet" message="Termindetails wurden erfolgreich bearbeitet." v-if="success"/>
+
             <h1>{{ appointment.name }}</h1>
             
             <form @submit.prevent="submitForm">
