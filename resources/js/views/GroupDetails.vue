@@ -126,8 +126,9 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a>
-                                                <span></span>
+                                            <datetime zone="Europe/Berlin" value-zone="Europe/Berlin" v-model="milestone.data.done_on" format="yyyy-MM-dd" auto v-if="user.role_id == 2" @close="updateMilestone(milestone.data.id, milestone.data.done_on)"></datetime>
+                                            <a v-else>
+                                                <span>{{ milestone.data.done_on != null ? milestone.data.done_on : '-' }}</span>
                                             </a>
                                         </td>
                                     </tr>
@@ -146,6 +147,10 @@
     import PieChart from '../components/PieChart'
     export default {
         name: "GroupDetails",
+
+        props: [
+            'user',
+        ],
 
         components: {
             Alert,
@@ -174,7 +179,7 @@
                         this.$router.push('/group');
                     }
                 });
-            axios.get('/api/milestone')
+            axios.get('/api/milestone?group_id=' + this.$route.params.id)
                 .then(response => {
                     this.milestones = response.data.data;
                     this.milestonesLoading = false;
@@ -225,6 +230,18 @@
             milestonesOrderBy: function(milestonesOrderByColumn) {
                 this.milestonesOrderByAsc = (this.milestonesOrderByColumn == milestonesOrderByColumn ? !this.milestonesOrderByAsc : true);
                 this.milestonesOrderByColumn = milestonesOrderByColumn;
+            },
+            updateMilestone: function(milestoneID, doneOn) {
+                axios.patch('/api/group/' + this.$route.params.id, {
+                    'milestoneID': milestoneID,
+                    'doneOn': doneOn
+                    })
+                    .then(response => {
+                        console.log(response);
+                    })
+                    .catch(errors => {
+                        console.log(errors);
+                    });
             }
         },
 

@@ -9,7 +9,7 @@
             </li>
         </ul>
         <ul>
-            <li>
+            <li v-if="user.role_id == 1">
                 <router-link to="/adviser">
                     <i class="fas fa-users"></i>
                     <span>Betreuer</span>
@@ -21,7 +21,7 @@
                     <span>Gruppe</span>
                 </router-link>
             </li>
-            <li>
+            <li v-if="user.role_id == 1">
                 <router-link to="/student">
                     <i class="fas fa-graduation-cap"></i>
                     <span>Studenten</span>
@@ -33,7 +33,7 @@
                     <span>Termine</span>
                 </router-link>
             </li>
-            <li>
+            <li v-if="user.role_id == 1">
                 <router-link to="/milestone">
                     <i class="fas fa-briefcase"></i>
                     <span>Meilensteine</span>
@@ -63,6 +63,7 @@
 
         props: [
             'active',
+            'user',
         ]
     }
 </script>

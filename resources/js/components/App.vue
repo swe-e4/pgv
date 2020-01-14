@@ -7,10 +7,10 @@
         <main>
 
             <!-- Sidebar -->
-            <Sidebar :active="this.sidebarActive"></Sidebar>
+            <Sidebar :active="this.sidebarActive" :user="user"></Sidebar>
 
             <!-- Content -->
-            <router-view class="content"></router-view>
+            <router-view class="content" :user="user"></router-view>
             
         </main>
     </div>

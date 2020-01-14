@@ -17944,15 +17944,15 @@ form .group.checkbox > label {
   display: inline;
 }
 
-form .vdatetime .vdatetime-popup__header,
-form .vdatetime .vdatetime-calendar__month__day--selected > span > span,
-form .vdatetime .vdatetime-calendar__month__day--selected:hover > span > span {
+.vdatetime .vdatetime-popup__header,
+.vdatetime .vdatetime-calendar__month__day--selected > span > span,
+.vdatetime .vdatetime-calendar__month__day--selected:hover > span > span {
   background-color: #38b2ac;
 }
 
-form .vdatetime .vdatetime-year-picker__item--selected,
-form .vdatetime .vdatetime-time-picker__item--selected,
-form .vdatetime .vdatetime-popup__actions__button {
+.vdatetime .vdatetime-year-picker__item--selected,
+.vdatetime .vdatetime-time-picker__item--selected,
+.vdatetime .vdatetime-popup__actions__button {
   color: #38b2ac;
 }
 
@@ -18450,6 +18450,19 @@ nav > .toggle:hover {
 .table table > tbody > tr > td > a > small {
   display: block;
   color: #4a5568;
+}
+
+.table table > tbody > tr > td > .vdatetime {
+  display: block;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  width: 100%;
+}
+
+.table table > tbody > tr > td > .vdatetime > input {
+  width: 100%;
 }
 
 .table table > tbody > tr > td > ul {

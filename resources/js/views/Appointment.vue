@@ -2,7 +2,7 @@
     <div>
         <div class="box">
 
-            <div class="button-list">
+            <div class="button-list" v-if="user.role_id == 1">
                 <router-link to="/appointment/create" tag="button">
                     <i class="fas fa-plus"></i>
                     <span>Termin hinzufügen</span>
@@ -54,7 +54,7 @@
                                                 <span>Gruppe</span>
                                             </a>
                                         </th>
-                                        <th class="actions">
+                                        <th class="actions" v-if="user.role_id == 1">
                                             <a>
                                                 <span>Aktion</span>
                                             </a>
@@ -78,7 +78,7 @@
                                                 <span>{{ appointment.data.group.data.name }}</span>
                                             </a>
                                         </td>
-                                        <td class="actions">
+                                        <td class="actions" v-if="user.role_id == 1">
                                             <router-link :to="'/appointment/' + appointment.data.id + '/edit'">
                                                 <i class="fas fa-pencil-alt"></i>
                                                 <span>Bearbeiten</span>
@@ -112,6 +112,10 @@
             Alert,
             DatePicker,
         },
+
+        props: [
+            'user',
+        ],
 
         mounted() {
             axios.get('/api/appointment')

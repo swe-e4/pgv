@@ -98,7 +98,7 @@
                                     <th class="sort" @click="orderBy('adviser.data.full_name')" v-bind:class="[
                                         { up: orderByColumn == 'adviser.data.full_name' && orderByAsc == true },
                                         { down: orderByColumn == 'adviser.data.full_name' && orderByAsc == false }
-                                        ]">
+                                        ]" v-if="user.role_id == 1">
                                         <a>
                                             <span>Betreuer</span>
                                         </a>
@@ -122,7 +122,7 @@
                                             <span>{{ group.data.name }}</span>
                                         </a>
                                     </td>
-                                    <td>
+                                    <td v-if="user.role_id == 1">
                                         <a>
                                             <span>{{ group.data.adviser ? group.data.adviser.data.full_name : '' }}</span>
                                         </a>
@@ -156,6 +156,10 @@
         components: {
             Alert
         },
+
+        props: [
+            'user',
+        ],
         
         mounted() {
             axios.get('/api/appointment?week')

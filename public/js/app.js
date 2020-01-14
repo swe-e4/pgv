@@ -2184,7 +2184,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Sidebar",
-  props: ['active']
+  props: ['active', 'user']
 });
 
 /***/ }),
@@ -2723,6 +2723,7 @@ __webpack_require__.r(__webpack_exports__);
     Alert: _components_Alert__WEBPACK_IMPORTED_MODULE_0__["default"],
     DatePicker: v_calendar_lib_components_date_picker_umd__WEBPACK_IMPORTED_MODULE_1___default.a
   },
+  props: ['user'],
   mounted: function mounted() {
     var _this = this;
 
@@ -3220,6 +3221,7 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     Alert: _components_Alert__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  props: ['user'],
   mounted: function mounted() {
     var _this = this;
 
@@ -3531,10 +3533,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GroupDetails",
+  props: ['user'],
   components: {
     Alert: _components_Alert__WEBPACK_IMPORTED_MODULE_0__["default"],
     PieChart: _components_PieChart__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -3561,7 +3565,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.$router.push('/group');
       }
     });
-    axios.get('/api/milestone').then(function (response) {
+    axios.get('/api/milestone?group_id=' + this.$route.params.id).then(function (response) {
       _this.milestones = response.data.data;
       _this.milestonesLoading = false;
     })["catch"](function (errors) {
@@ -3596,6 +3600,16 @@ __webpack_require__.r(__webpack_exports__);
     milestonesOrderBy: function milestonesOrderBy(milestonesOrderByColumn) {
       this.milestonesOrderByAsc = this.milestonesOrderByColumn == milestonesOrderByColumn ? !this.milestonesOrderByAsc : true;
       this.milestonesOrderByColumn = milestonesOrderByColumn;
+    },
+    updateMilestone: function updateMilestone(milestoneID, doneOn) {
+      axios.patch('/api/group/' + this.$route.params.id, {
+        'milestoneID': milestoneID,
+        'doneOn': doneOn
+      }).then(function (response) {
+        console.log(response);
+      })["catch"](function (errors) {
+        console.log(errors);
+      });
     }
   },
   computed: {
@@ -4286,6 +4300,7 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     Alert: _components_Alert__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  props: ['user'],
   mounted: function mounted() {
     var _this = this;
 
@@ -88313,9 +88328,14 @@ var render = function() {
       _c(
         "main",
         [
-          _c("Sidebar", { attrs: { active: this.sidebarActive } }),
+          _c("Sidebar", {
+            attrs: { active: this.sidebarActive, user: _vm.user }
+          }),
           _vm._v(" "),
-          _c("router-view", { staticClass: "content" })
+          _c("router-view", {
+            staticClass: "content",
+            attrs: { user: _vm.user }
+          })
         ],
         1
       )
@@ -88492,17 +88512,19 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("ul", [
-      _c(
-        "li",
-        [
-          _c("router-link", { attrs: { to: "/adviser" } }, [
-            _c("i", { staticClass: "fas fa-users" }),
-            _vm._v(" "),
-            _c("span", [_vm._v("Betreuer")])
-          ])
-        ],
-        1
-      ),
+      _vm.user.role_id == 1
+        ? _c(
+            "li",
+            [
+              _c("router-link", { attrs: { to: "/adviser" } }, [
+                _c("i", { staticClass: "fas fa-users" }),
+                _vm._v(" "),
+                _c("span", [_vm._v("Betreuer")])
+              ])
+            ],
+            1
+          )
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "li",
@@ -88516,17 +88538,19 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "li",
-        [
-          _c("router-link", { attrs: { to: "/student" } }, [
-            _c("i", { staticClass: "fas fa-graduation-cap" }),
-            _vm._v(" "),
-            _c("span", [_vm._v("Studenten")])
-          ])
-        ],
-        1
-      ),
+      _vm.user.role_id == 1
+        ? _c(
+            "li",
+            [
+              _c("router-link", { attrs: { to: "/student" } }, [
+                _c("i", { staticClass: "fas fa-graduation-cap" }),
+                _vm._v(" "),
+                _c("span", [_vm._v("Studenten")])
+              ])
+            ],
+            1
+          )
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "li",
@@ -88540,17 +88564,19 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "li",
-        [
-          _c("router-link", { attrs: { to: "/milestone" } }, [
-            _c("i", { staticClass: "fas fa-briefcase" }),
-            _vm._v(" "),
-            _c("span", [_vm._v("Meilensteine")])
-          ])
-        ],
-        1
-      )
+      _vm.user.role_id == 1
+        ? _c(
+            "li",
+            [
+              _c("router-link", { attrs: { to: "/milestone" } }, [
+                _c("i", { staticClass: "fas fa-briefcase" }),
+                _vm._v(" "),
+                _c("span", [_vm._v("Meilensteine")])
+              ])
+            ],
+            1
+          )
+        : _vm._e()
     ]),
     _vm._v(" "),
     _c("ul", { staticClass: "only-mobile" }, [
@@ -89353,22 +89379,24 @@ var render = function() {
       "div",
       { staticClass: "box" },
       [
-        _c(
-          "div",
-          { staticClass: "button-list" },
-          [
-            _c(
-              "router-link",
-              { attrs: { to: "/appointment/create", tag: "button" } },
+        _vm.user.role_id == 1
+          ? _c(
+              "div",
+              { staticClass: "button-list" },
               [
-                _c("i", { staticClass: "fas fa-plus" }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Termin hinzufügen")])
-              ]
+                _c(
+                  "router-link",
+                  { attrs: { to: "/appointment/create", tag: "button" } },
+                  [
+                    _c("i", { staticClass: "fas fa-plus" }),
+                    _vm._v(" "),
+                    _c("span", [_vm._v("Termin hinzufügen")])
+                  ]
+                )
+              ],
+              1
             )
-          ],
-          1
-        ),
+          : _vm._e(),
         _vm._v(" "),
         _vm.error
           ? _c("Alert", {
@@ -89490,9 +89518,11 @@ var render = function() {
                                   [_c("a", [_c("span", [_vm._v("Gruppe")])])]
                                 ),
                                 _vm._v(" "),
-                                _c("th", { staticClass: "actions" }, [
-                                  _c("a", [_c("span", [_vm._v("Aktion")])])
-                                ])
+                                _vm.user.role_id == 1
+                                  ? _c("th", { staticClass: "actions" }, [
+                                      _c("a", [_c("span", [_vm._v("Aktion")])])
+                                    ])
+                                  : _vm._e()
                               ])
                             ]),
                             _vm._v(" "),
@@ -89542,49 +89572,53 @@ var render = function() {
                                     ])
                                   ]),
                                   _vm._v(" "),
-                                  _c(
-                                    "td",
-                                    { staticClass: "actions" },
-                                    [
-                                      _c(
-                                        "router-link",
-                                        {
-                                          attrs: {
-                                            to:
-                                              "/appointment/" +
-                                              appointment.data.id +
-                                              "/edit"
-                                          }
-                                        },
+                                  _vm.user.role_id == 1
+                                    ? _c(
+                                        "td",
+                                        { staticClass: "actions" },
                                         [
-                                          _c("i", {
-                                            staticClass: "fas fa-pencil-alt"
-                                          }),
+                                          _c(
+                                            "router-link",
+                                            {
+                                              attrs: {
+                                                to:
+                                                  "/appointment/" +
+                                                  appointment.data.id +
+                                                  "/edit"
+                                              }
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass: "fas fa-pencil-alt"
+                                              }),
+                                              _vm._v(" "),
+                                              _c("span", [_vm._v("Bearbeiten")])
+                                            ]
+                                          ),
                                           _vm._v(" "),
-                                          _c("span", [_vm._v("Bearbeiten")])
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "a",
-                                        {
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.destroy(appointment)
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass: "far fa-trash-alt"
-                                          }),
-                                          _vm._v(" "),
-                                          _c("span", [_vm._v("Löschen")])
-                                        ]
+                                          _c(
+                                            "a",
+                                            {
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.destroy(
+                                                    appointment
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass: "far fa-trash-alt"
+                                              }),
+                                              _vm._v(" "),
+                                              _c("span", [_vm._v("Löschen")])
+                                            ]
+                                          )
+                                        ],
+                                        1
                                       )
-                                    ],
-                                    1
-                                  )
+                                    : _vm._e()
                                 ])
                               }),
                               0
@@ -90124,22 +90158,24 @@ var render = function() {
       "div",
       { staticClass: "box" },
       [
-        _c(
-          "div",
-          { staticClass: "button-list" },
-          [
-            _c(
-              "router-link",
-              { attrs: { to: "/group/create", tag: "button" } },
+        _vm.user.role_id == 1
+          ? _c(
+              "div",
+              { staticClass: "button-list" },
               [
-                _c("i", { staticClass: "fas fa-plus" }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Gruppe hinzufügen")])
-              ]
+                _c(
+                  "router-link",
+                  { attrs: { to: "/group/create", tag: "button" } },
+                  [
+                    _c("i", { staticClass: "fas fa-plus" }),
+                    _vm._v(" "),
+                    _c("span", [_vm._v("Gruppe hinzufügen")])
+                  ]
+                )
+              ],
+              1
             )
-          ],
-          1
-        ),
+          : _vm._e(),
         _vm._v(" "),
         _vm.error
           ? _c("Alert", {
@@ -90298,39 +90334,46 @@ var render = function() {
                                 "td",
                                 { staticClass: "actions" },
                                 [
-                                  _c(
-                                    "router-link",
-                                    {
-                                      attrs: {
-                                        to: "/group/" + group.data.id + "/edit"
-                                      }
-                                    },
-                                    [
-                                      _c("i", {
-                                        staticClass: "fas fa-pencil-alt"
-                                      }),
-                                      _vm._v(" "),
-                                      _c("span", [_vm._v("Bearbeiten")])
-                                    ]
-                                  ),
+                                  _vm.user.role_id == 1
+                                    ? _c(
+                                        "router-link",
+                                        {
+                                          attrs: {
+                                            to:
+                                              "/group/" +
+                                              group.data.id +
+                                              "/edit"
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fas fa-pencil-alt"
+                                          }),
+                                          _vm._v(" "),
+                                          _c("span", [_vm._v("Bearbeiten")])
+                                        ]
+                                      )
+                                    : _vm._e(),
                                   _vm._v(" "),
-                                  _c(
-                                    "a",
-                                    {
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.destroy(group)
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c("i", {
-                                        staticClass: "far fa-trash-alt"
-                                      }),
-                                      _vm._v(" "),
-                                      _c("span", [_vm._v("Löschen")])
-                                    ]
-                                  ),
+                                  _vm.user.role_id == 1
+                                    ? _c(
+                                        "a",
+                                        {
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.destroy(group)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "far fa-trash-alt"
+                                          }),
+                                          _vm._v(" "),
+                                          _c("span", [_vm._v("Löschen")])
+                                        ]
+                                      )
+                                    : _vm._e(),
                                   _vm._v(" "),
                                   _c(
                                     "router-link",
@@ -90354,7 +90397,7 @@ var render = function() {
                     ])
                   ]),
               _vm._v(" "),
-              _vm.groups.length >= 10
+              _vm.groups.length >= 10 && _vm.user.role_id == 1
                 ? _c(
                     "div",
                     { staticClass: "button-list" },
@@ -90805,7 +90848,53 @@ var render = function() {
                                       ])
                                     ]),
                                     _vm._v(" "),
-                                    _c("td", [_c("a", [_c("span")])])
+                                    _c(
+                                      "td",
+                                      [
+                                        _vm.user.role_id == 2
+                                          ? _c("datetime", {
+                                              attrs: {
+                                                zone: "Europe/Berlin",
+                                                "value-zone": "Europe/Berlin",
+                                                format: "yyyy-MM-dd",
+                                                auto: ""
+                                              },
+                                              on: {
+                                                close: function($event) {
+                                                  return _vm.updateMilestone(
+                                                    milestone.data.id,
+                                                    milestone.data.done_on
+                                                  )
+                                                }
+                                              },
+                                              model: {
+                                                value: milestone.data.done_on,
+                                                callback: function($$v) {
+                                                  _vm.$set(
+                                                    milestone.data,
+                                                    "done_on",
+                                                    $$v
+                                                  )
+                                                },
+                                                expression:
+                                                  "milestone.data.done_on"
+                                              }
+                                            })
+                                          : _c("a", [
+                                              _c("span", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    milestone.data.done_on !=
+                                                      null
+                                                      ? milestone.data.done_on
+                                                      : "-"
+                                                  )
+                                                )
+                                              ])
+                                            ])
+                                      ],
+                                      1
+                                    )
                                   ])
                                 }),
                                 0
@@ -91887,32 +91976,36 @@ var render = function() {
                               [_c("a", [_c("span", [_vm._v("Gruppe")])])]
                             ),
                             _vm._v(" "),
-                            _c(
-                              "th",
-                              {
-                                staticClass: "sort",
-                                class: [
+                            _vm.user.role_id == 1
+                              ? _c(
+                                  "th",
                                   {
-                                    up:
-                                      _vm.orderByColumn ==
-                                        "adviser.data.full_name" &&
-                                      _vm.orderByAsc == true
+                                    staticClass: "sort",
+                                    class: [
+                                      {
+                                        up:
+                                          _vm.orderByColumn ==
+                                            "adviser.data.full_name" &&
+                                          _vm.orderByAsc == true
+                                      },
+                                      {
+                                        down:
+                                          _vm.orderByColumn ==
+                                            "adviser.data.full_name" &&
+                                          _vm.orderByAsc == false
+                                      }
+                                    ],
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.orderBy(
+                                          "adviser.data.full_name"
+                                        )
+                                      }
+                                    }
                                   },
-                                  {
-                                    down:
-                                      _vm.orderByColumn ==
-                                        "adviser.data.full_name" &&
-                                      _vm.orderByAsc == false
-                                  }
-                                ],
-                                on: {
-                                  click: function($event) {
-                                    return _vm.orderBy("adviser.data.full_name")
-                                  }
-                                }
-                              },
-                              [_c("a", [_c("span", [_vm._v("Betreuer")])])]
-                            ),
+                                  [_c("a", [_c("span", [_vm._v("Betreuer")])])]
+                                )
+                              : _vm._e(),
                             _vm._v(" "),
                             _c("th", [
                               _c("a", [_c("span", [_vm._v("Nächster Termin")])])
@@ -91934,19 +92027,22 @@ var render = function() {
                                 ])
                               ]),
                               _vm._v(" "),
-                              _c("td", [
-                                _c("a", [
-                                  _c("span", [
-                                    _vm._v(
-                                      _vm._s(
-                                        group.data.adviser
-                                          ? group.data.adviser.data.full_name
-                                          : ""
-                                      )
-                                    )
+                              _vm.user.role_id == 1
+                                ? _c("td", [
+                                    _c("a", [
+                                      _c("span", [
+                                        _vm._v(
+                                          _vm._s(
+                                            group.data.adviser
+                                              ? group.data.adviser.data
+                                                  .full_name
+                                              : ""
+                                          )
+                                        )
+                                      ])
+                                    ])
                                   ])
-                                ])
-                              ]),
+                                : _vm._e(),
                               _vm._v(" "),
                               _c("td", [
                                 _c("a", [

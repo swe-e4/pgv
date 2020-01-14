@@ -113,6 +113,12 @@
                             @apply block text-gray-700;
                         }
                     }
+                    > .vdatetime {
+                        @apply block px-4 py-2 w-full;
+                        > input {
+                            @apply w-full;
+                        }
+                    }
                     > ul {
                         @apply block px-4 py-2;
                     }

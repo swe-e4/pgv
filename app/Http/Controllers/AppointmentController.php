@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\Appointment as AppointmentResource;
 use Symfony\Component\HttpFoundation\Response;
 use Carbon\Carbon;
+use App\User;
 
 class AppointmentController extends Controller
 {
@@ -38,7 +39,9 @@ class AppointmentController extends Controller
     {
         $this->authorize('viewAny', Appointment::class);
 
+
         if($request->has('week')) {
+            $user = User::find(auth()->user()->id);
             $appointments = Appointment::whereBetween('start', [Carbon::now()->startOfWeek(),Carbon::now()->endOfWeek()])->orderBy('start', 'asc')->get();
             $week = array(
                 '1' => [],
@@ -50,7 +53,9 @@ class AppointmentController extends Controller
                 '7' => [],
             );
             foreach($appointments as $appointment) {
-                array_push($week[date('w', strtotime($appointment->start))], new AppointmentResource($appointment));
+                if($user->role_id == 1 || $appointment->group->adviser_id == $user->id) {
+                    array_push($week[date('w', strtotime($appointment->start))], new AppointmentResource($appointment));
+                }
             }
             $maxRows = 0;
             foreach($week as $day) {
@@ -79,7 +84,20 @@ class AppointmentController extends Controller
             }
             return $result;
         } else {
-            return AppointmentResource::collection(Appointment::all());
+            $user = User::find(auth()->user()->id);
+            $appointments = Appointment::all();
+            if($user->role_id == 2) {
+                $tmp = array();
+                foreach($appointments as $appointment) {
+                    if($appointment->group->adviser_id == $user->id) {
+                        array_push($tmp, new AppointmentResource($appointment));
+                    }
+                }
+                $appointments = array('data' => $tmp);
+            } else {
+                $appointments = AppointmentResource::collection($appointments);
+            }
+            return $appointments;
         }
         
     }
