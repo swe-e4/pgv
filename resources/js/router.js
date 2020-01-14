@@ -15,12 +15,18 @@ import Student from './views/Student';
 import StudentCreate from './views/StudentCreate';
 import StudentEdit from './views/StudentEdit';
 
+import Appointment from './views/Appointment';
+import AppointmentCreate from './views/AppointmentCreate';
+import AppointmentEdit from './views/AppointmentEdit';
+import AppointmentDetails from './views/AppointmentDetails';
+
 import Milestone from './views/Milestone';
 import MilestoneCreate from './views/MilestoneCreate';
 import MilestoneEdit from './views/MilestoneEdit';
 
 import Disabled from './views/Disabled';
 
+import Settings from './views/Settings';
 import Logout from './actions/Logout';
 
 Vue.use(VueRouter);
@@ -76,6 +82,23 @@ export default new VueRouter({
         },
         
         {
+            path: '/appointment', component: Appointment,
+            meta: {title: 'Termine' }
+        },
+        {
+            path: '/appointment/create', component: AppointmentCreate,
+            meta: {title: 'Termin hinzufügen' }
+        },
+        {
+            path: '/appointment/:id/edit', component: AppointmentEdit,
+            meta: {title: 'Termin bearbeiten' }
+        },
+        {
+            path: '/appointment/:id', component: AppointmentDetails,
+            meta: {title: 'Termin' }
+        },
+        
+        {
             path: '/milestone', component: Milestone,
             meta: {title: 'Meilensteine' }
         },
@@ -92,7 +115,12 @@ export default new VueRouter({
             path: '/disabled', component: Disabled,
             meta: {title: 'Deaktiviert' }
         },
-
+        
+        {
+            path: '/settings', component: Settings,
+            meta: {title: 'Einstellungen' }
+            
+        },
         {
             path: '/logout', component: Logout
         }

@@ -6,6 +6,9 @@ use App\Group;
 use App\Http\Resources\Group as GroupResource;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\User;
+use App\Milestone;
+use Carbon\Carbon;
 
 class GroupController extends Controller
 {
@@ -30,8 +33,14 @@ class GroupController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Group::class);
-        
-        return GroupResource::collection(Group::all());
+
+        $user = User::find(auth()->user()->id);
+
+        if($user->role_id == 2) {
+            return GroupResource::collection(Group::where('adviser_id', $user->id)->get());
+        } else {
+            return GroupResource::collection(Group::all());
+        }
     }
 
     /**
@@ -43,8 +52,6 @@ class GroupController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create', Group::class);
-
-        $group = Group::create($this->validateData());
 
         return (new GroupResource($group))
             ->response()
@@ -74,11 +81,34 @@ class GroupController extends Controller
     {
         $this->authorize('update', $group);
 
-        $group->update($this->validateData());
-        
-        return (new GroupResource($group))
-            ->response()
-            ->setStatusCode(Response::HTTP_OK);
+        if($request->has('milestoneID') && $request->has('doneOn') &&
+            $milestone = Milestone::find($request->input('milestoneID'))) {
+
+            $doneOn = Carbon::parse($request->input('doneOn'))->format('Y-m-d');
+
+            if($group_milestone = \DB::table('group_milestone')->where('group_id', $group->id)->where('milestone_id', $milestone->id)->first()) {
+                $affected = \DB::table('group_milestone')->where('id', $group_milestone->id)->update(['done_on' => $doneOn]);
+            } else {
+                \DB::table('group_milestone')->insert(
+                    [
+                        'group_id' => $group->id,
+                        'milestone_id' => $milestone->id,
+                        'done_on' => $doneOn
+                    ]
+                );
+
+            }
+            return response('', Response::HTTP_OK);
+
+        } else {
+            $group = Group::create($this->validateData());
+
+            $group->update($this->validateData());
+            
+            return (new GroupResource($group))
+                ->response()
+                ->setStatusCode(Response::HTTP_OK);
+        }
     }
 
     /**

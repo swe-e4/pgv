@@ -7,12 +7,31 @@ use Illuminate\Database\Eloquent\Model;
 class Appointment extends Model
 {
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'start', 'end', 'group_id', 'description', 'traffic_light_status', 'rating'
+    ];
+    
+    /**
      * group
      *
      * @return void
      */
     public function group()
     {
-        return $this->hasOne('App\Group');
+        return $this->belongsTo('App\Group');
+    }
+    
+    /**
+     * students
+     *
+     * @return void
+     */
+    public function students()
+    {
+        return $this->belongsToMany('App\Student');
     }
 }

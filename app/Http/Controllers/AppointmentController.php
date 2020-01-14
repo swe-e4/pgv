@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Appointment;
 use Illuminate\Http\Request;
+use App\Http\Resources\Appointment as AppointmentResource;
+use Symfony\Component\HttpFoundation\Response;
+use Carbon\Carbon;
+use App\User;
+use App\Student;
 
 class AppointmentController extends Controller
 {
@@ -16,33 +21,96 @@ class AppointmentController extends Controller
     {
         return request()->validate([
             'name' => 'required',
-            'start' => 'nullable|date',
-            'end' => 'nullable|date',
+            'start' => 'nullable',
+            'end' => 'nullable',
             'group_id' => 'nullable|bail|numeric|exists:groups,id',
-            'description' => 'required',
-            'traffic_light_status' => 'required|in:red,yellow,green',
-            'rating' => '|in:+,0,-',
+            'description' => 'nullable',
+            'traffic_light_status' => 'nullable|in:red,yellow,green',
+            'rating' => 'nullable|in:+,0,-',
+        ]);
+    }
+    private function validateDataTest()
+    {
+        return request()->validate([
+            'description' => 'nullable',
+            'traffic_light_status' => 'nullable|in:red,yellow,green',
+            'rating' => 'nullable|in:+,0,-',
         ]);
     }
 
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $this->authorize('viewAny', Appointment::class);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+
+        if($request->has('week')) {
+            $user = User::find(auth()->user()->id);
+            $appointments = Appointment::whereBetween('start', [Carbon::now()->startOfWeek(),Carbon::now()->endOfWeek()])->orderBy('start', 'asc')->get();
+            $week = array(
+                '1' => [],
+                '2' => [],
+                '3' => [],
+                '4' => [],
+                '5' => [],
+                '6' => [],
+                '7' => [],
+            );
+            foreach($appointments as $appointment) {
+                if($user->role_id == 1 || $appointment->group->adviser_id == $user->id) {
+                    if(date('w', strtotime($appointment->start)) > 0) {
+                        array_push($week[date('w', strtotime($appointment->start))], new AppointmentResource($appointment));
+                    }
+                }
+            }
+            $maxRows = 0;
+            foreach($week as $day) {
+                if(count($day) > $maxRows) {
+                    $maxRows = count($day);
+                }
+            }
+            $result = array();
+            for($i = 0; $i < $maxRows; $i++) {
+                $result[$i] = array(
+                    '1' => [],
+                    '2' => [],
+                    '3' => [],
+                    '4' => [],
+                    '5' => [],
+                    '6' => [],
+                    '7' => [],
+                );
+                foreach($week as $key => $day) {
+                    if(count($day) > $i) {
+                        $result[$i][$key] = $day[$i];
+                    } else {
+                        $result[$i][$key] = false;
+                    }
+                }
+            }
+            return $result;
+        } else {
+            $user = User::find(auth()->user()->id);
+            $appointments = Appointment::all();
+            if($user->role_id == 2) {
+                $tmp = array();
+                foreach($appointments as $appointment) {
+                    if($appointment->group->adviser_id == $user->id) {
+                        array_push($tmp, new AppointmentResource($appointment));
+                    }
+                }
+                $appointments = array('data' => $tmp);
+            } else {
+                $appointments = AppointmentResource::collection($appointments);
+            }
+            return $appointments;
+        }
+        
     }
 
     /**
@@ -53,7 +121,13 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
-        Appointment::create($this->validateData());
+        $this->authorize('create', Appointment::class);
+
+        $appointment = Appointment::create($this->validateData());
+
+        return (new AppointmentResource($appointment))
+            ->response()
+            ->setStatusCode(Response::HTTP_CREATED);
     }
 
     /**
@@ -64,18 +138,8 @@ class AppointmentController extends Controller
      */
     public function show(Appointment $appointment)
     {
-        return $appointment;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Appointment  $appointment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Appointment $appointment)
-    {
-        //
+        $this->authorize('view', $appointment);
+        return new AppointmentResource($appointment);
     }
 
     /**
@@ -87,7 +151,23 @@ class AppointmentController extends Controller
      */
     public function update(Request $request, Appointment $appointment)
     {
-        $appointment->update($this->validateData());
+        $this->authorize('update', $appointment);
+
+        $appointment->update($this->validateDataTest());
+        
+        if($request->has('studentList') || $request->has('updateStudents')) {
+            if($request->input('studentList')) {
+                $list = $request->input('studentList');
+            } else {
+                $list = [];
+            }
+            $studentList = Student::find($list);
+            $appointment->students()->sync($studentList);
+        }
+
+        return (new AppointmentResource($appointment))
+            ->response()
+            ->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -98,6 +178,9 @@ class AppointmentController extends Controller
      */
     public function destroy(Appointment $appointment)
     {
-        $appointment->destroy();
+        $this->authorize('delete', $appointment);
+        $appointment->delete();
+
+        return response([], Response::HTTP_NO_CONTENT);
     }
 }

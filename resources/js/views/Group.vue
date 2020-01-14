@@ -2,7 +2,7 @@
     <div>
         <div class="box">
 
-            <div class="button-list">
+            <div class="button-list" v-if="user.role_id == 1">
                 <router-link to="/group/create" tag="button">
                     <i class="fas fa-plus"></i>
                     <span>Gruppe hinzufügen</span>
@@ -64,11 +64,11 @@
                                         </a>
                                     </td>
                                     <td class="actions">
-                                        <router-link :to="'/group/' + group.data.id + '/edit'">
+                                        <router-link :to="'/group/' + group.data.id + '/edit'" v-if="user.role_id == 1">
                                             <i class="fas fa-pencil-alt"></i>
                                             <span>Bearbeiten</span>
                                         </router-link>
-                                        <a @click="destroy(group)">
+                                        <a @click="destroy(group)" v-if="user.role_id == 1">
                                             <i class="far fa-trash-alt"></i>
                                             <span>Löschen</span>
                                         </a>
@@ -83,7 +83,7 @@
                     </div>
                 </div>
             
-                <div class="button-list" v-if="groups.length >= 10">
+                <div class="button-list" v-if="groups.length >= 10 && user.role_id == 1">
                     <router-link to="/group/create" tag="button">
                         <i class="fas fa-plus"></i>
                         <span>Gruppe hinzufügen</span>
@@ -103,6 +103,10 @@
         components: {
             Alert
         },
+
+        props: [
+            'user',
+        ],
 
         mounted() {
             axios.get('/api/group')

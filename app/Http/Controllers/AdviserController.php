@@ -8,6 +8,9 @@ use App\Http\Resources\Adviser as AdviserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 
 class AdviserController extends Controller
 {
@@ -34,7 +37,6 @@ class AdviserController extends Controller
     private function requiredData()
     {
         return [
-            'password' => 'nope', //'$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'api_token' => Str::random(60),
             'role_id' => 2,
         ];
@@ -62,12 +64,20 @@ class AdviserController extends Controller
     {
         $this->authorize('create', User::class);
 
-        $adviser = User::create(array_merge($this->requiredData(), $this->validateData()));
+        $password = Str::random(12);
+
+        $adviser = User::create(array_merge(
+            $this->requiredData(),
+            $this->validateData(),
+            ['password' => Hash::make($password)]
+        ));
 
         if($request->input('groups')) {
             $groups = Group::find($request->input('groups'));
             $adviser->groups()->saveMany($groups);
         }
+
+        Mail::to($adviser->email)->send(new WelcomeMail($adviser, $password));
 
         return (new AdviserResource($adviser))
             ->response()

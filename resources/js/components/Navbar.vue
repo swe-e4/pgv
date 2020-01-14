@@ -10,7 +10,7 @@
             </a>
             <ul>
                 <li class="separator">
-                    <router-link to="/disabled" class="disabled">
+                    <router-link to="/settings">
                         <i class="fas fa-cog"></i>
                         <span>Einstellungen</span>
                     </router-link>
