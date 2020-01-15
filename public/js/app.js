@@ -3678,6 +3678,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4180,7 +4182,7 @@ __webpack_require__.r(__webpack_exports__);
     submitForm: function submitForm() {
       var _this = this;
 
-      this.form.deadline = this.form.deadline.split("T00:00:00.000Z")[0];
+      this.form.deadline = this.form.deadline.split("T")[0];
       axios.post('/api/milestone', this.form).then(function (response) {
         _this.success = true;
         _this.form = {
@@ -4266,7 +4268,7 @@ __webpack_require__.r(__webpack_exports__);
     submitForm: function submitForm() {
       var _this2 = this;
 
-      this.form.deadline = this.form.deadline.split("T00:00:00.000Z")[0];
+      this.form.deadline = this.form.deadline.split("T")[0];
       axios.patch('/api/milestone/' + this.$route.params.id, this.form).then(function (response) {
         _this2.success = true;
       })["catch"](function (errors) {
@@ -91292,14 +91294,22 @@ var render = function() {
             _c(
               "div",
               { staticClass: "chart pie" },
-              [_c("pie-chart", { attrs: { chartdata: _vm.pieDataOne } })],
+              [
+                _c("pie-chart", { attrs: { chartdata: _vm.pieDataOne } }),
+                _vm._v(" "),
+                _c("h1", [_vm._v("Bewertung")])
+              ],
               1
             ),
             _vm._v(" "),
             _c(
               "div",
               { staticClass: "chart pie" },
-              [_c("pie-chart", { attrs: { chartdata: _vm.pieDataTwo } })],
+              [
+                _c("pie-chart", { attrs: { chartdata: _vm.pieDataTwo } }),
+                _vm._v(" "),
+                _c("h1", [_vm._v("Ampelstatus")])
+              ],
               1
             )
           ]),
@@ -109614,7 +109624,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_Appointment__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./views/Appointment */ "./resources/js/views/Appointment.vue");
 /* harmony import */ var _views_AppointmentCreate__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./views/AppointmentCreate */ "./resources/js/views/AppointmentCreate.vue");
 /* harmony import */ var _views_AppointmentEdit__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./views/AppointmentEdit */ "./resources/js/views/AppointmentEdit.vue");
-/* harmony import */ var _views_AppointmentDetails__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./views/AppointmentDetails */ "./resources/js/views/AppointmentDetails.vue");
+/* harmony import */ var _views_AppointmentDetails__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./views/AppointmentDetails */ "./resources/js/views/AppointmentDetails.vue");
 /* harmony import */ var _views_Milestone__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./views/Milestone */ "./resources/js/views/Milestone.vue");
 /* harmony import */ var _views_MilestoneCreate__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./views/MilestoneCreate */ "./resources/js/views/MilestoneCreate.vue");
 /* harmony import */ var _views_MilestoneEdit__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./views/MilestoneEdit */ "./resources/js/views/MilestoneEdit.vue");
@@ -109732,7 +109742,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     }
   }, {
     path: '/appointment/:id',
-    component: _views_AppointmentDetails__WEBPACK_IMPORTED_MODULE_23__["default"],
+    component: _views_AppointmentDetails__WEBPACK_IMPORTED_MODULE_16__["default"],
     meta: {
       title: 'Termin'
     }

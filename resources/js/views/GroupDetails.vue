@@ -81,9 +81,11 @@
             <div class="box">
                 <div class="chart pie">
                     <pie-chart :chartdata="pieDataOne"></pie-chart>
+                    <h1>Bewertung</h1>
                 </div>
                 <div class="chart pie">
                     <pie-chart :chartdata="pieDataTwo"></pie-chart>
+                    <h1>Ampelstatus</h1>
                 </div>
             </div>
 

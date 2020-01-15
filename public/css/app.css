@@ -18603,6 +18603,11 @@ ul.comma-separated > li:not(:last-child)::after {
   }
 }
 
+.chart > h1 {
+  width: 100%;
+  text-align: center;
+}
+
 @media (min-width: 640px){
   .sm\:sr-only{
     position: absolute;

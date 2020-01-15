@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\User;
 use App\Milestone;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class GroupController extends Controller
 {
@@ -33,8 +34,7 @@ class GroupController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Group::class);
-
-        $user = User::find(auth()->user()->id);
+        $user = User::find(Auth::id());
 
         if($user->role_id == 2) {
             return GroupResource::collection(Group::where('adviser_id', $user->id)->get());
@@ -52,6 +52,8 @@ class GroupController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create', Group::class);
+        
+        $group = Group::create($this->validateData());
 
         return (new GroupResource($group))
             ->response()
@@ -101,8 +103,6 @@ class GroupController extends Controller
             return response('', Response::HTTP_OK);
 
         } else {
-            $group = Group::create($this->validateData());
-
             $group->update($this->validateData());
             
             return (new GroupResource($group))
