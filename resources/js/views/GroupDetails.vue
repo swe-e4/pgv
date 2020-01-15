@@ -4,6 +4,9 @@
             <Alert type="info" title="Information" message="Gruppendetails werden geladen."/>
         </div>
         <div v-else>
+            
+            <Alert type="success" title="Gesendet" message="Die Mail wird an die Gruppe gesedent." v-if="success"/>
+                
             <div class="modal box" v-bind:class="{hidden: hidden}">
                 <h1>E-Mail an alle Gruppenmitglieder</h1>
                  <form>
@@ -234,6 +237,7 @@
                     'content': ''
                 },
                 hidden: true,
+                success: false,
                 pieDataOne: {
                     labels: [],
                     datasets: [
@@ -287,7 +291,20 @@
                 this.hidden = true;
             },
             sendMail() {
-                
+                axios.post('/api/sendmail', {
+                    'content': this.form.content,
+                    'group_id': this.group.id
+                    })
+                    .then(response => {
+                        this.success = true;
+                        this.form = {
+                                'content': '',
+                            };
+                        this.hidden = true;
+                    })
+                    .catch(errors => {
+                        this.success = false;
+                    });
             }
         },
 
