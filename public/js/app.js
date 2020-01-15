@@ -4778,6 +4778,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Student",
@@ -4827,6 +4835,9 @@ __webpack_require__.r(__webpack_exports__);
     orderBy: function orderBy(orderByColumn) {
       this.orderByAsc = this.orderByColumn == orderByColumn ? !this.orderByAsc : true;
       this.orderByColumn = orderByColumn;
+    },
+    massImport: function massImport(e) {
+      this.$refs.form.submit();
     }
   },
   computed: {
@@ -93047,11 +93058,65 @@ var render = function() {
       "div",
       { staticClass: "box" },
       [
+        this.$route.query.t == "n"
+          ? _c("Alert", {
+              attrs: {
+                type: "error",
+                title: "Fehler",
+                message: "Ein Fehler ist aufgetreten, bitte versuche es erneut"
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        this.$route.query.t == "w"
+          ? _c("Alert", {
+              attrs: {
+                type: "success",
+                title: "Importiert",
+                message: "Studenten wurden erfolgreich importiert."
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        this.$route.query.t == "o"
+          ? _c("Alert", {
+              attrs: {
+                type: "warning",
+                title: "Warnung",
+                message: "Es dürfen nur .csv-Dateien hochgeladen werden."
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
         _c(
           "div",
           { staticClass: "button-list" },
           [
-            _vm._m(0),
+            _c(
+              "form",
+              {
+                ref: "form",
+                staticClass: "buttonForm half",
+                attrs: {
+                  enctype: "multipart/form-data",
+                  method: "POST",
+                  action: "/api/student/import"
+                }
+              },
+              [
+                _c("label", { staticClass: "button gray" }, [
+                  _c("input", {
+                    attrs: { type: "file", name: "importfile", accept: ".csv" },
+                    on: { change: _vm.massImport }
+                  }),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "fas fa-upload" }),
+                  _vm._v(
+                    "\n                    Studenten importieren\n                "
+                  )
+                ])
+              ]
+            ),
             _vm._v(" "),
             _c(
               "router-link",
@@ -93355,18 +93420,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "half gray disabled" }, [
-      _c("i", { staticClass: "fas fa-upload" }),
-      _vm._v(" "),
-      _c("span", [_vm._v("Studenten importieren")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

@@ -1,12 +1,20 @@
 <template>
     <div>
         <div class="box">
+            
+            <Alert type="error" title="Fehler" message="Ein Fehler ist aufgetreten, bitte versuche es erneut" v-if="this.$route.query.t == 'n'"/>
+            <Alert type="success" title="Importiert" message="Studenten wurden erfolgreich importiert." v-if="this.$route.query.t == 'w'"/>
+            <Alert type="warning" title="Warnung" message="Es dürfen nur .csv-Dateien hochgeladen werden." v-if="this.$route.query.t == 'o'"/>
 
             <div class="button-list">
-                <button class="half gray disabled">
-                    <i class="fas fa-upload"></i>
-                    <span>Studenten importieren</span>
-                </button>
+                <form enctype="multipart/form-data" method="POST" action="/api/student/import" ref="form" class="buttonForm half">
+                    <label class="button gray">
+                        <input type="file" name="importfile" @change="massImport" accept=".csv">
+                        <i class="fas fa-upload"></i>
+                        Studenten importieren
+                    </label>
+                </form>
+
                 <router-link to="/student/create" tag="button" class="half">
                     <i class="fas fa-graduation-cap"></i>
                     <span>Student hinzufügen</span>
@@ -175,6 +183,9 @@
             orderBy: function(orderByColumn) {
                 this.orderByAsc = (this.orderByColumn == orderByColumn ? !this.orderByAsc : true);
                 this.orderByColumn = orderByColumn;
+            },
+            massImport: function(e) {
+                this.$refs.form.submit()
             }
         },
 
