@@ -5,4 +5,7 @@
             @apply w-1/2 float-left;
         }
     }
+    > h1 {
+        @apply w-full text-center;
+    }
 }

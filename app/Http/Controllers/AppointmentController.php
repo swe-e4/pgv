@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Carbon\Carbon;
 use App\User;
 use App\Student;
+use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
@@ -50,7 +51,7 @@ class AppointmentController extends Controller
 
 
         if($request->has('week')) {
-            $user = User::find(auth()->user()->id);
+            $user = User::find(Auth::id());
             $appointments = Appointment::whereBetween('start', [Carbon::now()->startOfWeek(),Carbon::now()->endOfWeek()])->orderBy('start', 'asc')->get();
             $week = array(
                 '1' => [],
@@ -95,7 +96,7 @@ class AppointmentController extends Controller
             }
             return $result;
         } else {
-            $user = User::find(auth()->user()->id);
+            $user = User::find(Auth::id());
             $appointments = Appointment::all();
             if($user->role_id == 2) {
                 $tmp = array();

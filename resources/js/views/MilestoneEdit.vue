@@ -60,7 +60,7 @@
 
         methods: {
             submitForm: function() {
-                this.form.deadline = this.form.deadline.split("T00:00:00.000Z")[0];
+                this.form.deadline = this.form.deadline.split("T")[0];
                 axios.patch('/api/milestone/' + this.$route.params.id, this.form)
                     .then(response => {
                         this.success = true;
