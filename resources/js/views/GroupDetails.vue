@@ -4,7 +4,26 @@
             <Alert type="info" title="Information" message="Gruppendetails werden geladen."/>
         </div>
         <div v-else>
+            <div class="modal box" v-bind:class="{hidden: hidden}">
+                <h1>E-Mail an alle Gruppenmitglieder</h1>
+                 <form>
+                    <textarea rows=10 v-model="form.content"></textarea>
+
+                    <div class="button-list">
+                        <button class="half" type="submit" @click="sendMail()">Senden</button>
+                        <button class="half gray" type="reset" @click="closeModel()">Abbrechen</button>
+                    </div>
+                </form>
+            </div>
             <div class="box">
+
+                <div class="button-list" v-if="user.role_id == 2">
+                    <button @click="openModel()">
+                        <i class="fas fa-reply-all"></i>
+                        <span>E-Mail an alle Gruppenmitglieder</span>
+                    </button>
+                </div>
+
                 <div class="table center">
                     <h1>Gruppen: {{ this.group.name }}</h1>
                     <div class="scroll max">
@@ -211,6 +230,10 @@
                 milestonesLoading: true,
                 milestonesOrderByColumn: 'name',
                 milestonesOrderByAsc: true,
+                form: {
+                    'content': ''
+                },
+                hidden: true,
                 pieDataOne: {
                     labels: [],
                     datasets: [
@@ -256,6 +279,15 @@
                     .catch(errors => {
                         console.log(errors);
                     });
+            },
+            openModel() {
+                this.hidden = false;
+            },
+            closeModel() {
+                this.hidden = true;
+            },
+            sendMail() {
+                
             }
         },
 

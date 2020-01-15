@@ -18559,6 +18559,17 @@ nav > .toggle:hover {
   }
 }
 
+.modal {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  width: 80%;
+}
+
+.modal.hidden {
+  display: none;
+}
+
 ul.comma-separated > li {
   float: left;
 }

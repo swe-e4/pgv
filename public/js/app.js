@@ -3680,6 +3680,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3726,6 +3745,10 @@ __webpack_require__.r(__webpack_exports__);
       milestonesLoading: true,
       milestonesOrderByColumn: 'name',
       milestonesOrderByAsc: true,
+      form: {
+        'content': ''
+      },
+      hidden: true,
       pieDataOne: {
         labels: [],
         datasets: [{
@@ -3756,7 +3779,14 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (errors) {
         console.log(errors);
       });
-    }
+    },
+    openModel: function openModel() {
+      this.hidden = false;
+    },
+    closeModel: function closeModel() {
+      this.hidden = true;
+    },
+    sendMail: function sendMail() {}
   },
   computed: {
     filteredMilestones: function filteredMilestones() {
@@ -91168,7 +91198,88 @@ var render = function() {
           1
         )
       : _c("div", [
+          _c(
+            "div",
+            { staticClass: "modal box", class: { hidden: _vm.hidden } },
+            [
+              _c("h1", [_vm._v("E-Mail an alle Gruppenmitglieder")]),
+              _vm._v(" "),
+              _c("form", [
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.content,
+                      expression: "form.content"
+                    }
+                  ],
+                  attrs: { rows: "10" },
+                  domProps: { value: _vm.form.content },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "content", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "button-list" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "half",
+                      attrs: { type: "submit" },
+                      on: {
+                        click: function($event) {
+                          return _vm.sendMail()
+                        }
+                      }
+                    },
+                    [_vm._v("Senden")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "half gray",
+                      attrs: { type: "reset" },
+                      on: {
+                        click: function($event) {
+                          return _vm.closeModel()
+                        }
+                      }
+                    },
+                    [_vm._v("Abbrechen")]
+                  )
+                ])
+              ])
+            ]
+          ),
+          _vm._v(" "),
           _c("div", { staticClass: "box" }, [
+            _vm.user.role_id == 2
+              ? _c("div", { staticClass: "button-list" }, [
+                  _c(
+                    "button",
+                    {
+                      on: {
+                        click: function($event) {
+                          return _vm.openModel()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-reply-all" }),
+                      _vm._v(" "),
+                      _c("span", [_vm._v("E-Mail an alle Gruppenmitglieder")])
+                    ]
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
             _c("div", { staticClass: "table center" }, [
               _c("h1", [_vm._v("Gruppen: " + _vm._s(this.group.name))]),
               _vm._v(" "),
