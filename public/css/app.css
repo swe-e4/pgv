@@ -17968,7 +17968,8 @@ form .group.checkbox label {
   color: #38b2ac;
 }
 
-button {
+button,
+.button {
   background-color: #38b2ac;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -17978,25 +17979,30 @@ button {
   width: 100%;
 }
 
-button:hover {
+button:hover,
+.button:hover {
   background-color: #319795;
 }
 
-button.gray {
+button.gray,
+.button.gray {
   background-color: #a0aec0;
   color: #fff;
 }
 
-button.gray:hover {
+button.gray:hover,
+.button.gray:hover {
   background-color: #718096;
 }
 
 @media (min-width: 1024px) {
-  button.half {
+  button.half,
+.button.half {
     width: 50%;
   }
 
-  button.full {
+  button.full,
+.button.full {
     width: 100%;
   }
 }
@@ -18013,36 +18019,65 @@ button.gray:hover {
   margin-bottom: 2rem;
 }
 
+.button-list > .buttonForm:not(:last-child),
 .button-list > button:not(:last-child) {
   margin-bottom: 0.5rem;
 }
 
 @media (min-width: 1024px) {
-  .button-list > button {
+  .button-list > .buttonForm,
+.button-list > button {
     float: left;
     margin-bottom: 0;
     width: calc(100% - 0.5rem);
   }
 
-  .button-list > button:first-child, .button-list > button:last-child {
+  .button-list > .buttonForm:first-child, .button-list > .buttonForm:last-child,
+.button-list > button:first-child,
+.button-list > button:last-child {
     width: calc(100% - 0.25rem);
   }
 
-  .button-list > button:not(:first-child) {
+  .button-list > .buttonForm:not(:first-child),
+.button-list > button:not(:first-child) {
     margin-left: 0.25rem;
   }
 
-  .button-list > button:not(:last-child) {
+  .button-list > .buttonForm:not(:last-child),
+.button-list > button:not(:last-child) {
     margin-right: 0.25rem;
   }
 
-  .button-list > button.half {
+  .button-list > .buttonForm.half,
+.button-list > button.half {
     width: calc(50% - 0.5rem);
   }
 
-  .button-list > button.half:first-child, .button-list > button.half:last-child {
+  .button-list > .buttonForm.half:first-child, .button-list > .buttonForm.half:last-child,
+.button-list > button.half:first-child,
+.button-list > button.half:last-child {
     width: calc(50% - 0.25rem);
   }
+}
+
+label.button {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  color: #fff;
+  width: 100%;
+  font-weight: 400;
+  text-align: center;
+  height: 40px;
+}
+
+label.button:hover {
+  cursor: pointer;
+}
+
+label.button input {
+  display: none;
 }
 
 .alert {
