@@ -10,6 +10,8 @@ use App\User;
 use App\Milestone;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\GroupMail;
+use Illuminate\Support\Facades\Mail;
 
 class GroupController extends Controller
 {
@@ -123,5 +125,25 @@ class GroupController extends Controller
         $group->delete();
 
         return response([], Response::HTTP_NO_CONTENT);
+    }
+
+    public function mail(Request $request) {
+        if($group = Group::find($request->input('group_id'))) {
+            if($content = $request->input('content')) {
+
+                $mail = new GroupMail($content);
+
+                foreach($group->students as $student) {
+                    Mail::to($student->email)->send($mail);
+                    if(config('app.debug') == true) {
+                        break;
+                    }
+                }
+
+                return response(["true"], Response::HTTP_OK);
+            }
+        }
+
+        return response(["false"], Response::HTTP_OK);
     }
 }

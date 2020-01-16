@@ -15,4 +15,7 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes();
 
 Route::post('/api/changepassword', 'ChangePasswordController@store');
+Route::post('/api/sendmail', 'GroupController@mail');
+Route::post('/api/adviser/import', 'AdviserController@import');
+Route::post('/api/student/import', 'StudentController@import');
 Route::get('/{any}', 'AppController@index')->where('any', '.*');

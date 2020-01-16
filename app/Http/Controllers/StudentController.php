@@ -6,6 +6,7 @@ use App\Student;
 use Illuminate\Http\Request;
 use App\Http\Resources\Student as StudentResource;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Str;
 
 class StudentController extends Controller
 {
@@ -110,5 +111,38 @@ class StudentController extends Controller
         $student->delete();
 
         return response([], Response::HTTP_NO_CONTENT);
+    }
+
+    public function import(Request $request) {
+        if(!$request->has('importfile') && !$request->file('importfile')) {
+            return redirect('/student?t=n');
+        }
+        if($request->importfile->getClientOriginalExtension() == 'csv') {
+            $fileName = Str::random(10).time().'.'.$request->importfile->getClientOriginalExtension();
+            $request->importfile->move(public_path('csv'), $fileName);
+            $csvFile = file(public_path('csv').'/'.$fileName);
+            $data = [];
+            foreach($csvFile as $line) {
+                $data[] = str_getcsv($line);
+            }
+            foreach($data as $student) {
+                try{
+                    $studentData = explode(';', $student[0]);
+                    
+                    //create a student 
+                    $student = Student::create([
+                        'surname' => $studentData[1],
+                        'first_name' => $studentData[0],
+                        'email' => $studentData[2],
+                        'student_number' => $studentData[3]
+                    ]);
+
+                } catch(\Exception $e) {
+                }
+            }
+            return redirect('/student?t=w');
+            
+        }
+        return redirect('/student?t=o');
     }
 }

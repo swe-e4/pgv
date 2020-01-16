@@ -2316,6 +2316,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Adviser",
@@ -2368,6 +2376,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     groupsString: function groupsString(groups_string) {
       return groups_string.replace(';', ', ');
+    },
+    massImport: function massImport(e) {
+      this.$refs.form.submit();
     }
   },
   computed: {
@@ -3680,6 +3691,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3695,13 +3728,13 @@ __webpack_require__.r(__webpack_exports__);
     axios.get('/api/group/' + this.$route.params.id + '?students&appointments&studentList').then(function (response) {
       _this.group = response.data.data;
       _this.loading = false;
-      _this.pieDataOne.labels = _this.group.ratings.sort();
+      _this.pieDataOne.labels = ['+', '0', '-']; //this.group.ratings.filter(val=>val).sort();
 
       for (var label in _this.pieDataOne.labels) {
         _this.pieDataOne.datasets[0].data.push(_this.group.rating_count[_this.pieDataOne.labels[label]]);
       }
 
-      _this.pieDataTwo.labels = _this.group.traffic_lights.sort();
+      _this.pieDataTwo.labels = ['red', 'yellow', 'green']; //this.group.traffic_lights.filter(val=>val).sort();
 
       for (var label in _this.pieDataTwo.labels) {
         _this.pieDataTwo.datasets[0].data.push(_this.group.traffic_light_status_count[_this.pieDataTwo.labels[label]]);
@@ -3726,17 +3759,22 @@ __webpack_require__.r(__webpack_exports__);
       milestonesLoading: true,
       milestonesOrderByColumn: 'name',
       milestonesOrderByAsc: true,
+      form: {
+        'content': ''
+      },
+      hidden: true,
+      success: false,
       pieDataOne: {
         labels: [],
         datasets: [{
-          backgroundColor: ['#48bb78', '#f56565', '#ecc94b'],
+          backgroundColor: ['#48bb78', '#ecc94b', '#f56565'],
           data: []
         }]
       },
       pieDataTwo: {
         labels: [],
         datasets: [{
-          backgroundColor: ['#48bb78', '#f56565', '#ecc94b'],
+          backgroundColor: ['#f56565', '#ecc94b', '#48bb78'],
           data: []
         }]
       }
@@ -3755,6 +3793,28 @@ __webpack_require__.r(__webpack_exports__);
         console.log(response);
       })["catch"](function (errors) {
         console.log(errors);
+      });
+    },
+    openModel: function openModel() {
+      this.hidden = false;
+    },
+    closeModel: function closeModel() {
+      this.hidden = true;
+    },
+    sendMail: function sendMail() {
+      var _this2 = this;
+
+      axios.post('/api/sendmail', {
+        'content': this.form.content,
+        'group_id': this.group.id
+      }).then(function (response) {
+        _this2.success = true;
+        _this2.form = {
+          'content': ''
+        };
+        _this2.hidden = true;
+      })["catch"](function (errors) {
+        _this2.success = false;
       });
     }
   },
@@ -4718,6 +4778,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Student",
@@ -4767,6 +4835,9 @@ __webpack_require__.r(__webpack_exports__);
     orderBy: function orderBy(orderByColumn) {
       this.orderByAsc = this.orderByColumn == orderByColumn ? !this.orderByAsc : true;
       this.orderByColumn = orderByColumn;
+    },
+    massImport: function massImport(e) {
+      this.$refs.form.submit();
     }
   },
   computed: {
@@ -88779,11 +88850,65 @@ var render = function() {
       "div",
       { staticClass: "box" },
       [
+        this.$route.query.t == "n"
+          ? _c("Alert", {
+              attrs: {
+                type: "error",
+                title: "Fehler",
+                message: "Ein Fehler ist aufgetreten, bitte versuche es erneut"
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        this.$route.query.t == "w"
+          ? _c("Alert", {
+              attrs: {
+                type: "success",
+                title: "Importiert",
+                message: "Betreuer wurden erfolgreich importiert."
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        this.$route.query.t == "o"
+          ? _c("Alert", {
+              attrs: {
+                type: "warning",
+                title: "Warnung",
+                message: "Es dürfen nur .csv-Dateien hochgeladen werden."
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
         _c(
           "div",
           { staticClass: "button-list" },
           [
-            _vm._m(0),
+            _c(
+              "form",
+              {
+                ref: "form",
+                staticClass: "buttonForm half",
+                attrs: {
+                  enctype: "multipart/form-data",
+                  method: "POST",
+                  action: "/api/adviser/import"
+                }
+              },
+              [
+                _c("label", { staticClass: "button gray" }, [
+                  _c("input", {
+                    attrs: { type: "file", name: "importfile", accept: ".csv" },
+                    on: { change: _vm.massImport }
+                  }),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "fas fa-upload" }),
+                  _vm._v(
+                    "\n                    Betreuer importieren\n                "
+                  )
+                ])
+              ]
+            ),
             _vm._v(" "),
             _c(
               "router-link",
@@ -89062,18 +89187,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "half gray disabled" }, [
-      _c("i", { staticClass: "fas fa-upload" }),
-      _vm._v(" "),
-      _c("span", [_vm._v("Betreuer importieren")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -91167,330 +91281,438 @@ var render = function() {
           ],
           1
         )
-      : _c("div", [
-          _c("div", { staticClass: "box" }, [
-            _c("div", { staticClass: "table center" }, [
-              _c("h1", [_vm._v("Gruppen: " + _vm._s(this.group.name))]),
-              _vm._v(" "),
-              _c("div", { staticClass: "scroll max" }, [
-                _c("table", { staticClass: "w-full" }, [
-                  _c("thead", [
-                    _c(
-                      "tr",
-                      [
-                        _vm._m(0),
-                        _vm._v(" "),
-                        _vm._m(1),
-                        _vm._v(" "),
-                        _vm._m(2),
-                        _vm._v(" "),
-                        _vm._l(_vm.group.students, function(student) {
-                          return _c("th", { key: student.data.id }, [
-                            _c("a", [
-                              _c("span", [
-                                _vm._v(
-                                  _vm._s(student.data.first_name) +
-                                    " " +
-                                    _vm._s(student.data.surname)
-                                )
-                              ])
-                            ])
-                          ])
-                        }),
-                        _vm._v(" "),
-                        _vm.user.role_id == 2
-                          ? _c("th", { staticClass: "actions" }, [_vm._m(3)])
-                          : _vm._e()
-                      ],
-                      2
-                    )
-                  ]),
+      : _c(
+          "div",
+          [
+            _vm.success
+              ? _c("Alert", {
+                  attrs: {
+                    type: "success",
+                    title: "Gesendet",
+                    message: "Die Mail wird an die Gruppe gesedent."
+                  }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "modal box", class: { hidden: _vm.hidden } },
+              [
+                _c("h1", [_vm._v("E-Mail an alle Gruppenmitglieder")]),
+                _vm._v(" "),
+                _c("form", [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.content,
+                        expression: "form.content"
+                      }
+                    ],
+                    attrs: { rows: "10" },
+                    domProps: { value: _vm.form.content },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "content", $event.target.value)
+                      }
+                    }
+                  }),
                   _vm._v(" "),
-                  _c(
-                    "tbody",
-                    _vm._l(_vm.group.appointments, function(appointment) {
-                      return _c(
+                  _c("div", { staticClass: "button-list" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "half",
+                        attrs: { type: "submit" },
+                        on: {
+                          click: function($event) {
+                            return _vm.sendMail()
+                          }
+                        }
+                      },
+                      [_vm._v("Senden")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "half gray",
+                        attrs: { type: "reset" },
+                        on: {
+                          click: function($event) {
+                            return _vm.closeModel()
+                          }
+                        }
+                      },
+                      [_vm._v("Abbrechen")]
+                    )
+                  ])
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "box" }, [
+              _vm.user.role_id == 2
+                ? _c("div", { staticClass: "button-list" }, [
+                    _c(
+                      "button",
+                      {
+                        on: {
+                          click: function($event) {
+                            return _vm.openModel()
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-reply-all" }),
+                        _vm._v(" "),
+                        _c("span", [_vm._v("E-Mail an alle Gruppenmitglieder")])
+                      ]
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "table center" }, [
+                _c("h1", [_vm._v("Gruppen: " + _vm._s(this.group.name))]),
+                _vm._v(" "),
+                _c("div", { staticClass: "scroll max" }, [
+                  _c("table", { staticClass: "w-full" }, [
+                    _c("thead", [
+                      _c(
                         "tr",
-                        { key: appointment.data.id },
                         [
-                          _c("td", [
-                            _c("a", [
-                              _c("span", [
-                                _vm._v(_vm._s(appointment.data.name))
-                              ])
-                            ])
-                          ]),
+                          _vm._m(0),
                           _vm._v(" "),
-                          _c("td", [
-                            _c("a", [
-                              _c("span", [
-                                _vm._v(_vm._s(appointment.data.rating))
-                              ])
-                            ])
-                          ]),
+                          _vm._m(1),
                           _vm._v(" "),
-                          _c("td", [
-                            _c("a", [
-                              _c("span", [
-                                _c("div", {
-                                  staticClass: "traffic-light-status",
-                                  class: appointment.data.traffic_light_status
-                                })
-                              ])
-                            ])
-                          ]),
+                          _vm._m(2),
                           _vm._v(" "),
                           _vm._l(_vm.group.students, function(student) {
-                            return _c("td", { key: student.data.id }, [
+                            return _c("th", { key: student.data.id }, [
                               _c("a", [
-                                appointment.data.studentIDs.includes(
-                                  student.data.id
-                                )
-                                  ? _c("i", { staticClass: "fas fa-check" })
-                                  : _c("i", { staticClass: "fas fa-times" })
+                                _c("span", [
+                                  _vm._v(
+                                    _vm._s(student.data.first_name) +
+                                      " " +
+                                      _vm._s(student.data.surname)
+                                  )
+                                ])
                               ])
                             ])
                           }),
                           _vm._v(" "),
                           _vm.user.role_id == 2
-                            ? _c(
-                                "td",
-                                { staticClass: "actions" },
-                                [
-                                  _c(
-                                    "router-link",
-                                    {
-                                      attrs: {
-                                        to:
-                                          "/appointment/" +
-                                          appointment.data.id +
-                                          ""
-                                      }
-                                    },
-                                    [
-                                      _c("i", {
-                                        staticClass: "fas fa-pencil-alt"
-                                      }),
-                                      _vm._v(" "),
-                                      _c("span", [_vm._v("Bearbeiten")])
-                                    ]
-                                  )
-                                ],
-                                1
-                              )
+                            ? _c("th", { staticClass: "actions" }, [_vm._m(3)])
                             : _vm._e()
                         ],
                         2
                       )
-                    }),
-                    0
-                  )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.group.appointments, function(appointment) {
+                        return _c(
+                          "tr",
+                          { key: appointment.data.id },
+                          [
+                            _c("td", [
+                              _c("a", [
+                                _c("span", [
+                                  _vm._v(_vm._s(appointment.data.name))
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c("a", [
+                                _c("span", [
+                                  _vm._v(_vm._s(appointment.data.rating))
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c("a", [
+                                _c("span", [
+                                  _c("div", {
+                                    staticClass: "traffic-light-status",
+                                    class: appointment.data.traffic_light_status
+                                  })
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.group.students, function(student) {
+                              return _c("td", { key: student.data.id }, [
+                                _c("a", [
+                                  appointment.data.studentIDs.includes(
+                                    student.data.id
+                                  )
+                                    ? _c("i", { staticClass: "fas fa-check" })
+                                    : _c("i", { staticClass: "fas fa-times" })
+                                ])
+                              ])
+                            }),
+                            _vm._v(" "),
+                            _vm.user.role_id == 2
+                              ? _c(
+                                  "td",
+                                  { staticClass: "actions" },
+                                  [
+                                    _c(
+                                      "router-link",
+                                      {
+                                        attrs: {
+                                          to:
+                                            "/appointment/" +
+                                            appointment.data.id +
+                                            ""
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "fas fa-pencil-alt"
+                                        }),
+                                        _vm._v(" "),
+                                        _c("span", [_vm._v("Bearbeiten")])
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
+                              : _vm._e()
+                          ],
+                          2
+                        )
+                      }),
+                      0
+                    )
+                  ])
                 ])
               ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "box" }, [
-            _c(
-              "div",
-              { staticClass: "chart pie" },
-              [
-                _c("pie-chart", { attrs: { chartdata: _vm.pieDataOne } }),
-                _vm._v(" "),
-                _c("h1", [_vm._v("Bewertung")])
-              ],
-              1
-            ),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "box" }, [
+              _c(
+                "div",
+                { staticClass: "chart pie" },
+                [
+                  _c("pie-chart", { attrs: { chartdata: _vm.pieDataOne } }),
+                  _vm._v(" "),
+                  _c("h1", [_vm._v("Bewertung")])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "chart pie" },
+                [
+                  _c("pie-chart", { attrs: { chartdata: _vm.pieDataTwo } }),
+                  _vm._v(" "),
+                  _c("h1", [_vm._v("Ampelstatus")])
+                ],
+                1
+              )
+            ]),
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "chart pie" },
+              { staticClass: "box" },
               [
-                _c("pie-chart", { attrs: { chartdata: _vm.pieDataTwo } }),
-                _vm._v(" "),
-                _c("h1", [_vm._v("Ampelstatus")])
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "box" },
-            [
-              _vm.milestonesLoading
-                ? _c("Alert", {
-                    attrs: {
-                      type: "info",
-                      title: "Information",
-                      message: "Meilensteine werden geladen."
-                    }
-                  })
-                : _c("div", [
-                    _vm.milestones.length === 0
-                      ? _c("div", { staticClass: "alert info" }, [
-                          _c("h1", [_vm._v("Information")]),
-                          _vm._v(" "),
-                          _c("p", [
-                            _vm._v("Es exestieren derzeit keine Meilensteine.")
-                          ])
-                        ])
-                      : _c("div", { staticClass: "table" }, [
-                          _c("h1", [_vm._v("Meilensteine")]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "scroll" }, [
-                            _c("table", { staticClass: "w-full" }, [
-                              _c("thead", [
-                                _c("tr", [
-                                  _c(
-                                    "th",
-                                    {
-                                      staticClass: "sort",
-                                      class: [
-                                        {
-                                          up:
-                                            _vm.milestonesOrderByColumn ==
-                                              "name" &&
-                                            _vm.milestonesOrderByAsc == true
-                                        },
-                                        {
-                                          down:
-                                            _vm.milestonesOrderByColumn ==
-                                              "name" &&
-                                            _vm.milestonesOrderByAsc == false
-                                        }
-                                      ],
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.milestonesOrderBy("name")
-                                        }
-                                      }
-                                    },
-                                    [_c("a", [_c("span", [_vm._v("Name")])])]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "th",
-                                    {
-                                      staticClass: "sort",
-                                      class: [
-                                        {
-                                          up:
-                                            _vm.milestonesOrderByColumn ==
-                                              "deadline" &&
-                                            _vm.milestonesOrderByAsc == true
-                                        },
-                                        {
-                                          down:
-                                            _vm.milestonesOrderByColumn ==
-                                              "deadline" &&
-                                            _vm.milestonesOrderByAsc == false
-                                        }
-                                      ],
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.milestonesOrderBy(
-                                            "deadline"
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c("a", [
-                                        _c("span", [_vm._v("Abgabefrist")])
-                                      ])
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("th", [
-                                    _c("a", [_c("span", [_vm._v("Abgabe am")])])
-                                  ])
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "tbody",
-                                _vm._l(_vm.filteredMilestones, function(
-                                  milestone
-                                ) {
-                                  return _c("tr", { key: milestone.data.id }, [
-                                    _c("td", [
-                                      _c("a", [
-                                        _c("span", [
-                                          _vm._v(_vm._s(milestone.data.name))
-                                        ])
-                                      ])
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _c("a", [
-                                        _c("span", [
-                                          _vm._v(
-                                            _vm._s(milestone.data.deadline)
-                                          )
-                                        ])
-                                      ])
-                                    ]),
-                                    _vm._v(" "),
-                                    _c(
-                                      "td",
-                                      [
-                                        _vm.user.role_id == 2
-                                          ? _c("datetime", {
-                                              attrs: {
-                                                zone: "Europe/Berlin",
-                                                "value-zone": "Europe/Berlin",
-                                                format: "yyyy-MM-dd",
-                                                auto: ""
-                                              },
-                                              on: {
-                                                close: function($event) {
-                                                  return _vm.updateMilestone(
-                                                    milestone.data.id,
-                                                    milestone.data.done_on
-                                                  )
-                                                }
-                                              },
-                                              model: {
-                                                value: milestone.data.done_on,
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    milestone.data,
-                                                    "done_on",
-                                                    $$v
-                                                  )
-                                                },
-                                                expression:
-                                                  "milestone.data.done_on"
-                                              }
-                                            })
-                                          : _c("a", [
-                                              _c("span", [
-                                                _vm._v(
-                                                  _vm._s(
-                                                    milestone.data.done_on !=
-                                                      null
-                                                      ? milestone.data.done_on
-                                                      : "-"
-                                                  )
-                                                )
-                                              ])
-                                            ])
-                                      ],
-                                      1
-                                    )
-                                  ])
-                                }),
-                                0
+                _vm.milestonesLoading
+                  ? _c("Alert", {
+                      attrs: {
+                        type: "info",
+                        title: "Information",
+                        message: "Meilensteine werden geladen."
+                      }
+                    })
+                  : _c("div", [
+                      _vm.milestones.length === 0
+                        ? _c("div", { staticClass: "alert info" }, [
+                            _c("h1", [_vm._v("Information")]),
+                            _vm._v(" "),
+                            _c("p", [
+                              _vm._v(
+                                "Es exestieren derzeit keine Meilensteine."
                               )
                             ])
                           ])
-                        ])
-                  ])
-            ],
-            1
-          )
-        ])
+                        : _c("div", { staticClass: "table" }, [
+                            _c("h1", [_vm._v("Meilensteine")]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "scroll" }, [
+                              _c("table", { staticClass: "w-full" }, [
+                                _c("thead", [
+                                  _c("tr", [
+                                    _c(
+                                      "th",
+                                      {
+                                        staticClass: "sort",
+                                        class: [
+                                          {
+                                            up:
+                                              _vm.milestonesOrderByColumn ==
+                                                "name" &&
+                                              _vm.milestonesOrderByAsc == true
+                                          },
+                                          {
+                                            down:
+                                              _vm.milestonesOrderByColumn ==
+                                                "name" &&
+                                              _vm.milestonesOrderByAsc == false
+                                          }
+                                        ],
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.milestonesOrderBy("name")
+                                          }
+                                        }
+                                      },
+                                      [_c("a", [_c("span", [_vm._v("Name")])])]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "th",
+                                      {
+                                        staticClass: "sort",
+                                        class: [
+                                          {
+                                            up:
+                                              _vm.milestonesOrderByColumn ==
+                                                "deadline" &&
+                                              _vm.milestonesOrderByAsc == true
+                                          },
+                                          {
+                                            down:
+                                              _vm.milestonesOrderByColumn ==
+                                                "deadline" &&
+                                              _vm.milestonesOrderByAsc == false
+                                          }
+                                        ],
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.milestonesOrderBy(
+                                              "deadline"
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("a", [
+                                          _c("span", [_vm._v("Abgabefrist")])
+                                        ])
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("th", [
+                                      _c("a", [
+                                        _c("span", [_vm._v("Abgabe am")])
+                                      ])
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "tbody",
+                                  _vm._l(_vm.filteredMilestones, function(
+                                    milestone
+                                  ) {
+                                    return _c(
+                                      "tr",
+                                      { key: milestone.data.id },
+                                      [
+                                        _c("td", [
+                                          _c("a", [
+                                            _c("span", [
+                                              _vm._v(
+                                                _vm._s(milestone.data.name)
+                                              )
+                                            ])
+                                          ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _c("a", [
+                                            _c("span", [
+                                              _vm._v(
+                                                _vm._s(milestone.data.deadline)
+                                              )
+                                            ])
+                                          ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          [
+                                            _vm.user.role_id == 2
+                                              ? _c("datetime", {
+                                                  attrs: {
+                                                    zone: "Europe/Berlin",
+                                                    "value-zone":
+                                                      "Europe/Berlin",
+                                                    format: "yyyy-MM-dd",
+                                                    auto: ""
+                                                  },
+                                                  on: {
+                                                    close: function($event) {
+                                                      return _vm.updateMilestone(
+                                                        milestone.data.id,
+                                                        milestone.data.done_on
+                                                      )
+                                                    }
+                                                  },
+                                                  model: {
+                                                    value:
+                                                      milestone.data.done_on,
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        milestone.data,
+                                                        "done_on",
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "milestone.data.done_on"
+                                                  }
+                                                })
+                                              : _c("a", [
+                                                  _c("span", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        milestone.data
+                                                          .done_on != null
+                                                          ? milestone.data
+                                                              .done_on
+                                                          : "-"
+                                                      )
+                                                    )
+                                                  ])
+                                                ])
+                                          ],
+                                          1
+                                        )
+                                      ]
+                                    )
+                                  }),
+                                  0
+                                )
+                              ])
+                            ])
+                          ])
+                    ])
+              ],
+              1
+            )
+          ],
+          1
+        )
   ])
 }
 var staticRenderFns = [
@@ -92836,11 +93058,65 @@ var render = function() {
       "div",
       { staticClass: "box" },
       [
+        this.$route.query.t == "n"
+          ? _c("Alert", {
+              attrs: {
+                type: "error",
+                title: "Fehler",
+                message: "Ein Fehler ist aufgetreten, bitte versuche es erneut"
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        this.$route.query.t == "w"
+          ? _c("Alert", {
+              attrs: {
+                type: "success",
+                title: "Importiert",
+                message: "Studenten wurden erfolgreich importiert."
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        this.$route.query.t == "o"
+          ? _c("Alert", {
+              attrs: {
+                type: "warning",
+                title: "Warnung",
+                message: "Es dürfen nur .csv-Dateien hochgeladen werden."
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
         _c(
           "div",
           { staticClass: "button-list" },
           [
-            _vm._m(0),
+            _c(
+              "form",
+              {
+                ref: "form",
+                staticClass: "buttonForm half",
+                attrs: {
+                  enctype: "multipart/form-data",
+                  method: "POST",
+                  action: "/api/student/import"
+                }
+              },
+              [
+                _c("label", { staticClass: "button gray" }, [
+                  _c("input", {
+                    attrs: { type: "file", name: "importfile", accept: ".csv" },
+                    on: { change: _vm.massImport }
+                  }),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "fas fa-upload" }),
+                  _vm._v(
+                    "\n                    Studenten importieren\n                "
+                  )
+                ])
+              ]
+            ),
             _vm._v(" "),
             _c(
               "router-link",
@@ -93144,18 +93420,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "half gray disabled" }, [
-      _c("i", { staticClass: "fas fa-upload" }),
-      _vm._v(" "),
-      _c("span", [_vm._v("Studenten importieren")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

@@ -139,4 +139,44 @@ class AdviserController extends Controller
 
         return response([], Response::HTTP_NO_CONTENT);
     }
+
+    public function import(Request $request) {
+        if(!$request->has('importfile') && !$request->file('importfile')) {
+            return redirect('/adviser?t=n');
+        }
+        if($request->importfile->getClientOriginalExtension() == 'csv') {
+            $fileName = Str::random(10).time().'.'.$request->importfile->getClientOriginalExtension();
+            $request->importfile->move(public_path('csv'), $fileName);
+            $csvFile = file(public_path('csv').'/'.$fileName);
+            $data = [];
+            foreach($csvFile as $line) {
+                $data[] = str_getcsv($line);
+            }
+            foreach($data as $user) {
+                try{
+                    $userData = explode(';', $user[0]);
+                    
+                    //create a user 
+                    $user = User::create([
+                        'surname' => $userData[1],
+                        'first_name' => $userData[0],
+                        'email' => $userData[2],
+                        'password' => Str::random(12),
+                        'remember_token' => Str::random(10),
+                        'api_token' => Str::random(60),
+                        'role_id' => 2,
+                    ]);
+
+                    if(config('app.debug') != true) {
+                        Mail::to($adviser->email)->send(new WelcomeMail($adviser, $password));
+                    }
+
+                } catch(\Exception $e) {
+                }
+            }
+            return redirect('/adviser?t=w');
+            
+        }
+        return redirect('/adviser?t=o');
+    }
 }

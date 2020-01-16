@@ -1,12 +1,20 @@
 <template>
     <div>
         <div class="box">
+            
+            <Alert type="error" title="Fehler" message="Ein Fehler ist aufgetreten, bitte versuche es erneut" v-if="this.$route.query.t == 'n'"/>
+            <Alert type="success" title="Importiert" message="Betreuer wurden erfolgreich importiert." v-if="this.$route.query.t == 'w'"/>
+            <Alert type="warning" title="Warnung" message="Es dürfen nur .csv-Dateien hochgeladen werden." v-if="this.$route.query.t == 'o'"/>
 
             <div class="button-list">
-                <button class="half gray disabled">
-                    <i class="fas fa-upload"></i>
-                    <span>Betreuer importieren</span>
-                </button>
+                <form enctype="multipart/form-data" method="POST" action="/api/adviser/import" ref="form" class="buttonForm half">
+                    <label class="button gray">
+                        <input type="file" name="importfile" @change="massImport" accept=".csv">
+                        <i class="fas fa-upload"></i>
+                        Betreuer importieren
+                    </label>
+                </form>
+
                 <router-link to="/adviser/create" tag="button" class="half">
                     <i class="fas fa-user-plus"></i>
                     <span>Betreuer hinzufügen</span>
@@ -171,6 +179,9 @@
             },
             groupsString: function(groups_string) {
                 return groups_string.replace(';', ', ');
+            },
+            massImport: function(e) {
+                this.$refs.form.submit()
             }
         },
 

@@ -4,7 +4,29 @@
             <Alert type="info" title="Information" message="Gruppendetails werden geladen."/>
         </div>
         <div v-else>
+            
+            <Alert type="success" title="Gesendet" message="Die Mail wird an die Gruppe gesedent." v-if="success"/>
+                
+            <div class="modal box" v-bind:class="{hidden: hidden}">
+                <h1>E-Mail an alle Gruppenmitglieder</h1>
+                 <form>
+                    <textarea rows=10 v-model="form.content"></textarea>
+
+                    <div class="button-list">
+                        <button class="half" type="submit" @click="sendMail()">Senden</button>
+                        <button class="half gray" type="reset" @click="closeModel()">Abbrechen</button>
+                    </div>
+                </form>
+            </div>
             <div class="box">
+
+                <div class="button-list" v-if="user.role_id == 2">
+                    <button @click="openModel()">
+                        <i class="fas fa-reply-all"></i>
+                        <span>E-Mail an alle Gruppenmitglieder</span>
+                    </button>
+                </div>
+
                 <div class="table center">
                     <h1>Gruppen: {{ this.group.name }}</h1>
                     <div class="scroll max">
@@ -177,12 +199,12 @@
                     this.group = response.data.data;
                     this.loading = false;
 
-                    this.pieDataOne.labels = this.group.ratings.sort();
+                    this.pieDataOne.labels = ['+','0','-'];//this.group.ratings.filter(val=>val).sort();
                     for(var label in this.pieDataOne.labels) {
                         this.pieDataOne.datasets[0].data.push(this.group.rating_count[this.pieDataOne.labels[label]]);
                     }
 
-                    this.pieDataTwo.labels = this.group.traffic_lights.sort();
+                    this.pieDataTwo.labels = ['red', 'yellow', 'green'];//this.group.traffic_lights.filter(val=>val).sort();
                     for(var label in this.pieDataTwo.labels) {
                         this.pieDataTwo.datasets[0].data.push(this.group.traffic_light_status_count[this.pieDataTwo.labels[label]]);
                     }
@@ -211,14 +233,19 @@
                 milestonesLoading: true,
                 milestonesOrderByColumn: 'name',
                 milestonesOrderByAsc: true,
+                form: {
+                    'content': ''
+                },
+                hidden: true,
+                success: false,
                 pieDataOne: {
                     labels: [],
                     datasets: [
                         {
                             backgroundColor: [
                                 '#48bb78',
+                                '#ecc94b',
                                 '#f56565',
-                                '#ecc94b'
                             ],
                             data: []
                         }
@@ -229,9 +256,9 @@
                     datasets: [
                         {
                             backgroundColor: [
-                                '#48bb78',
                                 '#f56565',
                                 '#ecc94b',
+                                '#48bb78',
                             ],
                             data: []
                         }
@@ -255,6 +282,28 @@
                     })
                     .catch(errors => {
                         console.log(errors);
+                    });
+            },
+            openModel() {
+                this.hidden = false;
+            },
+            closeModel() {
+                this.hidden = true;
+            },
+            sendMail() {
+                axios.post('/api/sendmail', {
+                    'content': this.form.content,
+                    'group_id': this.group.id
+                    })
+                    .then(response => {
+                        this.success = true;
+                        this.form = {
+                                'content': '',
+                            };
+                        this.hidden = true;
+                    })
+                    .catch(errors => {
+                        this.success = false;
                     });
             }
         },
