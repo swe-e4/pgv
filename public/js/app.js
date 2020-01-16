@@ -3728,13 +3728,17 @@ __webpack_require__.r(__webpack_exports__);
     axios.get('/api/group/' + this.$route.params.id + '?students&appointments&studentList').then(function (response) {
       _this.group = response.data.data;
       _this.loading = false;
-      _this.pieDataOne.labels = _this.group.ratings.sort();
+      _this.pieDataOne.labels = _this.group.ratings.filter(function (val) {
+        return val;
+      }).sort();
 
       for (var label in _this.pieDataOne.labels) {
         _this.pieDataOne.datasets[0].data.push(_this.group.rating_count[_this.pieDataOne.labels[label]]);
       }
 
-      _this.pieDataTwo.labels = _this.group.traffic_lights.sort();
+      _this.pieDataTwo.labels = _this.group.traffic_lights.filter(function (val) {
+        return val;
+      }).sort();
 
       for (var label in _this.pieDataTwo.labels) {
         _this.pieDataTwo.datasets[0].data.push(_this.group.traffic_light_status_count[_this.pieDataTwo.labels[label]]);

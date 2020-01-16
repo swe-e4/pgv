@@ -199,12 +199,12 @@
                     this.group = response.data.data;
                     this.loading = false;
 
-                    this.pieDataOne.labels = this.group.ratings.sort();
+                    this.pieDataOne.labels = this.group.ratings.filter(val=>val).sort();
                     for(var label in this.pieDataOne.labels) {
                         this.pieDataOne.datasets[0].data.push(this.group.rating_count[this.pieDataOne.labels[label]]);
                     }
 
-                    this.pieDataTwo.labels = this.group.traffic_lights.sort();
+                    this.pieDataTwo.labels = this.group.traffic_lights.filter(val=>val).sort();
                     for(var label in this.pieDataTwo.labels) {
                         this.pieDataTwo.datasets[0].data.push(this.group.traffic_light_status_count[this.pieDataTwo.labels[label]]);
                     }
