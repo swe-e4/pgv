@@ -199,12 +199,12 @@
                     this.group = response.data.data;
                     this.loading = false;
 
-                    this.pieDataOne.labels = this.group.ratings.filter(val=>val).sort();
+                    this.pieDataOne.labels = ['+','0','-'];//this.group.ratings.filter(val=>val).sort();
                     for(var label in this.pieDataOne.labels) {
                         this.pieDataOne.datasets[0].data.push(this.group.rating_count[this.pieDataOne.labels[label]]);
                     }
 
-                    this.pieDataTwo.labels = this.group.traffic_lights.filter(val=>val).sort();
+                    this.pieDataTwo.labels = ['red', 'yellow', 'green'];//this.group.traffic_lights.filter(val=>val).sort();
                     for(var label in this.pieDataTwo.labels) {
                         this.pieDataTwo.datasets[0].data.push(this.group.traffic_light_status_count[this.pieDataTwo.labels[label]]);
                     }
@@ -244,8 +244,8 @@
                         {
                             backgroundColor: [
                                 '#48bb78',
+                                '#ecc94b',
                                 '#f56565',
-                                '#ecc94b'
                             ],
                             data: []
                         }
@@ -256,9 +256,9 @@
                     datasets: [
                         {
                             backgroundColor: [
-                                '#48bb78',
                                 '#f56565',
                                 '#ecc94b',
+                                '#48bb78',
                             ],
                             data: []
                         }
